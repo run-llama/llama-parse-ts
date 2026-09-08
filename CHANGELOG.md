@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.16.1](https://github.com/run-llama/llama-parse-ts/compare/v2.16.0...v2.16.1) (2026-09-08)
+
+
+### Documentation
+
+* **changelog:** record the classify v1 removal in 2.16.0 ([f65c1b3](https://github.com/run-llama/llama-parse-ts/commit/f65c1b3cb9e9292df991810e3a67f0fb1cecb5e0))
+* **changelog:** record the classify v1 removal in 2.16.0 ([e3d9c9a](https://github.com/run-llama/llama-parse-ts/commit/e3d9c9afc263a4db2e23b9a38cb32c20351c8618))
+
 ## [2.16.0](https://github.com/run-llama/llama-parse-ts/compare/v2.15.0...v2.16.0) (2026-09-08)
 
 
