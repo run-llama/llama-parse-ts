@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.16.0](https://github.com/run-llama/llama-parse-ts/compare/v2.15.0...v2.16.0) (2026-09-08)
+
+
+### Features
+
+* **api:** map DELETE /api/v2/parse/{job_id} and GET /api/v2/pipelines into the SDKs (LI-9569) ([0171901](https://github.com/run-llama/llama-parse-ts/commit/017190123b6555d48463c5e3f7476d21feed8c1b))
+* **api:** return what Parse `latest` resolves to on GET /api/v2/parse/versions ([#25824](https://github.com/run-llama/llama-parse-ts/issues/25824)) ([bff8691](https://github.com/run-llama/llama-parse-ts/commit/bff8691318c8e8b5bb69982502f0f62cc2d658f3))
+* **llamaparse:** agentic 2026-09-07 — heading rules: own-line titles, furniture, document-wide levels ([#26146](https://github.com/run-llama/llama-parse-ts/issues/26146)) ([352cb70](https://github.com/run-llama/llama-parse-ts/commit/352cb70303a588b9555fd1f21271dd70ccdfb75d))
+
 ## [2.15.0](https://github.com/run-llama/llama-parse-ts/compare/v2.14.1...v2.15.0) (2026-08-28)
 
 
