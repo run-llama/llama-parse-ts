@@ -3,6 +3,11 @@
 ## [2.16.0](https://github.com/run-llama/llama-parse-ts/compare/v2.15.0...v2.16.0) (2026-09-08)
 
 
+### ⚠ BREAKING CHANGES
+
+* **classifier:** the classify v1 job methods (`client.classifier.jobs.create`, `.list`, `.get`, `.getResults`) are removed. The `/api/v1/classifier/jobs*` routes were unpublished from the API surface; use `client.classify` instead.
+
+
 ### Features
 
 * **api:** map DELETE /api/v2/parse/{job_id} and GET /api/v2/pipelines into the SDKs (LI-9569) ([0171901](https://github.com/run-llama/llama-parse-ts/commit/017190123b6555d48463c5e3f7476d21feed8c1b))
