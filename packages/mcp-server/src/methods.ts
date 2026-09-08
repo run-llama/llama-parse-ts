@@ -101,6 +101,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/parse/{job_id}/cancel',
   },
   {
+    clientCallName: 'client.parsing.delete',
+    fullyQualifiedName: 'parsing.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v2/parse/{job_id}',
+  },
+  {
     clientCallName: 'client.parsing.listVersions',
     fullyQualifiedName: 'parsing.listVersions',
     httpMethod: 'get',
@@ -351,6 +357,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'pipelines.list',
     httpMethod: 'get',
     httpPath: '/api/v1/pipelines',
+  },
+  {
+    clientCallName: 'client.pipelines.listPaginated',
+    fullyQualifiedName: 'pipelines.listPaginated',
+    httpMethod: 'get',
+    httpPath: '/api/v2/pipelines',
   },
   {
     clientCallName: 'client.pipelines.create',

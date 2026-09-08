@@ -90,6 +90,7 @@ Types:
 - <code><a href="./src/resources/parsing.ts">TextItem</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingCreateResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingListResponse</a></code>
+- <code><a href="./src/resources/parsing.ts">ParsingDeleteResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingCancelResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingGetResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingListVersionsResponse</a></code>
@@ -100,6 +101,7 @@ Methods:
 - <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 - <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedCursor</code>
 - <code title="post /api/v2/parse/{job_id}/cancel">client.parsing.<a href="./src/resources/parsing.ts">cancel</a>(jobID, { ...params }) -> ParsingCancelResponse</code>
+- <code title="delete /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">delete</a>(jobID, { ...params }) -> ParsingDeleteResponse</code>
 - <code title="get /api/v2/parse/versions">client.parsing.<a href="./src/resources/parsing.ts">listVersions</a>() -> ParsingListVersionsResponse</code>
 
 # Extract
@@ -311,10 +313,12 @@ Types:
 - <code><a href="./src/resources/pipelines/pipelines.ts">VertexTextEmbedding</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineRetrieveResponse</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListResponse</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListPaginatedResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">list</a>({ ...params }) -> PipelineListResponse</code>
+- <code title="get /api/v2/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">listPaginated</a>({ ...params }) -> PipelineListPaginatedResponsesPaginatedCursor</code>
 - <code title="post /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">create</a>({ ...params }) -> Pipeline</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">get</a>(pipelineID, { ...params }) -> Pipeline</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">update</a>(pipelineID, { ...params }) -> Pipeline</code>

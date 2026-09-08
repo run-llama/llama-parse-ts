@@ -70,6 +70,7 @@ import { Metadata, MetadataCreateParams, MetadataCreateResponse, MetadataDeleteA
 import * as SyncAPI from './sync';
 import { Sync, SyncCancelParams, SyncCreateParams } from './sync';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -94,6 +95,19 @@ export class Pipelines extends APIResource {
     options?: RequestOptions,
   ): APIPromise<PipelineListResponse> {
     return this._client.get('/api/v1/pipelines', { query, ...options });
+  }
+
+  /**
+   * List the pipelines in a project, newest first.
+   */
+  listPaginated(
+    query: PipelineListPaginatedParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<PipelineListPaginatedResponsesPaginatedCursor, PipelineListPaginatedResponse> {
+    return this._client.getAPIList('/api/v2/pipelines', PaginatedCursor<PipelineListPaginatedResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -216,6 +230,8 @@ export class Pipelines extends APIResource {
     });
   }
 }
+
+export type PipelineListPaginatedResponsesPaginatedCursor = PaginatedCursor<PipelineListPaginatedResponse>;
 
 export interface AdvancedModeTransformConfig {
   /**
@@ -1862,6 +1878,46 @@ export namespace PipelineRetrieveResponse {
 
 export type PipelineListResponse = Array<Pipeline>;
 
+/**
+ * A pipeline in a project.
+ */
+export interface PipelineListPaginatedResponse {
+  /**
+   * The pipeline's unique identifier.
+   */
+  id: string;
+
+  /**
+   * The pipeline's display name.
+   */
+  name: string;
+
+  /**
+   * The pipeline's type.
+   */
+  pipeline_type: 'MANAGED' | 'PLAYGROUND';
+
+  /**
+   * The project the pipeline belongs to.
+   */
+  project_id: string;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * The pipeline's current status.
+   */
+  status?: 'CREATED' | 'DELETING' | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
 export interface PipelineListParams {
   organization_id?: string | null;
 
@@ -1875,6 +1931,16 @@ export interface PipelineListParams {
   project_id?: string | null;
 
   project_name?: string | null;
+}
+
+export interface PipelineListPaginatedParams extends PaginatedCursorParams {
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  pipeline_type?: 'MANAGED' | 'PLAYGROUND' | null;
+
+  project_id?: string | null;
 }
 
 export interface PipelineCreateParams {
@@ -2289,7 +2355,10 @@ export declare namespace Pipelines {
     type VertexTextEmbedding as VertexTextEmbedding,
     type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
+    type PipelineListPaginatedResponse as PipelineListPaginatedResponse,
+    type PipelineListPaginatedResponsesPaginatedCursor as PipelineListPaginatedResponsesPaginatedCursor,
     type PipelineListParams as PipelineListParams,
+    type PipelineListPaginatedParams as PipelineListPaginatedParams,
     type PipelineCreateParams as PipelineCreateParams,
     type PipelineGetParams as PipelineGetParams,
     type PipelineUpdateParams as PipelineUpdateParams,

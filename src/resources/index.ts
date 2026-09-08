@@ -138,6 +138,7 @@ export {
   type TextItem,
   type ParsingCreateResponse,
   type ParsingListResponse,
+  type ParsingDeleteResponse,
   type ParsingCancelResponse,
   type ParsingGetResponse,
   type ParsingListVersionsResponse,
@@ -145,6 +146,7 @@ export {
   type ParsingGetParams,
   type ParsingListParams,
   type ParsingCancelParams,
+  type ParsingDeleteParams,
   type ParsingListResponsesPaginatedCursor,
 } from './parsing';
 export {
@@ -182,7 +184,9 @@ export {
   type VertexTextEmbedding,
   type PipelineRetrieveResponse,
   type PipelineListResponse,
+  type PipelineListPaginatedResponse,
   type PipelineListParams,
+  type PipelineListPaginatedParams,
   type PipelineCreateParams,
   type PipelineGetParams,
   type PipelineUpdateParams,
@@ -190,6 +194,7 @@ export {
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
   type PipelineRetrieveParams,
+  type PipelineListPaginatedResponsesPaginatedCursor,
 } from './pipelines/pipelines';
 export {
   Projects,

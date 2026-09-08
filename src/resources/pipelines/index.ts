@@ -97,7 +97,9 @@ export {
   type VertexTextEmbedding,
   type PipelineRetrieveResponse,
   type PipelineListResponse,
+  type PipelineListPaginatedResponse,
   type PipelineListParams,
+  type PipelineListPaginatedParams,
   type PipelineCreateParams,
   type PipelineGetParams,
   type PipelineUpdateParams,
@@ -105,5 +107,6 @@ export {
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
   type PipelineRetrieveParams,
+  type PipelineListPaginatedResponsesPaginatedCursor,
 } from './pipelines';
 export { Sync, type SyncCreateParams, type SyncCancelParams } from './sync';
