@@ -70,7 +70,6 @@ export {
   type RetrievalFindResponsesPaginatedCursorPost,
   type RetrievalGrepResponsesPaginatedCursorPost,
 } from './retrieval';
-export { Sheets } from './sheets';
 export {
   Split,
   type SplitCategory,

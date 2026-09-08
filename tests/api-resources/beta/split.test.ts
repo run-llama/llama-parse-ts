@@ -28,7 +28,11 @@ describe('resource split', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       configuration: {
         categories: [{ name: 'x', description: 'x' }],
-        splitting_strategy: { allow_uncategorized: 'forbid' },
+        splitting_strategy: {
+          allow_uncategorized: 'forbid',
+          custom_instructions: 'Start a new segment at every signature page.',
+          min_pages_per_split: 1,
+        },
       },
       configuration_id: 'configuration_id',
     });

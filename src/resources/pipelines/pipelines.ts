@@ -7,6 +7,7 @@ import * as ParsingAPI from '../parsing';
 import * as Shared from '../shared';
 import * as DataSourcesAPI from './data-sources';
 import {
+  DataSourceGetDataSourcesParams,
   DataSourceGetDataSourcesResponse,
   DataSourceGetStatusParams,
   DataSourceSyncParams,
@@ -65,10 +66,11 @@ import {
   Images,
 } from './images';
 import * as MetadataAPI from './metadata';
-import { Metadata, MetadataCreateParams, MetadataCreateResponse } from './metadata';
+import { Metadata, MetadataCreateParams, MetadataCreateResponse, MetadataDeleteAllParams } from './metadata';
 import * as SyncAPI from './sync';
-import { Sync } from './sync';
+import { Sync, SyncCancelParams, SyncCreateParams } from './sync';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -84,6 +86,8 @@ export class Pipelines extends APIResource {
   /**
    * Search for pipelines by name, type, or project.
    *
+   * Deprecated: use `GET /api/v2/pipelines`, which is paginated.
+   *
    * @deprecated
    */
   list(
@@ -91,6 +95,19 @@ export class Pipelines extends APIResource {
     options?: RequestOptions,
   ): APIPromise<PipelineListResponse> {
     return this._client.get('/api/v1/pipelines', { query, ...options });
+  }
+
+  /**
+   * List the pipelines in a project, newest first.
+   */
+  listPaginated(
+    query: PipelineListPaginatedParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<PipelineListPaginatedResponsesPaginatedCursor, PipelineListPaginatedResponse> {
+    return this._client.getAPIList('/api/v2/pipelines', PaginatedCursor<PipelineListPaginatedResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -115,8 +132,12 @@ export class Pipelines extends APIResource {
    *
    * @deprecated
    */
-  get(pipelineID: string, options?: RequestOptions): APIPromise<Pipeline> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}`, options);
+  get(
+    pipelineID: string,
+    query: PipelineGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Pipeline> {
+    return this._client.get(path`/api/v1/pipelines/${pipelineID}`, { query, ...options });
   }
 
   /**
@@ -124,8 +145,13 @@ export class Pipelines extends APIResource {
    *
    * @deprecated
    */
-  update(pipelineID: string, body: PipelineUpdateParams, options?: RequestOptions): APIPromise<Pipeline> {
-    return this._client.put(path`/api/v1/pipelines/${pipelineID}`, { body, ...options });
+  update(pipelineID: string, params: PipelineUpdateParams, options?: RequestOptions): APIPromise<Pipeline> {
+    const { project_id, ...body } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipelineID}`, {
+      query: { project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -136,8 +162,14 @@ export class Pipelines extends APIResource {
    *
    * @deprecated
    */
-  delete(pipelineID: string, options?: RequestOptions): APIPromise<void> {
+  delete(
+    pipelineID: string,
+    params: PipelineDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { project_id } = params ?? {};
     return this._client.delete(path`/api/v1/pipelines/${pipelineID}`, {
+      query: { project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -198,6 +230,8 @@ export class Pipelines extends APIResource {
     });
   }
 }
+
+export type PipelineListPaginatedResponsesPaginatedCursor = PaginatedCursor<PipelineListPaginatedResponse>;
 
 export interface AdvancedModeTransformConfig {
   /**
@@ -1844,6 +1878,46 @@ export namespace PipelineRetrieveResponse {
 
 export type PipelineListResponse = Array<Pipeline>;
 
+/**
+ * A pipeline in a project.
+ */
+export interface PipelineListPaginatedResponse {
+  /**
+   * The pipeline's unique identifier.
+   */
+  id: string;
+
+  /**
+   * The pipeline's display name.
+   */
+  name: string;
+
+  /**
+   * The pipeline's type.
+   */
+  pipeline_type: 'MANAGED' | 'PLAYGROUND';
+
+  /**
+   * The project the pipeline belongs to.
+   */
+  project_id: string;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * The pipeline's current status.
+   */
+  status?: 'CREATED' | 'DELETING' | null;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
 export interface PipelineListParams {
   organization_id?: string | null;
 
@@ -1857,6 +1931,16 @@ export interface PipelineListParams {
   project_id?: string | null;
 
   project_name?: string | null;
+}
+
+export interface PipelineListPaginatedParams extends PaginatedCursorParams {
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  pipeline_type?: 'MANAGED' | 'PLAYGROUND' | null;
+
+  project_id?: string | null;
 }
 
 export interface PipelineCreateParams {
@@ -1950,18 +2034,30 @@ export interface PipelineCreateParams {
   transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
 }
 
+export interface PipelineGetParams {
+  project_id?: string | null;
+}
+
 export interface PipelineUpdateParams {
   /**
-   * Schema for creating a data sink.
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: Schema for creating a data sink.
    */
   data_sink?: DataSinkCreate | null;
 
   /**
-   * Data sink ID. When provided instead of data_sink, the data sink will be looked
-   * up by ID.
+   * Body param: Data sink ID. When provided instead of data_sink, the data sink will
+   * be looked up by ID.
    */
   data_sink_id?: string | null;
 
+  /**
+   * Body param
+   */
   embedding_config?:
     | AzureOpenAIEmbeddingConfig
     | BedrockEmbeddingConfig
@@ -1973,37 +2069,40 @@ export interface PipelineUpdateParams {
     | null;
 
   /**
-   * Embedding model config ID. When provided instead of embedding_config, the
-   * embedding model config will be looked up by ID.
+   * Body param: Embedding model config ID. When provided instead of
+   * embedding_config, the embedding model config will be looked up by ID.
    */
   embedding_model_config_id?: string | null;
 
   /**
-   * Settings that can be configured for how to use LlamaParse to parse files within
-   * a LlamaCloud pipeline.
+   * Body param: Settings that can be configured for how to use LlamaParse to parse
+   * files within a LlamaCloud pipeline.
    */
   llama_parse_parameters?: LlamaParseParameters | null;
 
   /**
-   * The ID of the ManagedPipeline this playground pipeline is linked to.
+   * Body param: The ID of the ManagedPipeline this playground pipeline is linked to.
    */
   managed_pipeline_id?: string | null;
 
   /**
-   * Metadata configuration for the pipeline.
+   * Body param: Metadata configuration for the pipeline.
    */
   metadata_config?: PipelineMetadataConfig | null;
 
+  /**
+   * Body param
+   */
   name?: string | null;
 
   /**
-   * Schema for the search params for an retrieval execution that can be preset for a
-   * pipeline.
+   * Body param: Schema for the search params for an retrieval execution that can be
+   * preset for a pipeline.
    */
   preset_retrieval_parameters?: PresetRetrievalParams | null;
 
   /**
-   * Configuration for sparse embedding models used in hybrid search.
+   * Body param: Configuration for sparse embedding models used in hybrid search.
    *
    * This allows users to choose between Splade and BM25 models for sparse retrieval
    * in managed data sinks.
@@ -2011,18 +2110,24 @@ export interface PipelineUpdateParams {
   sparse_model_config?: SparseModelConfig | null;
 
   /**
-   * Status of the pipeline deployment.
+   * Body param: Status of the pipeline deployment.
    */
   status?: string | null;
 
   /**
-   * Configuration for the transformation.
+   * Body param: Configuration for the transformation.
    */
   transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
 }
 
+export interface PipelineDeleteParams {
+  project_id?: string | null;
+}
+
 export interface PipelineGetStatusParams {
   full_details?: boolean | null;
+
+  project_id?: string | null;
 }
 
 export interface PipelineUpsertParams {
@@ -2250,21 +2355,31 @@ export declare namespace Pipelines {
     type VertexTextEmbedding as VertexTextEmbedding,
     type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
+    type PipelineListPaginatedResponse as PipelineListPaginatedResponse,
+    type PipelineListPaginatedResponsesPaginatedCursor as PipelineListPaginatedResponsesPaginatedCursor,
     type PipelineListParams as PipelineListParams,
+    type PipelineListPaginatedParams as PipelineListPaginatedParams,
     type PipelineCreateParams as PipelineCreateParams,
+    type PipelineGetParams as PipelineGetParams,
     type PipelineUpdateParams as PipelineUpdateParams,
+    type PipelineDeleteParams as PipelineDeleteParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,
     type PipelineUpsertParams as PipelineUpsertParams,
     type PipelineRetrieveParams as PipelineRetrieveParams,
   };
 
-  export { Sync as Sync };
+  export {
+    Sync as Sync,
+    type SyncCreateParams as SyncCreateParams,
+    type SyncCancelParams as SyncCancelParams,
+  };
 
   export {
     DataSources as DataSources,
     type PipelineDataSource as PipelineDataSource,
     type DataSourceGetDataSourcesResponse as DataSourceGetDataSourcesResponse,
     type DataSourceUpdateDataSourcesResponse as DataSourceUpdateDataSourcesResponse,
+    type DataSourceGetDataSourcesParams as DataSourceGetDataSourcesParams,
     type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,
@@ -2301,6 +2416,7 @@ export declare namespace Pipelines {
     Metadata as Metadata,
     type MetadataCreateResponse as MetadataCreateResponse,
     type MetadataCreateParams as MetadataCreateParams,
+    type MetadataDeleteAllParams as MetadataDeleteAllParams,
   };
 
   export {

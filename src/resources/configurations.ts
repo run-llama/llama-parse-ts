@@ -403,7 +403,7 @@ export interface ExtractV2Parameters {
    * specified. Turbo extract does not support parse configuration or produce a parse
    * output; use another tier if your workflow requires parsed text.
    */
-  parse_tier?: string | null;
+  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
 
   /**
    * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
@@ -435,7 +435,7 @@ export interface ExtractV2Parameters {
 
   /**
    * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
-   * agentic_plus (50 credits/page), or turbo (35 credits/page, experimental)
+   * agentic_plus (50 credits/page), or turbo (35 credits/page)
    */
   tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
 
@@ -476,12 +476,12 @@ export interface ParseV2Parameters {
    *
    * - `fast`: `2026-06-15`
    * - `cost_effective`: `2026-08-19`
-   * - `agentic`: `2026-08-19`
+   * - `agentic`: `2026-09-07`
    * - `agentic_plus`: `2026-08-19`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-08-19' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-09-07' | '2026-08-19' | '2026-06-15' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -1313,12 +1313,12 @@ export namespace ParseV2Parameters {
          *
          * - `fast`: `2026-06-15`
          * - `cost_effective`: `2026-08-19`
-         * - `agentic`: `2026-08-19`
+         * - `agentic`: `2026-09-07`
          * - `agentic_plus`: `2026-08-19`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-08-19' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-09-07' | '2026-08-19' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1525,6 +1525,17 @@ export namespace SplitV1Parameters {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
+     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+     * 1 disables merging.
+     */
+    min_pages_per_split?: number;
   }
 }
 

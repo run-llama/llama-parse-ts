@@ -75,6 +75,18 @@ describe('resource dataSources', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('get: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.dataSources.get(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.dataSources.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       source_type: 'AZURE_STORAGE_BLOB',
@@ -92,6 +104,7 @@ describe('resource dataSources', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.dataSources.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       source_type: 'AZURE_STORAGE_BLOB',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       component: { foo: 'bar' },
       custom_metadata: { foo: { foo: 'bar' } },
       name: 'name',
@@ -108,5 +121,17 @@ describe('resource dataSources', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.dataSources.delete(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 });

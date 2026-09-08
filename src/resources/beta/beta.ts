@@ -61,8 +61,6 @@ import {
   RetrievalRetrieveParams,
   RetrievalRetrieveResponse,
 } from './retrieval';
-import * as SheetsAPI from './sheets';
-import { Sheets } from './sheets';
 import * as SplitAPI from './split';
 import {
   Split,
@@ -98,7 +96,6 @@ export class Beta extends APIResource {
   retrieval: RetrievalAPI.Retrieval = new RetrievalAPI.Retrieval(this._client);
   chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
-  sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
   split: SplitAPI.Split = new SplitAPI.Split(this._client);
 }
@@ -106,7 +103,6 @@ export class Beta extends APIResource {
 Beta.Indexes = Indexes;
 Beta.Retrieval = Retrieval;
 Beta.Chat = Chat;
-Beta.Sheets = Sheets;
 Beta.Directories = Directories;
 Beta.Split = Split;
 
@@ -170,8 +166,6 @@ export declare namespace Beta {
     type AgentDataAggregateParams as AgentDataAggregateParams,
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
   };
-
-  export { Sheets as Sheets };
 
   export {
     Directories as Directories,

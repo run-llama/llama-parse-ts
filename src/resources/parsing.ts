@@ -139,7 +139,32 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * List the parse versions accepted by each tier.
+   * Delete a parse job and its results.
+   *
+   * The job must be in a terminal state (COMPLETED, FAILED, CANCELLED). Cancel a job
+   * that is still running before deleting it.
+   *
+   * Returns the identifiers of the deleted job.
+   *
+   * @example
+   * ```ts
+   * const parsing = await client.parsing.delete('job_id');
+   * ```
+   */
+  delete(
+    jobID: string,
+    params: ParsingDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ParsingDeleteResponse> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v2/parse/${jobID}`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
+   * List the parse versions accepted by each tier and what `latest` resolves to.
    *
    * @example
    * ```ts
@@ -1225,6 +1250,25 @@ export namespace ParsingListResponse {
 }
 
 /**
+ * Confirmation that a parse job was deleted.
+ *
+ * A deleted job can no longer be fetched, so the response echoes back what it was
+ * rather than pointing at it. Returning the identifiers instead of an empty body
+ * lets a caller assert on the delete it just made without a follow-up request.
+ */
+export interface ParsingDeleteResponse {
+  /**
+   * Identifier of the deleted parse job
+   */
+  id: string;
+
+  /**
+   * Project the deleted job belonged to
+   */
+  project_id: string;
+}
+
+/**
  * A parse job.
  */
 export interface ParsingCancelResponse {
@@ -2038,6 +2082,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic tier
    */
   agentic: Array<
+    | '2026-09-07'
     | '2026-08-19'
     | '2026-07-24'
     | '2026-07-23'
@@ -2154,6 +2199,38 @@ export interface ParsingListVersionsResponse {
    * Versions for the fast tier
    */
   fast: Array<'2026-06-15' | '2025-12-11'>;
+
+  /**
+   * Version `latest` currently resolves to, per tier
+   */
+  latest: ParsingListVersionsResponse.Latest;
+}
+
+export namespace ParsingListVersionsResponse {
+  /**
+   * Version `latest` currently resolves to, per tier
+   */
+  export interface Latest {
+    /**
+     * Version `latest` resolves to for the agentic tier
+     */
+    agentic: string;
+
+    /**
+     * Version `latest` resolves to for the agentic_plus tier
+     */
+    agentic_plus: string;
+
+    /**
+     * Version `latest` resolves to for the cost_effective tier
+     */
+    cost_effective: string;
+
+    /**
+     * Version `latest` resolves to for the fast tier
+     */
+    fast: string;
+  }
 }
 
 export interface ParsingCreateParams {
@@ -2172,12 +2249,12 @@ export interface ParsingCreateParams {
    *
    * - `fast`: `2026-06-15`
    * - `cost_effective`: `2026-08-19`
-   * - `agentic`: `2026-08-19`
+   * - `agentic`: `2026-09-07`
    * - `agentic_plus`: `2026-08-19`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-08-19' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-09-07' | '2026-08-19' | '2026-06-15' | (string & {});
 
   /**
    * Query param
@@ -3050,12 +3127,12 @@ export namespace ParsingCreateParams {
          *
          * - `fast`: `2026-06-15`
          * - `cost_effective`: `2026-08-19`
-         * - `agentic`: `2026-08-19`
+         * - `agentic`: `2026-09-07`
          * - `agentic_plus`: `2026-08-19`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-08-19' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-09-07' | '2026-08-19' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -3282,6 +3359,12 @@ export interface ParsingCancelParams {
   project_id?: string | null;
 }
 
+export interface ParsingDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace Parsing {
   export {
     type BBox as BBox,
@@ -3309,6 +3392,7 @@ export declare namespace Parsing {
     type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
+    type ParsingDeleteResponse as ParsingDeleteResponse,
     type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
     type ParsingListVersionsResponse as ParsingListVersionsResponse,
@@ -3317,5 +3401,6 @@ export declare namespace Parsing {
     type ParsingGetParams as ParsingGetParams,
     type ParsingListParams as ParsingListParams,
     type ParsingCancelParams as ParsingCancelParams,
+    type ParsingDeleteParams as ParsingDeleteParams,
   };
 }

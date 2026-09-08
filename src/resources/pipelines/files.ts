@@ -36,8 +36,11 @@ export class Files extends APIResource {
     params: FileGetStatusParams,
     options?: RequestOptions,
   ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
-    const { pipeline_id } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}/status`, options);
+    const { pipeline_id, ...query } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}/status`, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -50,8 +53,12 @@ export class Files extends APIResource {
     params: FileCreateParams,
     options?: RequestOptions,
   ): APIPromise<FileCreateResponse> {
-    const { body } = params;
-    return this._client.put(path`/api/v1/pipelines/${pipelineID}/files`, { body: body, ...options });
+    const { body, project_id } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipelineID}/files`, {
+      query: { project_id },
+      body: body,
+      ...options,
+    });
   }
 
   /**
@@ -60,8 +67,12 @@ export class Files extends APIResource {
    * @deprecated
    */
   update(fileID: string, params: FileUpdateParams, options?: RequestOptions): APIPromise<PipelineFile> {
-    const { pipeline_id, ...body } = params;
-    return this._client.put(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, { body, ...options });
+    const { pipeline_id, project_id, ...body } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, {
+      query: { project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
@@ -70,8 +81,9 @@ export class Files extends APIResource {
    * @deprecated
    */
   delete(fileID: string, params: FileDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { pipeline_id } = params;
+    const { pipeline_id, project_id } = params;
     return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/files/${fileID}`, {
+      query: { project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -238,14 +250,32 @@ export interface FileGetStatusCountsParams {
   data_source_id?: string | null;
 
   only_manually_uploaded?: boolean;
+
+  project_id?: string | null;
 }
 
 export interface FileGetStatusParams {
+  /**
+   * Path param
+   */
   pipeline_id: string;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export interface FileCreateParams {
+  /**
+   * Body param
+   */
   body: Array<FileCreateParams.Body>;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export namespace FileCreateParams {
@@ -274,6 +304,11 @@ export interface FileUpdateParams {
   pipeline_id: string;
 
   /**
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
    * Body param: Custom metadata for the file
    */
   custom_metadata?: {
@@ -282,7 +317,15 @@ export interface FileUpdateParams {
 }
 
 export interface FileDeleteParams {
+  /**
+   * Path param
+   */
   pipeline_id: string;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export interface FileListParams extends PaginatedPipelineFilesParams {
@@ -293,6 +336,8 @@ export interface FileListParams extends PaginatedPipelineFilesParams {
   only_manually_uploaded?: boolean;
 
   order_by?: string | null;
+
+  project_id?: string | null;
 
   /**
    * Filter by file statuses

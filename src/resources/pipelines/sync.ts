@@ -15,8 +15,16 @@ export class Sync extends APIResource {
    *
    * @deprecated
    */
-  create(pipelineID: string, options?: RequestOptions): APIPromise<PipelinesAPI.Pipeline> {
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/sync`, options);
+  create(
+    pipelineID: string,
+    params: SyncCreateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PipelinesAPI.Pipeline> {
+    const { project_id } = params ?? {};
+    return this._client.post(path`/api/v1/pipelines/${pipelineID}/sync`, {
+      query: { project_id },
+      ...options,
+    });
   }
 
   /**
@@ -24,7 +32,27 @@ export class Sync extends APIResource {
    *
    * @deprecated
    */
-  cancel(pipelineID: string, options?: RequestOptions): APIPromise<PipelinesAPI.Pipeline> {
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/sync/cancel`, options);
+  cancel(
+    pipelineID: string,
+    params: SyncCancelParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<PipelinesAPI.Pipeline> {
+    const { project_id } = params ?? {};
+    return this._client.post(path`/api/v1/pipelines/${pipelineID}/sync/cancel`, {
+      query: { project_id },
+      ...options,
+    });
   }
+}
+
+export interface SyncCreateParams {
+  project_id?: string | null;
+}
+
+export interface SyncCancelParams {
+  project_id?: string | null;
+}
+
+export declare namespace Sync {
+  export { type SyncCreateParams as SyncCreateParams, type SyncCancelParams as SyncCancelParams };
 }

@@ -26,6 +26,7 @@ describe('resource metadata', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.pipelines.metadata.create('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       upload_file: await toFile(Buffer.from('Example data'), 'README.md'),
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -39,5 +40,17 @@ describe('resource metadata', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('deleteAll: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.pipelines.metadata.deleteAll(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 });

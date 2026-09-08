@@ -101,6 +101,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/parse/{job_id}/cancel',
   },
   {
+    clientCallName: 'client.parsing.delete',
+    fullyQualifiedName: 'parsing.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v2/parse/{job_id}',
+  },
+  {
     clientCallName: 'client.parsing.listVersions',
     fullyQualifiedName: 'parsing.listVersions',
     httpMethod: 'get',
@@ -147,30 +153,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'extract.generateSchema',
     httpMethod: 'post',
     httpPath: '/api/v2/extract/schema/generate',
-  },
-  {
-    clientCallName: 'client.classifier.jobs.create',
-    fullyQualifiedName: 'classifier.jobs.create',
-    httpMethod: 'post',
-    httpPath: '/api/v1/classifier/jobs',
-  },
-  {
-    clientCallName: 'client.classifier.jobs.list',
-    fullyQualifiedName: 'classifier.jobs.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/classifier/jobs',
-  },
-  {
-    clientCallName: 'client.classifier.jobs.get',
-    fullyQualifiedName: 'classifier.jobs.get',
-    httpMethod: 'get',
-    httpPath: '/api/v1/classifier/jobs/{classify_job_id}',
-  },
-  {
-    clientCallName: 'client.classifier.jobs.getResults',
-    fullyQualifiedName: 'classifier.jobs.getResults',
-    httpMethod: 'get',
-    httpPath: '/api/v1/classifier/jobs/{classify_job_id}/results',
   },
   {
     clientCallName: 'client.batches.create',
@@ -375,6 +357,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'pipelines.list',
     httpMethod: 'get',
     httpPath: '/api/v1/pipelines',
+  },
+  {
+    clientCallName: 'client.pipelines.listPaginated',
+    fullyQualifiedName: 'pipelines.listPaginated',
+    httpMethod: 'get',
+    httpPath: '/api/v2/pipelines',
   },
   {
     clientCallName: 'client.pipelines.create',

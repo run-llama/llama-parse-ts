@@ -318,7 +318,8 @@ export interface RetrievalRetrieveParams {
   static_filters?: RetrievalRetrieveParams.StaticFilters | null;
 
   /**
-   * Body param: Maximum number of results to return.
+   * Body param: Maximum number of results to return. Values above 500 are capped
+   * at 500.
    */
   top_k?: number | null;
 
