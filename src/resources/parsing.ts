@@ -1499,6 +1499,11 @@ export namespace ParsingGetResponse {
       success: true;
 
       /**
+       * Form types detected on the page (e.g. 'w2', 'other'), or null if not a form
+       */
+      detected_form_types?: Array<string> | null;
+
+      /**
        * Height of the page in points
        */
       page_height?: number | null;
