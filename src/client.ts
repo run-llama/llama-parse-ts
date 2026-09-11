@@ -81,10 +81,12 @@ import {
   DataSinkCreateParams,
   DataSinkDeleteParams,
   DataSinkGetParams,
+  DataSinkListPaginatedParams,
   DataSinkListParams,
   DataSinkListResponse,
   DataSinkUpdateParams,
   DataSinks,
+  DataSinksPaginatedCursor,
 } from './resources/data-sinks';
 import {
   DataSource,
@@ -119,6 +121,12 @@ import {
   ExtractValidateSchemaParams,
   ExtractedFieldMetadata,
 } from './resources/extract';
+import {
+  ExtractAgent,
+  ExtractAgentsPaginatedCursor,
+  ExtractionAgentListParams,
+  ExtractionAgents,
+} from './resources/extraction-agents';
 import {
   File,
   FileContentParams,
@@ -1038,6 +1046,7 @@ export class LlamaCloud {
   v2Projects: API.V2Projects = new API.V2Projects(this);
   jobDataPoints: API.JobDataPoints = new API.JobDataPoints(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
+  extractionAgents: API.ExtractionAgents = new API.ExtractionAgents(this);
   dataSources: API.DataSources = new API.DataSources(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
   retrievers: API.Retrievers = new API.Retrievers(this);
@@ -1057,6 +1066,7 @@ LlamaCloud.Projects = Projects;
 LlamaCloud.V2Projects = V2Projects;
 LlamaCloud.JobDataPoints = JobDataPoints;
 LlamaCloud.DataSinks = DataSinks;
+LlamaCloud.ExtractionAgents = ExtractionAgents;
 LlamaCloud.DataSources = DataSources;
 LlamaCloud.Pipelines = Pipelines;
 LlamaCloud.Retrievers = Retrievers;
@@ -1283,11 +1293,20 @@ export declare namespace LlamaCloud {
     DataSinks as DataSinks,
     type DataSink as DataSink,
     type DataSinkListResponse as DataSinkListResponse,
+    type DataSinksPaginatedCursor as DataSinksPaginatedCursor,
     type DataSinkListParams as DataSinkListParams,
+    type DataSinkListPaginatedParams as DataSinkListPaginatedParams,
     type DataSinkCreateParams as DataSinkCreateParams,
     type DataSinkGetParams as DataSinkGetParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
     type DataSinkDeleteParams as DataSinkDeleteParams,
+  };
+
+  export {
+    ExtractionAgents as ExtractionAgents,
+    type ExtractAgent as ExtractAgent,
+    type ExtractAgentsPaginatedCursor as ExtractAgentsPaginatedCursor,
+    type ExtractionAgentListParams as ExtractionAgentListParams,
   };
 
   export {

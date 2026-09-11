@@ -51,10 +51,12 @@ export {
   type DataSink,
   type DataSinkListResponse,
   type DataSinkListParams,
+  type DataSinkListPaginatedParams,
   type DataSinkCreateParams,
   type DataSinkGetParams,
   type DataSinkUpdateParams,
   type DataSinkDeleteParams,
+  type DataSinksPaginatedCursor,
 } from './data-sinks';
 export {
   DataSources,
@@ -89,6 +91,12 @@ export {
   type ExtractGenerateSchemaParams,
   type ExtractV2JobsPaginatedCursor,
 } from './extract';
+export {
+  ExtractionAgents,
+  type ExtractAgent,
+  type ExtractionAgentListParams,
+  type ExtractAgentsPaginatedCursor,
+} from './extraction-agents';
 export {
   Files,
   type File,

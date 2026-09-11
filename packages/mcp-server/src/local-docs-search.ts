@@ -2618,6 +2618,61 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'list_paginated',
+    endpoint: '/api/v1/beta/data-sinks',
+    httpMethod: 'get',
+    summary: 'List Data Sinks',
+    description: 'List the data sinks in a project, newest first.',
+    stainlessPath: '(resource) data_sinks > (method) list_paginated',
+    qualified: 'client.dataSinks.listPaginated',
+    params: [
+      'include_total?: boolean;',
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      "{ id: string; component: object | object | object | object | object | object | object | object; name: string; project_id: string; sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT'; created_at?: string; updated_at?: string; }",
+    markdown:
+      "## list_paginated\n\n`client.dataSinks.listPaginated(include_total?: boolean, organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { id: string; component: object | cloud_pinecone_vector_store | cloud_postgres_vector_store | cloud_qdrant_vector_store | cloud_azure_ai_search_vector_store | cloud_mongodb_atlas_vector_search | cloud_milvus_vector_store | cloud_astra_db_vector_store; name: string; project_id: string; sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT'; created_at?: string; updated_at?: string; }`\n\n**get** `/api/v1/beta/data-sinks`\n\nList the data sinks in a project, newest first.\n\n### Parameters\n\n- `include_total?: boolean`\n  Return `total_size`, a count of every row matching the filter. It is a second query on every page, so it is off unless asked for.\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Number of items per page\n\n- `page_token?: string`\n  Cursor from the previous page's `next_page_token`.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; component: object | { api_key: string; index_name: string; class_name?: string; insert_kwargs?: object; namespace?: string; supports_nested_metadata_filters?: true; } | { database: string; embed_dim: number; host: string; password: string; port: number; schema_name: string; table_name: string; user: string; class_name?: string; hnsw_settings?: pg_vector_hnsw_settings; hybrid_search?: boolean; perform_setup?: boolean; supports_nested_metadata_filters?: boolean; } | { api_key: string; collection_name: string; url: string; class_name?: string; client_kwargs?: object; max_retries?: number; supports_nested_metadata_filters?: true; } | { search_service_api_key: string; search_service_endpoint: string; class_name?: string; client_id?: string; client_secret?: string; embedding_dimension?: number; filterable_metadata_field_keys?: object; index_name?: string; search_service_api_version?: string; supports_nested_metadata_filters?: true; tenant_id?: string; } | { collection_name: string; db_name: string; mongodb_uri: string; class_name?: string; embedding_dimension?: number; fulltext_index_name?: string; supports_nested_metadata_filters?: boolean; vector_index_name?: string; } | { uri: string; token?: string; class_name?: string; collection_name?: string; embedding_dimension?: number; supports_nested_metadata_filters?: boolean; } | { token: string; api_endpoint: string; collection_name: string; embedding_dimension: number; class_name?: string; keyspace?: string; supports_nested_metadata_filters?: true; }; name: string; project_id: string; sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT'; created_at?: string; updated_at?: string; }`\n  Schema for a data sink.\n\n  - `id: string`\n  - `component: object | { api_key: string; index_name: string; class_name?: string; insert_kwargs?: object; namespace?: string; supports_nested_metadata_filters?: true; } | { database: string; embed_dim: number; host: string; password: string; port: number; schema_name: string; table_name: string; user: string; class_name?: string; hnsw_settings?: { distance_method?: 'cosine' | 'hamming' | 'ip' | 'jaccard' | 'l1' | 'l2'; ef_construction?: number; ef_search?: number; m?: number; vector_type?: 'bit' | 'half_vec' | 'sparse_vec' | 'vector'; }; hybrid_search?: boolean; perform_setup?: boolean; supports_nested_metadata_filters?: boolean; } | { api_key: string; collection_name: string; url: string; class_name?: string; client_kwargs?: object; max_retries?: number; supports_nested_metadata_filters?: true; } | { search_service_api_key: string; search_service_endpoint: string; class_name?: string; client_id?: string; client_secret?: string; embedding_dimension?: number; filterable_metadata_field_keys?: object; index_name?: string; search_service_api_version?: string; supports_nested_metadata_filters?: true; tenant_id?: string; } | { collection_name: string; db_name: string; mongodb_uri: string; class_name?: string; embedding_dimension?: number; fulltext_index_name?: string; supports_nested_metadata_filters?: boolean; vector_index_name?: string; } | { uri: string; token?: string; class_name?: string; collection_name?: string; embedding_dimension?: number; supports_nested_metadata_filters?: boolean; } | { token: string; api_endpoint: string; collection_name: string; embedding_dimension: number; class_name?: string; keyspace?: string; supports_nested_metadata_filters?: true; }`\n  - `name: string`\n  - `project_id: string`\n  - `sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT'`\n  - `created_at?: string`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const dataSink of client.dataSinks.listPaginated()) {\n  console.log(dataSink);\n}\n```",
+    perLanguage: {
+      go: {
+        method: 'client.DataSinks.ListPaginated',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.DataSinks.ListPaginated(context.TODO(), llamacloud.DataSinkListPaginatedParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      python: {
+        method: 'data_sinks.list_paginated',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.data_sinks.list_paginated()\npage = page.items[0]\nprint(page.id)',
+      },
+      java: {
+        method: 'dataSinks().listPaginated',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSinkListPaginatedPage;\nimport ai.llamaindex.llamacloud.models.datasinks.DataSinkListPaginatedParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        DataSinkListPaginatedPage page = client.dataSinks().listPaginated();\n    }\n}',
+      },
+      csharp: {
+        method: 'DataSinks.ListPaginated',
+        example:
+          'DataSinkListPaginatedParams parameters = new();\n\nvar page = await client.DataSinks.ListPaginated(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
+      typescript: {
+        method: 'client.dataSinks.listPaginated',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const dataSink of client.dataSinks.listPaginated()) {\n  console.log(dataSink.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/data-sinks \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'data_sinks list_paginated',
+        example: "llp data-sinks list-paginated \\\n  --api-key 'My API Key'",
+      },
+    },
+  },
+  {
     name: 'create',
     endpoint: '/api/v1/data-sinks',
     httpMethod: 'post',
@@ -2824,6 +2879,61 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'data_sinks delete',
         example:
           "llp data-sinks delete \\\n  --api-key 'My API Key' \\\n  --data-sink-id 182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v1/beta/extraction-agents',
+    httpMethod: 'get',
+    summary: 'List Extract Agents',
+    description: 'List the extraction agents in a project, newest first.',
+    stainlessPath: '(resource) extraction_agents > (method) list',
+    qualified: 'client.extractionAgents.list',
+    params: [
+      'include_default?: boolean;',
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      "{ id: string; config: { chunk_mode?: 'PAGE' | 'SECTION'; citation_bbox?: boolean; cite_sources?: boolean; confidence_scores?: boolean; extract_model?: string | string; extraction_mode?: 'BALANCED' | 'FAST' | 'MULTIMODAL' | 'PREMIUM'; extraction_target?: 'PER_DOC' | 'PER_PAGE' | 'PER_TABLE_ROW'; high_resolution_mode?: boolean; invalidate_cache?: boolean; multimodal_fast_mode?: boolean; num_pages_context?: number; page_range?: string; parse_model?: string; priority?: 'critical' | 'high' | 'low' | 'medium'; system_prompt?: string; use_reasoning?: boolean; }; data_schema: object; name: string; project_id: string; created_at?: string; custom_configuration?: 'default'; updated_at?: string; }",
+    markdown:
+      "## list\n\n`client.extractionAgents.list(include_default?: boolean, organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { id: string; config: object; data_schema: object; name: string; project_id: string; created_at?: string; custom_configuration?: 'default'; updated_at?: string; }`\n\n**get** `/api/v1/beta/extraction-agents`\n\nList the extraction agents in a project, newest first.\n\n### Parameters\n\n- `include_default?: boolean`\n  Whether to include default agents in the results\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Number of items per page\n\n- `page_token?: string`\n  Cursor from the previous page's `next_page_token`.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; config: { chunk_mode?: 'PAGE' | 'SECTION'; citation_bbox?: boolean; cite_sources?: boolean; confidence_scores?: boolean; extract_model?: string | string; extraction_mode?: 'BALANCED' | 'FAST' | 'MULTIMODAL' | 'PREMIUM'; extraction_target?: 'PER_DOC' | 'PER_PAGE' | 'PER_TABLE_ROW'; high_resolution_mode?: boolean; invalidate_cache?: boolean; multimodal_fast_mode?: boolean; num_pages_context?: number; page_range?: string; parse_model?: string; priority?: 'critical' | 'high' | 'low' | 'medium'; system_prompt?: string; use_reasoning?: boolean; }; data_schema: object; name: string; project_id: string; created_at?: string; custom_configuration?: 'default'; updated_at?: string; }`\n  Schema and configuration for an extraction agent.\n\n  - `id: string`\n  - `config: { chunk_mode?: 'PAGE' | 'SECTION'; citation_bbox?: boolean; cite_sources?: boolean; confidence_scores?: boolean; extract_model?: string | string; extraction_mode?: 'BALANCED' | 'FAST' | 'MULTIMODAL' | 'PREMIUM'; extraction_target?: 'PER_DOC' | 'PER_PAGE' | 'PER_TABLE_ROW'; high_resolution_mode?: boolean; invalidate_cache?: boolean; multimodal_fast_mode?: boolean; num_pages_context?: number; page_range?: string; parse_model?: string; priority?: 'critical' | 'high' | 'low' | 'medium'; system_prompt?: string; use_reasoning?: boolean; }`\n  - `data_schema: object`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `custom_configuration?: 'default'`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const extractAgent of client.extractionAgents.list()) {\n  console.log(extractAgent);\n}\n```",
+    perLanguage: {
+      go: {
+        method: 'client.ExtractionAgents.List',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.ExtractionAgents.List(context.TODO(), llamacloud.ExtractionAgentListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      python: {
+        method: 'extraction_agents.list',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.extraction_agents.list()\npage = page.items[0]\nprint(page.id)',
+      },
+      java: {
+        method: 'extractionAgents().list',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extractionagents.ExtractionAgentListPage;\nimport ai.llamaindex.llamacloud.models.extractionagents.ExtractionAgentListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractionAgentListPage page = client.extractionAgents().list();\n    }\n}',
+      },
+      csharp: {
+        method: 'ExtractionAgents.List',
+        example:
+          'ExtractionAgentListParams parameters = new();\n\nvar page = await client.ExtractionAgents.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
+      typescript: {
+        method: 'client.extractionAgents.list',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const extractAgent of client.extractionAgents.list()) {\n  console.log(extractAgent.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/extraction-agents \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'extraction_agents list',
+        example: "llp extraction-agents list \\\n  --api-key 'My API Key'",
       },
     },
   },

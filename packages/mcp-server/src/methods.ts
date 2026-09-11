@@ -299,6 +299,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/data-sinks',
   },
   {
+    clientCallName: 'client.dataSinks.listPaginated',
+    fullyQualifiedName: 'dataSinks.listPaginated',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/data-sinks',
+  },
+  {
     clientCallName: 'client.dataSinks.create',
     fullyQualifiedName: 'dataSinks.create',
     httpMethod: 'post',
@@ -321,6 +327,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'dataSinks.delete',
     httpMethod: 'delete',
     httpPath: '/api/v1/data-sinks/{data_sink_id}',
+  },
+  {
+    clientCallName: 'client.extractionAgents.list',
+    fullyQualifiedName: 'extractionAgents.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/extraction-agents',
   },
   {
     clientCallName: 'client.dataSources.list',

@@ -255,10 +255,21 @@ Types:
 Methods:
 
 - <code title="get /api/v1/data-sinks">client.dataSinks.<a href="./src/resources/data-sinks.ts">list</a>({ ...params }) -> DataSinkListResponse</code>
+- <code title="get /api/v1/beta/data-sinks">client.dataSinks.<a href="./src/resources/data-sinks.ts">listPaginated</a>({ ...params }) -> DataSinksPaginatedCursor</code>
 - <code title="post /api/v1/data-sinks">client.dataSinks.<a href="./src/resources/data-sinks.ts">create</a>({ ...params }) -> DataSink</code>
 - <code title="get /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">get</a>(dataSinkID, { ...params }) -> DataSink</code>
 - <code title="put /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">update</a>(dataSinkID, { ...params }) -> DataSink</code>
 - <code title="delete /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">delete</a>(dataSinkID, { ...params }) -> void</code>
+
+# ExtractionAgents
+
+Types:
+
+- <code><a href="./src/resources/extraction-agents.ts">ExtractAgent</a></code>
+
+Methods:
+
+- <code title="get /api/v1/beta/extraction-agents">client.extractionAgents.<a href="./src/resources/extraction-agents.ts">list</a>({ ...params }) -> ExtractAgentsPaginatedCursor</code>
 
 # DataSources
 
