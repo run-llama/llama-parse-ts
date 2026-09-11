@@ -30,11 +30,7 @@ export class WebhookConfigs extends APIResource {
   /**
    * List the webhook configurations for the current project, newest first.
    *
-   * @example
-   * ```ts
-   * const webhookConfigResponses =
-   *   await client.webhookConfigs.list();
-   * ```
+   * @deprecated
    */
   list(
     query: WebhookConfigListParams | null | undefined = {},
