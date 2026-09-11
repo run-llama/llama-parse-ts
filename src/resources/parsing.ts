@@ -468,6 +468,12 @@ export interface FormField {
   bbox?: Array<BBox> | null;
 
   /**
+   * Optional grounding for a field's printed text; boolean states have no text
+   * spans.
+   */
+  grounding?: FormField.Grounding | null;
+
+  /**
    * True for a printed-but-blank text field (mutually exclusive with value)
    */
   isEmpty?: boolean | null;
@@ -493,6 +499,187 @@ export interface FormField {
    * Options of a single_select/multi_select group (only on select fields)
    */
   valueItems?: Array<FormField | FormSection | FormTable> | null;
+}
+
+export namespace FormField {
+  /**
+   * Optional grounding for a field's printed text; boolean states have no text
+   * spans.
+   */
+  export interface Grounding {
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    id?: Grounding.ID | null;
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    label?: Grounding.Label | null;
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    value?: Grounding.Value | null;
+  }
+
+  export namespace Grounding {
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface ID {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<ID.Line>;
+    }
+
+    export namespace ID {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface Label {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<Label.Line>;
+    }
+
+    export namespace Label {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface Value {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<Value.Line>;
+    }
+
+    export namespace Value {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -555,6 +742,11 @@ export interface FormSection {
   id?: string | null;
 
   /**
+   * Optional grounding for printed identifiers and headings.
+   */
+  grounding?: FormSection.Grounding | null;
+
+  /**
    * Printed section heading, if any
    */
   label?: string | null;
@@ -563,6 +755,129 @@ export interface FormSection {
    * Form section node
    */
   type?: 'section';
+}
+
+export namespace FormSection {
+  /**
+   * Optional grounding for printed identifiers and headings.
+   */
+  export interface Grounding {
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    id?: Grounding.ID | null;
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    label?: Grounding.Label | null;
+  }
+
+  export namespace Grounding {
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface ID {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<ID.Line>;
+    }
+
+    export namespace ID {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface Label {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<Label.Line>;
+    }
+
+    export namespace Label {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -592,6 +907,11 @@ export interface FormTable {
   columns?: Array<string> | null;
 
   /**
+   * Scalar text grounding aligned with the table's columns and ragged rows.
+   */
+  grounding?: FormTable.Grounding | null;
+
+  /**
    * Printed table caption, if any
    */
   label?: string | null;
@@ -600,6 +920,242 @@ export interface FormTable {
    * Form table node
    */
   type?: 'table';
+}
+
+export namespace FormTable {
+  /**
+   * Scalar text grounding aligned with the table's columns and ragged rows.
+   */
+  export interface Grounding {
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    id?: Grounding.ID | null;
+
+    /**
+     * Column text grounding in source order; blank slots have empty lines
+     */
+    columns?: Array<Grounding.Column> | null;
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    label?: Grounding.Label | null;
+
+    /**
+     * Scalar cell text grounding aligned with rows; blank and structured slots have
+     * empty lines. Structured children carry their own grounding.
+     */
+    rows?: Array<Array<Grounding.Row>> | null;
+  }
+
+  export namespace Grounding {
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface ID {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<ID.Line>;
+    }
+
+    export namespace ID {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface Column {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<Column.Line>;
+    }
+
+    export namespace Column {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface Label {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<Label.Line>;
+    }
+
+    export namespace Label {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+
+    /**
+     * Supported text with half-open UTF-8 byte spans into the complete property
+     * string.
+     */
+    export interface Row {
+      /**
+       * Supported lines. Word requests include supported words; gaps are valid. Boxes
+       * use final page coordinates and optional local rotation r.
+       */
+      lines: Array<Row.Line>;
+    }
+
+    export namespace Row {
+      /**
+       * One grounded line of text with an optional per-word breakdown.
+       */
+      export interface Line {
+        /**
+         * Line bounding box
+         */
+        bbox: ParsingAPI.BBox;
+
+        /**
+         * `[start, end)` UTF-8 byte span in the complete source property string
+         */
+        span: Array<unknown>;
+
+        /**
+         * Per-word grounding within the line, when available
+         */
+        words?: Array<Line.Word> | null;
+      }
+
+      export namespace Line {
+        /**
+         * One grounded word: a `[start, end)` span in the source text and its bbox.
+         */
+        export interface Word {
+          /**
+           * Word bounding box
+           */
+          bbox: ParsingAPI.BBox;
+
+          /**
+           * `[start, end)` UTF-8 byte span in the complete source property string
+           */
+          span: Array<unknown>;
+        }
+      }
+    }
+  }
 }
 
 /**
