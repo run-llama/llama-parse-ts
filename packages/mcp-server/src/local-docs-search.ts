@@ -2572,14 +2572,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/v1/data-sinks',
     httpMethod: 'get',
     summary: 'List Data Sinks',
-    description: 'List data sinks for a given project.',
+    description:
+      "List a project's data sinks. Returns at most the first 50.\n\nDeprecated: use `GET /api/v1/beta/data-sinks`, which is paginated.",
     stainlessPath: '(resource) data_sinks > (method) list',
     qualified: 'client.dataSinks.list',
     params: ['organization_id?: string;', 'project_id?: string;'],
     response:
       "{ id: string; component: object | object | object | object | object | object | object | object; name: string; project_id: string; sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT'; created_at?: string; updated_at?: string; }[]",
     markdown:
-      "## list\n\n`client.dataSinks.list(organization_id?: string, project_id?: string): object[]`\n\n**get** `/api/v1/data-sinks`\n\nList data sinks for a given project.\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; component: object | object | object | object | object | object | object | object; name: string; project_id: string; sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT'; created_at?: string; updated_at?: string; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst dataSinks = await client.dataSinks.list();\n\nconsole.log(dataSinks);\n```",
+      "## list\n\n`client.dataSinks.list(organization_id?: string, project_id?: string): object[]`\n\n**get** `/api/v1/data-sinks`\n\nList a project's data sinks. Returns at most the first 50.\n\nDeprecated: use `GET /api/v1/beta/data-sinks`, which is paginated.\n\n### Parameters\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; component: object | object | object | object | object | object | object | object; name: string; project_id: string; sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT'; created_at?: string; updated_at?: string; }[]`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst dataSinks = await client.dataSinks.list();\n\nconsole.log(dataSinks);\n```",
     perLanguage: {
       go: {
         method: 'client.DataSinks.List',

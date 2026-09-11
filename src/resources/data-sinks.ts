@@ -9,7 +9,11 @@ import { path } from '../internal/utils/path';
 
 export class DataSinks extends APIResource {
   /**
-   * List data sinks for a given project.
+   * List a project's data sinks. Returns at most the first 50.
+   *
+   * Deprecated: use `GET /api/v1/beta/data-sinks`, which is paginated.
+   *
+   * @deprecated
    */
   list(
     query: DataSinkListParams | null | undefined = {},
