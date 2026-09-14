@@ -1508,6 +1508,21 @@ export interface SplitV1Parameters {
   product_type: 'split_v1';
 
   /**
+   * Saved parse configuration ID controlling how the document is read before
+   * splitting. Takes precedence over parse_tier. Configurations restricted to a page
+   * subset (target_pages or max_pages) are rejected, since split results always
+   * number pages relative to the full document. Ignored when a completed parse job
+   * is supplied as file_input.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier used to read the document before splitting. Defaults to fast. Ignored
+   * when a completed parse job is supplied as file_input.
+   */
+  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
+
+  /**
    * Strategy for splitting documents.
    */
   splitting_strategy?: SplitV1Parameters.SplittingStrategy;
