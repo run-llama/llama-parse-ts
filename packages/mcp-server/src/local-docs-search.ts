@@ -2510,65 +2510,6 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'list',
-    endpoint: '/api/v1/job-data-points',
-    httpMethod: 'get',
-    summary: 'Query project job data points',
-    description: 'Returns paginated job data points for the current project.',
-    stainlessPath: '(resource) job_data_points > (method) list',
-    qualified: 'client.jobDataPoints.list',
-    params: [
-      "job_type: 'classify' | 'extract' | 'parse';",
-      'created_at_on_or_after?: string;',
-      'created_at_on_or_before?: string;',
-      'hours?: number;',
-      'organization_id?: string;',
-      'page_size?: number;',
-      'page_token?: string;',
-      'project_id?: string;',
-      'status?: string[];',
-    ],
-    response:
-      '{ id: string; created_at: string; custom_tag: string; project_id: string; status: string; updated_at: string; error_message?: string; state_transitions?: { cancelled_at?: string; completed_at?: string; failed_at?: string; pending_at?: string; running_at?: string; throttled_at?: string; }; }',
-    markdown:
-      "## list\n\n`client.jobDataPoints.list(job_type: 'classify' | 'extract' | 'parse', created_at_on_or_after?: string, created_at_on_or_before?: string, hours?: number, organization_id?: string, page_size?: number, page_token?: string, project_id?: string, status?: string[]): { id: string; created_at: string; custom_tag: string; project_id: string; status: string; updated_at: string; error_message?: string; state_transitions?: object; }`\n\n**get** `/api/v1/job-data-points`\n\nReturns paginated job data points for the current project.\n\n### Parameters\n\n- `job_type: 'classify' | 'extract' | 'parse'`\n  Job type to query.\n\n- `created_at_on_or_after?: string`\n  Include items created at or after this timestamp (inclusive)\n\n- `created_at_on_or_before?: string`\n  Include items created at or before this timestamp (inclusive)\n\n- `hours?: number`\n  Hours of history to include.\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Number of items per page.\n\n- `page_token?: string`\n  Cursor token for the next page.\n\n- `project_id?: string`\n\n- `status?: string[]`\n  Filter by status.\n\n### Returns\n\n- `{ id: string; created_at: string; custom_tag: string; project_id: string; status: string; updated_at: string; error_message?: string; state_transitions?: { cancelled_at?: string; completed_at?: string; failed_at?: string; pending_at?: string; running_at?: string; throttled_at?: string; }; }`\n  A job data point.\n\n  - `id: string`\n  - `created_at: string`\n  - `custom_tag: string`\n  - `project_id: string`\n  - `status: string`\n  - `updated_at: string`\n  - `error_message?: string`\n  - `state_transitions?: { cancelled_at?: string; completed_at?: string; failed_at?: string; pending_at?: string; running_at?: string; throttled_at?: string; }`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const jobDataPoint of client.jobDataPoints.list({ job_type: 'parse' })) {\n  console.log(jobDataPoint);\n}\n```",
-    perLanguage: {
-      go: {
-        method: 'client.JobDataPoints.List',
-        example:
-          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.JobDataPoints.List(context.TODO(), llamacloud.JobDataPointListParams{\n\t\tJobType: llamacloud.JobDataPointListParamsJobTypeParse,\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
-      },
-      python: {
-        method: 'job_data_points.list',
-        example:
-          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.job_data_points.list(\n    job_type="parse",\n)\npage = page.items[0]\nprint(page.id)',
-      },
-      java: {
-        method: 'jobDataPoints().list',
-        example:
-          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.jobdatapoints.JobDataPointListPage;\nimport ai.llamaindex.llamacloud.models.jobdatapoints.JobDataPointListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        JobDataPointListParams params = JobDataPointListParams.builder()\n            .jobType(JobDataPointListParams.JobType.PARSE)\n            .build();\n        JobDataPointListPage page = client.jobDataPoints().list(params);\n    }\n}',
-      },
-      csharp: {
-        method: 'JobDataPoints.List',
-        example:
-          'JobDataPointListParams parameters = new() { JobType = JobType.Parse };\n\nvar page = await client.JobDataPoints.List(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
-      },
-      typescript: {
-        method: 'client.jobDataPoints.list',
-        example:
-          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const jobDataPoint of client.jobDataPoints.list({ job_type: 'parse' })) {\n  console.log(jobDataPoint.id);\n}",
-      },
-      http: {
-        example:
-          'curl https://api.cloud.llamaindex.ai/api/v1/job-data-points \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
-      },
-      cli: {
-        method: 'job_data_points list',
-        example: "llp job-data-points list \\\n  --api-key 'My API Key' \\\n  --job-type parse",
-      },
-    },
-  },
-  {
-    name: 'list',
     endpoint: '/api/v1/data-sinks',
     httpMethod: 'get',
     summary: 'List Data Sinks',

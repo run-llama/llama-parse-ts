@@ -37,6 +37,8 @@ export class Retrievers extends APIResource {
 
   /**
    * List Retrievers for a project.
+   *
+   * @deprecated
    */
   list(
     query: RetrieverListParams | null | undefined = {},

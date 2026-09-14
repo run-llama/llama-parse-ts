@@ -154,7 +154,6 @@ const fuse = new Fuse(
     'client.projects.list',
     'client.v2Projects.get',
     'client.v2Projects.list',
-    'client.jobDataPoints.list',
     'client.dataSinks.create',
     'client.dataSinks.delete',
     'client.dataSinks.get',

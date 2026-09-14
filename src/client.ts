@@ -143,12 +143,7 @@ import {
   Files,
   PresignedURL,
 } from './resources/files';
-import {
-  JobDataPoint,
-  JobDataPointListParams,
-  JobDataPoints,
-  JobDataPointsPaginatedCursor,
-} from './resources/job-data-points';
+import { JobDataPoints } from './resources/job-data-points';
 import {
   BBox,
   CodeItem,
@@ -1282,12 +1277,7 @@ export declare namespace LlamaCloud {
     type V2ProjectGetParams as V2ProjectGetParams,
   };
 
-  export {
-    JobDataPoints as JobDataPoints,
-    type JobDataPoint as JobDataPoint,
-    type JobDataPointsPaginatedCursor as JobDataPointsPaginatedCursor,
-    type JobDataPointListParams as JobDataPointListParams,
-  };
+  export { JobDataPoints as JobDataPoints };
 
   export {
     DataSinks as DataSinks,

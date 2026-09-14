@@ -237,14 +237,6 @@ Methods:
 
 # JobDataPoints
 
-Types:
-
-- <code><a href="./src/resources/job-data-points.ts">JobDataPoint</a></code>
-
-Methods:
-
-- <code title="get /api/v1/job-data-points">client.jobDataPoints.<a href="./src/resources/job-data-points.ts">list</a>({ ...params }) -> JobDataPointsPaginatedCursor</code>
-
 # DataSinks
 
 Types:

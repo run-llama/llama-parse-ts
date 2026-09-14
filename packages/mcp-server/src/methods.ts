@@ -287,12 +287,6 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/projects/{project_id}',
   },
   {
-    clientCallName: 'client.jobDataPoints.list',
-    fullyQualifiedName: 'jobDataPoints.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/job-data-points',
-  },
-  {
     clientCallName: 'client.dataSinks.list',
     fullyQualifiedName: 'dataSinks.list',
     httpMethod: 'get',

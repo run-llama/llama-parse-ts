@@ -113,12 +113,7 @@ export {
   type FileContentParams,
   type FileListResponsesPaginatedCursor,
 } from './files';
-export {
-  JobDataPoints,
-  type JobDataPoint,
-  type JobDataPointListParams,
-  type JobDataPointsPaginatedCursor,
-} from './job-data-points';
+export { JobDataPoints } from './job-data-points';
 export {
   Parsing,
   type BBox,
