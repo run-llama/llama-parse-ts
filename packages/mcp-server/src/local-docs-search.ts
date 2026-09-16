@@ -2158,6 +2158,61 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'list_paginated',
+    endpoint: '/api/v2/webhook-configs',
+    httpMethod: 'get',
+    summary: 'Query Webhook Configs',
+    description: 'List the webhook configurations for the current project, newest first.',
+    stainlessPath: '(resource) webhook_configs > (method) list_paginated',
+    qualified: 'client.webhookConfigs.listPaginated',
+    params: [
+      'include_total?: boolean;',
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      "{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }",
+    markdown:
+      "## list_paginated\n\n`client.webhookConfigs.listPaginated(include_total?: boolean, organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }`\n\n**get** `/api/v2/webhook-configs`\n\nList the webhook configurations for the current project, newest first.\n\n### Parameters\n\n- `include_total?: boolean`\n  Return `total_size`, a count of every row matching the filter. It is a second query on every page, so it is off unless asked for.\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Number of items per page\n\n- `page_token?: string`\n  Cursor from the previous page's `next_page_token`.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; has_secret: boolean; tenant_id: string; tenant_type: 'project'; webhook_url: string; created_at?: string; updated_at?: string; webhook_events?: string[]; webhook_headers?: object; webhook_output_format?: 'json' | 'string'; }`\n  A stored webhook configuration. The signing secret is never included.\n\n  - `id: string`\n  - `has_secret: boolean`\n  - `tenant_id: string`\n  - `tenant_type: 'project'`\n  - `webhook_url: string`\n  - `created_at?: string`\n  - `updated_at?: string`\n  - `webhook_events?: string[]`\n  - `webhook_headers?: object`\n  - `webhook_output_format?: 'json' | 'string'`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const webhookConfigResponse of client.webhookConfigs.listPaginated()) {\n  console.log(webhookConfigResponse);\n}\n```",
+    perLanguage: {
+      go: {
+        method: 'client.WebhookConfigs.ListPaginated',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.WebhookConfigs.ListPaginated(context.TODO(), llamacloud.WebhookConfigListPaginatedParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      python: {
+        method: 'webhook_configs.list_paginated',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.webhook_configs.list_paginated()\npage = page.items[0]\nprint(page.id)',
+      },
+      java: {
+        method: 'webhookConfigs().listPaginated',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigListPaginatedPage;\nimport ai.llamaindex.llamacloud.models.webhookconfigs.WebhookConfigListPaginatedParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        WebhookConfigListPaginatedPage page = client.webhookConfigs().listPaginated();\n    }\n}',
+      },
+      csharp: {
+        method: 'WebhookConfigs.ListPaginated',
+        example:
+          'WebhookConfigListPaginatedParams parameters = new();\n\nvar page = await client.WebhookConfigs.ListPaginated(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
+      typescript: {
+        method: 'client.webhookConfigs.listPaginated',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const webhookConfigResponse of client.webhookConfigs.listPaginated()) {\n  console.log(webhookConfigResponse.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/webhook-configs \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'webhook_configs list_paginated',
+        example: "llp webhook-configs list-paginated \\\n  --api-key 'My API Key'",
+      },
+    },
+  },
+  {
     name: 'retrieve',
     endpoint: '/api/v1/beta/webhook-configs/{config_id}',
     httpMethod: 'get',
@@ -5229,6 +5284,62 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       cli: {
         method: 'retrievers list',
         example: "llp retrievers list \\\n  --api-key 'My API Key'",
+      },
+    },
+  },
+  {
+    name: 'list_paginated',
+    endpoint: '/api/v1/beta/retrievers',
+    httpMethod: 'get',
+    summary: 'Query Retrievers',
+    description: 'List the retrievers in a project, newest first.',
+    stainlessPath: '(resource) retrievers > (method) list_paginated',
+    qualified: 'client.retrievers.listPaginated',
+    params: [
+      'include_total?: boolean;',
+      'name?: string;',
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      '{ id: string; name: string; project_id: string; created_at?: string; pipelines?: { description: string; name: string; pipeline_id: string; preset_retrieval_parameters?: preset_retrieval_params; }[]; updated_at?: string; }',
+    markdown:
+      "## list_paginated\n\n`client.retrievers.listPaginated(include_total?: boolean, name?: string, organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { id: string; name: string; project_id: string; created_at?: string; pipelines?: retriever_pipeline[]; updated_at?: string; }`\n\n**get** `/api/v1/beta/retrievers`\n\nList the retrievers in a project, newest first.\n\n### Parameters\n\n- `include_total?: boolean`\n  Return `total_size`, a count of every row matching the filter. It is a second query on every page, so it is off unless asked for.\n\n- `name?: string`\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Number of items per page\n\n- `page_token?: string`\n  Cursor from the previous page's `next_page_token`.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; name: string; project_id: string; created_at?: string; pipelines?: { description: string; name: string; pipeline_id: string; preset_retrieval_parameters?: preset_retrieval_params; }[]; updated_at?: string; }`\n  An entity that retrieves context nodes from several sub RetrieverTools.\n\n  - `id: string`\n  - `name: string`\n  - `project_id: string`\n  - `created_at?: string`\n  - `pipelines?: { description: string; name: string; pipeline_id: string; preset_retrieval_parameters?: { alpha?: number; class_name?: string; dense_similarity_cutoff?: number; dense_similarity_top_k?: number; enable_reranking?: boolean; files_top_k?: number; rerank_top_n?: number; retrieval_mode?: retrieval_mode; retrieve_image_nodes?: boolean; retrieve_page_figure_nodes?: boolean; retrieve_page_screenshot_nodes?: boolean; search_filters?: metadata_filters; search_filters_inference_schema?: object; sparse_similarity_top_k?: number; }; }[]`\n  - `updated_at?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const retriever of client.retrievers.listPaginated()) {\n  console.log(retriever);\n}\n```",
+    perLanguage: {
+      go: {
+        method: 'client.Retrievers.ListPaginated',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Retrievers.ListPaginated(context.TODO(), llamacloud.RetrieverListPaginatedParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      python: {
+        method: 'retrievers.list_paginated',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.retrievers.list_paginated()\npage = page.items[0]\nprint(page.id)',
+      },
+      java: {
+        method: 'retrievers().listPaginated',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverListPaginatedPage;\nimport ai.llamaindex.llamacloud.models.retrievers.RetrieverListPaginatedParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        RetrieverListPaginatedPage page = client.retrievers().listPaginated();\n    }\n}',
+      },
+      csharp: {
+        method: 'Retrievers.ListPaginated',
+        example:
+          'RetrieverListPaginatedParams parameters = new();\n\nvar page = await client.Retrievers.ListPaginated(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
+      typescript: {
+        method: 'client.retrievers.listPaginated',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const retriever of client.retrievers.listPaginated()) {\n  console.log(retriever.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v1/beta/retrievers \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'retrievers list_paginated',
+        example: "llp retrievers list-paginated \\\n  --api-key 'My API Key'",
       },
     },
   },

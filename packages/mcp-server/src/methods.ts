@@ -245,6 +245,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/webhook-configs',
   },
   {
+    clientCallName: 'client.webhookConfigs.listPaginated',
+    fullyQualifiedName: 'webhookConfigs.listPaginated',
+    httpMethod: 'get',
+    httpPath: '/api/v2/webhook-configs',
+  },
+  {
     clientCallName: 'client.webhookConfigs.retrieve',
     fullyQualifiedName: 'webhookConfigs.retrieve',
     httpMethod: 'get',
@@ -597,6 +603,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'retrievers.list',
     httpMethod: 'get',
     httpPath: '/api/v1/retrievers',
+  },
+  {
+    clientCallName: 'client.retrievers.listPaginated',
+    fullyQualifiedName: 'retrievers.listPaginated',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/retrievers',
   },
   {
     clientCallName: 'client.retrievers.get',

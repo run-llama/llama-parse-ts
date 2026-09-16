@@ -218,10 +218,12 @@ export {
   type RetrieverCreateParams,
   type RetrieverUpsertParams,
   type RetrieverListParams,
+  type RetrieverListPaginatedParams,
   type RetrieverGetParams,
   type RetrieverUpdateParams,
   type RetrieverDeleteParams,
   type RetrieverSearchParams,
+  type RetrieversPaginatedCursor,
 } from './retrievers/retrievers';
 export {
   Split,
@@ -252,7 +254,9 @@ export {
   type WebhookConfigListResponse,
   type WebhookConfigCreateParams,
   type WebhookConfigListParams,
+  type WebhookConfigListPaginatedParams,
   type WebhookConfigRetrieveParams,
   type WebhookConfigUpdateParams,
   type WebhookConfigDeleteParams,
+  type WebhookConfigResponsesPaginatedCursor,
 } from './webhook-configs';

@@ -207,6 +207,7 @@ Methods:
 
 - <code title="post /api/v1/beta/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">create</a>({ ...params }) -> WebhookConfigResponse</code>
 - <code title="get /api/v1/beta/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">list</a>({ ...params }) -> WebhookConfigListResponse</code>
+- <code title="get /api/v2/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">listPaginated</a>({ ...params }) -> WebhookConfigResponsesPaginatedCursor</code>
 - <code title="get /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">retrieve</a>(configID, { ...params }) -> WebhookConfigResponse</code>
 - <code title="put /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">update</a>(configID, { ...params }) -> WebhookConfigResponse</code>
 - <code title="delete /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">delete</a>(configID, { ...params }) -> void</code>
@@ -439,6 +440,7 @@ Methods:
 - <code title="post /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">create</a>({ ...params }) -> Retriever</code>
 - <code title="put /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">upsert</a>({ ...params }) -> Retriever</code>
 - <code title="get /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">list</a>({ ...params }) -> RetrieverListResponse</code>
+- <code title="get /api/v1/beta/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">listPaginated</a>({ ...params }) -> RetrieversPaginatedCursor</code>
 - <code title="get /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">get</a>(retrieverID, { ...params }) -> Retriever</code>
 - <code title="put /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">update</a>(retrieverID, { ...params }) -> Retriever</code>
 - <code title="delete /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">delete</a>(retrieverID, { ...params }) -> void</code>

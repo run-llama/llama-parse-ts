@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
@@ -37,6 +38,27 @@ export class WebhookConfigs extends APIResource {
     options?: RequestOptions,
   ): APIPromise<WebhookConfigListResponse> {
     return this._client.get('/api/v1/beta/webhook-configs', { query, ...options });
+  }
+
+  /**
+   * List the webhook configurations for the current project, newest first.
+   *
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const webhookConfigResponse of client.webhookConfigs.listPaginated()) {
+   *   // ...
+   * }
+   * ```
+   */
+  listPaginated(
+    query: WebhookConfigListPaginatedParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<WebhookConfigResponsesPaginatedCursor, WebhookConfigResponse> {
+    return this._client.getAPIList('/api/v2/webhook-configs', PaginatedCursor<WebhookConfigResponse>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -99,6 +121,8 @@ export class WebhookConfigs extends APIResource {
     });
   }
 }
+
+export type WebhookConfigResponsesPaginatedCursor = PaginatedCursor<WebhookConfigResponse>;
 
 /**
  * Request to create a stored webhook configuration.
@@ -339,6 +363,18 @@ export interface WebhookConfigListParams {
   project_id?: string | null;
 }
 
+export interface WebhookConfigListPaginatedParams extends PaginatedCursorParams {
+  /**
+   * Return `total_size`, a count of every row matching the filter. It is a second
+   * query on every page, so it is off unless asked for.
+   */
+  include_total?: boolean;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface WebhookConfigRetrieveParams {
   organization_id?: string | null;
 
@@ -428,8 +464,10 @@ export declare namespace WebhookConfigs {
     type WebhookConfigCreate as WebhookConfigCreate,
     type WebhookConfigResponse as WebhookConfigResponse,
     type WebhookConfigListResponse as WebhookConfigListResponse,
+    type WebhookConfigResponsesPaginatedCursor as WebhookConfigResponsesPaginatedCursor,
     type WebhookConfigCreateParams as WebhookConfigCreateParams,
     type WebhookConfigListParams as WebhookConfigListParams,
+    type WebhookConfigListPaginatedParams as WebhookConfigListPaginatedParams,
     type WebhookConfigRetrieveParams as WebhookConfigRetrieveParams,
     type WebhookConfigUpdateParams as WebhookConfigUpdateParams,
     type WebhookConfigDeleteParams as WebhookConfigDeleteParams,

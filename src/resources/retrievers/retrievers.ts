@@ -4,6 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as PipelinesAPI from '../pipelines/pipelines';
 import * as RetrieverAPI from './retriever';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -45,6 +46,19 @@ export class Retrievers extends APIResource {
     options?: RequestOptions,
   ): APIPromise<RetrieverListResponse> {
     return this._client.get('/api/v1/retrievers', { query, ...options });
+  }
+
+  /**
+   * List the retrievers in a project, newest first.
+   */
+  listPaginated(
+    query: RetrieverListPaginatedParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<RetrieversPaginatedCursor, Retriever> {
+    return this._client.getAPIList('/api/v1/beta/retrievers', PaginatedCursor<Retriever>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -102,6 +116,8 @@ export class Retrievers extends APIResource {
     });
   }
 }
+
+export type RetrieversPaginatedCursor = PaginatedCursor<Retriever>;
 
 /**
  * Enum for the mode of composite retrieval.
@@ -321,6 +337,20 @@ export interface RetrieverListParams {
   project_id?: string | null;
 }
 
+export interface RetrieverListPaginatedParams extends PaginatedCursorParams {
+  /**
+   * Return `total_size`, a count of every row matching the filter. It is a second
+   * query on every page, so it is off unless asked for.
+   */
+  include_total?: boolean;
+
+  name?: string | null;
+
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface RetrieverGetParams {
   organization_id?: string | null;
 
@@ -402,9 +432,11 @@ export declare namespace Retrievers {
     type RetrieverCreate as RetrieverCreate,
     type RetrieverPipeline as RetrieverPipeline,
     type RetrieverListResponse as RetrieverListResponse,
+    type RetrieversPaginatedCursor as RetrieversPaginatedCursor,
     type RetrieverCreateParams as RetrieverCreateParams,
     type RetrieverUpsertParams as RetrieverUpsertParams,
     type RetrieverListParams as RetrieverListParams,
+    type RetrieverListPaginatedParams as RetrieverListPaginatedParams,
     type RetrieverGetParams as RetrieverGetParams,
     type RetrieverUpdateParams as RetrieverUpdateParams,
     type RetrieverDeleteParams as RetrieverDeleteParams,
