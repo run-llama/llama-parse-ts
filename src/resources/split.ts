@@ -9,7 +9,23 @@ import { path } from '../internal/utils/path';
 
 export class Split extends APIResource {
   /**
-   * Create a document split job.
+   * Create a split job.
+   *
+   * ## Document input
+   *
+   * Set `file_input` to a file ID or a completed parse job ID (`pjb-...`). Supplying
+   * a parse job reuses its output instead of reading the document again.
+   *
+   * ## Parse settings
+   *
+   * `configuration.parse_tier` and `configuration.parse_config_id` control how the
+   * document is read before splitting; both are ignored when a parse job is
+   * supplied. A parse configuration restricted to a page subset (`target_pages` or
+   * `max_pages`) is rejected, since split results always number pages relative to
+   * the full document.
+   *
+   * The job runs asynchronously. Poll `GET /split/jobs/{split_job_id}` or register a
+   * webhook to monitor completion.
    *
    * @example
    * ```ts
@@ -168,6 +184,16 @@ export interface SplitCreateResponse {
   error_message?: string | null;
 
   /**
+   * Saved parse configuration ID requested for this job, if any.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier requested for this job, if any.
+   */
+  parse_tier?: string | null;
+
+  /**
    * Result of a completed split job.
    */
   result?: BetaSplitAPI.SplitResultResponse | null;
@@ -268,6 +294,16 @@ export interface SplitListResponse {
    * Error message if the job failed.
    */
   error_message?: string | null;
+
+  /**
+   * Saved parse configuration ID requested for this job, if any.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier requested for this job, if any.
+   */
+  parse_tier?: string | null;
 
   /**
    * Result of a completed split job.
@@ -374,6 +410,16 @@ export interface SplitCancelResponse {
   error_message?: string | null;
 
   /**
+   * Saved parse configuration ID requested for this job, if any.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier requested for this job, if any.
+   */
+  parse_tier?: string | null;
+
+  /**
    * Result of a completed split job.
    */
   result?: BetaSplitAPI.SplitResultResponse | null;
@@ -476,6 +522,16 @@ export interface SplitGetResponse {
   error_message?: string | null;
 
   /**
+   * Saved parse configuration ID requested for this job, if any.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier requested for this job, if any.
+   */
+  parse_tier?: string | null;
+
+  /**
    * Result of a completed split job.
    */
   result?: BetaSplitAPI.SplitResultResponse | null;
@@ -574,6 +630,21 @@ export namespace SplitCreateParams {
      * Categories to split documents into.
      */
     categories: Array<BetaSplitAPI.SplitCategory>;
+
+    /**
+     * Saved parse configuration ID controlling how the document is read before
+     * splitting. Takes precedence over parse_tier. Configurations restricted to a page
+     * subset (target_pages or max_pages) are rejected, since split results always
+     * number pages relative to the full document. Ignored when a completed parse job
+     * is supplied as file_input.
+     */
+    parse_config_id?: string | null;
+
+    /**
+     * Parse tier used to read the document before splitting. Defaults to fast. Ignored
+     * when a completed parse job is supplied as file_input.
+     */
+    parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
 
     /**
      * Strategy for splitting documents.

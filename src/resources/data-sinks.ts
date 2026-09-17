@@ -3,19 +3,37 @@
 import { APIResource } from '../core/resource';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
 export class DataSinks extends APIResource {
   /**
-   * List data sinks for a given project.
+   * List a project's data sinks. Returns at most the first 50.
+   *
+   * Deprecated: use `GET /api/v1/beta/data-sinks`, which is paginated.
+   *
+   * @deprecated
    */
   list(
     query: DataSinkListParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<DataSinkListResponse> {
     return this._client.get('/api/v1/data-sinks', { query, ...options });
+  }
+
+  /**
+   * List the data sinks in a project, newest first.
+   */
+  listPaginated(
+    query: DataSinkListPaginatedParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<DataSinksPaginatedCursor, DataSink> {
+    return this._client.getAPIList('/api/v1/beta/data-sinks', PaginatedCursor<DataSink>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -70,6 +88,8 @@ export class DataSinks extends APIResource {
   }
 }
 
+export type DataSinksPaginatedCursor = PaginatedCursor<DataSink>;
+
 /**
  * Schema for a data sink.
  */
@@ -115,6 +135,18 @@ export interface DataSink {
 export type DataSinkListResponse = Array<DataSink>;
 
 export interface DataSinkListParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
+export interface DataSinkListPaginatedParams extends PaginatedCursorParams {
+  /**
+   * Return `total_size`, a count of every row matching the filter. It is a second
+   * query on every page, so it is off unless asked for.
+   */
+  include_total?: boolean;
+
   organization_id?: string | null;
 
   project_id?: string | null;
@@ -198,7 +230,9 @@ export declare namespace DataSinks {
   export {
     type DataSink as DataSink,
     type DataSinkListResponse as DataSinkListResponse,
+    type DataSinksPaginatedCursor as DataSinksPaginatedCursor,
     type DataSinkListParams as DataSinkListParams,
+    type DataSinkListPaginatedParams as DataSinkListPaginatedParams,
     type DataSinkCreateParams as DataSinkCreateParams,
     type DataSinkGetParams as DataSinkGetParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,

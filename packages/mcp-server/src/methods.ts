@@ -245,6 +245,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/beta/webhook-configs',
   },
   {
+    clientCallName: 'client.webhookConfigs.listPaginated',
+    fullyQualifiedName: 'webhookConfigs.listPaginated',
+    httpMethod: 'get',
+    httpPath: '/api/v2/webhook-configs',
+  },
+  {
     clientCallName: 'client.webhookConfigs.retrieve',
     fullyQualifiedName: 'webhookConfigs.retrieve',
     httpMethod: 'get',
@@ -287,16 +293,16 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/projects/{project_id}',
   },
   {
-    clientCallName: 'client.jobDataPoints.list',
-    fullyQualifiedName: 'jobDataPoints.list',
-    httpMethod: 'get',
-    httpPath: '/api/v1/job-data-points',
-  },
-  {
     clientCallName: 'client.dataSinks.list',
     fullyQualifiedName: 'dataSinks.list',
     httpMethod: 'get',
     httpPath: '/api/v1/data-sinks',
+  },
+  {
+    clientCallName: 'client.dataSinks.listPaginated',
+    fullyQualifiedName: 'dataSinks.listPaginated',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/data-sinks',
   },
   {
     clientCallName: 'client.dataSinks.create',
@@ -321,6 +327,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'dataSinks.delete',
     httpMethod: 'delete',
     httpPath: '/api/v1/data-sinks/{data_sink_id}',
+  },
+  {
+    clientCallName: 'client.extractionAgents.list',
+    fullyQualifiedName: 'extractionAgents.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/extraction-agents',
   },
   {
     clientCallName: 'client.dataSources.list',
@@ -591,6 +603,12 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'retrievers.list',
     httpMethod: 'get',
     httpPath: '/api/v1/retrievers',
+  },
+  {
+    clientCallName: 'client.retrievers.listPaginated',
+    fullyQualifiedName: 'retrievers.listPaginated',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/retrievers',
   },
   {
     clientCallName: 'client.retrievers.get',

@@ -207,6 +207,7 @@ Methods:
 
 - <code title="post /api/v1/beta/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">create</a>({ ...params }) -> WebhookConfigResponse</code>
 - <code title="get /api/v1/beta/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">list</a>({ ...params }) -> WebhookConfigListResponse</code>
+- <code title="get /api/v2/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">listPaginated</a>({ ...params }) -> WebhookConfigResponsesPaginatedCursor</code>
 - <code title="get /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">retrieve</a>(configID, { ...params }) -> WebhookConfigResponse</code>
 - <code title="put /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">update</a>(configID, { ...params }) -> WebhookConfigResponse</code>
 - <code title="delete /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">delete</a>(configID, { ...params }) -> void</code>
@@ -237,14 +238,6 @@ Methods:
 
 # JobDataPoints
 
-Types:
-
-- <code><a href="./src/resources/job-data-points.ts">JobDataPoint</a></code>
-
-Methods:
-
-- <code title="get /api/v1/job-data-points">client.jobDataPoints.<a href="./src/resources/job-data-points.ts">list</a>({ ...params }) -> JobDataPointsPaginatedCursor</code>
-
 # DataSinks
 
 Types:
@@ -255,10 +248,21 @@ Types:
 Methods:
 
 - <code title="get /api/v1/data-sinks">client.dataSinks.<a href="./src/resources/data-sinks.ts">list</a>({ ...params }) -> DataSinkListResponse</code>
+- <code title="get /api/v1/beta/data-sinks">client.dataSinks.<a href="./src/resources/data-sinks.ts">listPaginated</a>({ ...params }) -> DataSinksPaginatedCursor</code>
 - <code title="post /api/v1/data-sinks">client.dataSinks.<a href="./src/resources/data-sinks.ts">create</a>({ ...params }) -> DataSink</code>
 - <code title="get /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">get</a>(dataSinkID, { ...params }) -> DataSink</code>
 - <code title="put /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">update</a>(dataSinkID, { ...params }) -> DataSink</code>
 - <code title="delete /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">delete</a>(dataSinkID, { ...params }) -> void</code>
+
+# ExtractionAgents
+
+Types:
+
+- <code><a href="./src/resources/extraction-agents.ts">ExtractAgent</a></code>
+
+Methods:
+
+- <code title="get /api/v1/beta/extraction-agents">client.extractionAgents.<a href="./src/resources/extraction-agents.ts">list</a>({ ...params }) -> ExtractAgentsPaginatedCursor</code>
 
 # DataSources
 
@@ -436,6 +440,7 @@ Methods:
 - <code title="post /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">create</a>({ ...params }) -> Retriever</code>
 - <code title="put /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">upsert</a>({ ...params }) -> Retriever</code>
 - <code title="get /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">list</a>({ ...params }) -> RetrieverListResponse</code>
+- <code title="get /api/v1/beta/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">listPaginated</a>({ ...params }) -> RetrieversPaginatedCursor</code>
 - <code title="get /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">get</a>(retrieverID, { ...params }) -> Retriever</code>
 - <code title="put /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">update</a>(retrieverID, { ...params }) -> Retriever</code>
 - <code title="delete /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">delete</a>(retrieverID, { ...params }) -> void</code>

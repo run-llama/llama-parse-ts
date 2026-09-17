@@ -51,10 +51,12 @@ export {
   type DataSink,
   type DataSinkListResponse,
   type DataSinkListParams,
+  type DataSinkListPaginatedParams,
   type DataSinkCreateParams,
   type DataSinkGetParams,
   type DataSinkUpdateParams,
   type DataSinkDeleteParams,
+  type DataSinksPaginatedCursor,
 } from './data-sinks';
 export {
   DataSources,
@@ -90,6 +92,12 @@ export {
   type ExtractV2JobsPaginatedCursor,
 } from './extract';
 export {
+  ExtractionAgents,
+  type ExtractAgent,
+  type ExtractionAgentListParams,
+  type ExtractAgentsPaginatedCursor,
+} from './extraction-agents';
+export {
   Files,
   type File,
   type PresignedURL,
@@ -105,12 +113,7 @@ export {
   type FileContentParams,
   type FileListResponsesPaginatedCursor,
 } from './files';
-export {
-  JobDataPoints,
-  type JobDataPoint,
-  type JobDataPointListParams,
-  type JobDataPointsPaginatedCursor,
-} from './job-data-points';
+export { JobDataPoints } from './job-data-points';
 export {
   Parsing,
   type BBox,
@@ -215,10 +218,12 @@ export {
   type RetrieverCreateParams,
   type RetrieverUpsertParams,
   type RetrieverListParams,
+  type RetrieverListPaginatedParams,
   type RetrieverGetParams,
   type RetrieverUpdateParams,
   type RetrieverDeleteParams,
   type RetrieverSearchParams,
+  type RetrieversPaginatedCursor,
 } from './retrievers/retrievers';
 export {
   Split,
@@ -249,7 +254,9 @@ export {
   type WebhookConfigListResponse,
   type WebhookConfigCreateParams,
   type WebhookConfigListParams,
+  type WebhookConfigListPaginatedParams,
   type WebhookConfigRetrieveParams,
   type WebhookConfigUpdateParams,
   type WebhookConfigDeleteParams,
+  type WebhookConfigResponsesPaginatedCursor,
 } from './webhook-configs';

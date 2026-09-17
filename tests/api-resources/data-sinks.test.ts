@@ -35,6 +35,35 @@ describe('resource dataSinks', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('listPaginated', async () => {
+    const responsePromise = client.dataSinks.listPaginated();
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('listPaginated: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.dataSinks.listPaginated(
+        {
+          include_total: true,
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          page_size: 1,
+          page_token: 'page_token',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.dataSinks.create({
       component: { foo: 'bar' },
