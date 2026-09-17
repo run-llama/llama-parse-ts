@@ -239,6 +239,17 @@ export namespace SplitCreateResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
+     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+     * 1 disables merging.
+     */
+    min_pages_per_split?: number;
   }
 }
 
@@ -345,6 +356,17 @@ export namespace SplitListResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
+     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+     * 1 disables merging.
+     */
+    min_pages_per_split?: number;
   }
 }
 
@@ -453,6 +475,17 @@ export namespace SplitCancelResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
+     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+     * 1 disables merging.
+     */
+    min_pages_per_split?: number;
   }
 }
 
@@ -559,6 +592,17 @@ export namespace SplitGetResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
+     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+     * 1 disables merging.
+     */
+    min_pages_per_split?: number;
   }
 }
 
@@ -654,6 +698,17 @@ export namespace SplitCreateParams {
        * 'uncategorized' but are excluded from results.
        */
       allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+      /**
+       * Free-form guidance for where segment boundaries are placed.
+       */
+      custom_instructions?: string | null;
+
+      /**
+       * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+       * 1 disables merging.
+       */
+      min_pages_per_split?: number;
     }
   }
 
