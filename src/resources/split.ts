@@ -16,6 +16,14 @@ export class Split extends APIResource {
    * Set `file_input` to a file ID or a completed parse job ID (`pjb-...`). Supplying
    * a parse job reuses its output instead of reading the document again.
    *
+   * ## Page selection
+   *
+   * `configuration.target_pages` selects which pages of a supplied parse job to
+   * split (1-based; `1-50`, `1,3,5-7`). Pages are read in ascending document order,
+   * and each segment's `pages` are the parse job's own page numbers, so segments map
+   * straight back to the original document. Requires a parse job as `file_input`;
+   * passing it with a file ID returns 400.
+   *
    * ## Parse settings
    *
    * `configuration.parse_tier` and `configuration.parse_config_id` control how the
@@ -204,6 +212,11 @@ export interface SplitCreateResponse {
   splitting_strategy?: SplitCreateResponse.SplittingStrategy;
 
   /**
+   * Page selection requested for this job, if any.
+   */
+  target_pages?: string | null;
+
+  /**
    * Idempotency key scoped to the project, if one was provided.
    */
   transaction_id?: string | null;
@@ -226,17 +239,6 @@ export namespace SplitCreateResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
-
-    /**
-     * Free-form guidance for where segment boundaries are placed.
-     */
-    custom_instructions?: string | null;
-
-    /**
-     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
-     * 1 disables merging.
-     */
-    min_pages_per_split?: number;
   }
 }
 
@@ -316,6 +318,11 @@ export interface SplitListResponse {
   splitting_strategy?: SplitListResponse.SplittingStrategy;
 
   /**
+   * Page selection requested for this job, if any.
+   */
+  target_pages?: string | null;
+
+  /**
    * Idempotency key scoped to the project, if one was provided.
    */
   transaction_id?: string | null;
@@ -338,17 +345,6 @@ export namespace SplitListResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
-
-    /**
-     * Free-form guidance for where segment boundaries are placed.
-     */
-    custom_instructions?: string | null;
-
-    /**
-     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
-     * 1 disables merging.
-     */
-    min_pages_per_split?: number;
   }
 }
 
@@ -430,6 +426,11 @@ export interface SplitCancelResponse {
   splitting_strategy?: SplitCancelResponse.SplittingStrategy;
 
   /**
+   * Page selection requested for this job, if any.
+   */
+  target_pages?: string | null;
+
+  /**
    * Idempotency key scoped to the project, if one was provided.
    */
   transaction_id?: string | null;
@@ -452,17 +453,6 @@ export namespace SplitCancelResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
-
-    /**
-     * Free-form guidance for where segment boundaries are placed.
-     */
-    custom_instructions?: string | null;
-
-    /**
-     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
-     * 1 disables merging.
-     */
-    min_pages_per_split?: number;
   }
 }
 
@@ -542,6 +532,11 @@ export interface SplitGetResponse {
   splitting_strategy?: SplitGetResponse.SplittingStrategy;
 
   /**
+   * Page selection requested for this job, if any.
+   */
+  target_pages?: string | null;
+
+  /**
    * Idempotency key scoped to the project, if one was provided.
    */
   transaction_id?: string | null;
@@ -564,17 +559,6 @@ export namespace SplitGetResponse {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
-
-    /**
-     * Free-form guidance for where segment boundaries are placed.
-     */
-    custom_instructions?: string | null;
-
-    /**
-     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
-     * 1 disables merging.
-     */
-    min_pages_per_split?: number;
   }
 }
 
@@ -632,11 +616,11 @@ export namespace SplitCreateParams {
     categories: Array<BetaSplitAPI.SplitCategory>;
 
     /**
-     * Saved parse configuration ID controlling how the document is read before
-     * splitting. Takes precedence over parse_tier. Configurations restricted to a page
-     * subset (target_pages or max_pages) are rejected, since split results always
-     * number pages relative to the full document. Ignored when a completed parse job
-     * is supplied as file_input.
+     * Saved parse configuration ID to control how the document is parsed before
+     * splitting. Takes precedence over parse_tier. Configurations that restrict pages
+     * (`target_pages` or `max_pages` on the parse configuration) are rejected: split
+     * results number pages relative to the full document. Ignored when a completed
+     * parse job is supplied as file_input.
      */
     parse_config_id?: string | null;
 
@@ -650,6 +634,12 @@ export namespace SplitCreateParams {
      * Strategy for splitting documents.
      */
     splitting_strategy?: Configuration.SplittingStrategy;
+
+    /**
+     * Comma-separated page numbers or ranges to split (1-based). Omit to split all
+     * pages. Requires a completed parse job as file_input.
+     */
+    target_pages?: string | null;
   }
 
   export namespace Configuration {
@@ -664,17 +654,6 @@ export namespace SplitCreateParams {
        * 'uncategorized' but are excluded from results.
        */
       allow_uncategorized?: 'forbid' | 'include' | 'omit';
-
-      /**
-       * Free-form guidance for where segment boundaries are placed.
-       */
-      custom_instructions?: string | null;
-
-      /**
-       * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
-       * 1 disables merging.
-       */
-      min_pages_per_split?: number;
     }
   }
 

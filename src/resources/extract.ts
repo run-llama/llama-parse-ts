@@ -342,7 +342,7 @@ export interface ExtractConfiguration {
    * specified. Turbo extract does not support parse configuration or produce a parse
    * output; use another tier if your workflow requires parsed text.
    */
-  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
+  parse_tier?: string | null;
 
   /**
    * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
@@ -373,10 +373,10 @@ export interface ExtractConfiguration {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
-   * agentic_plus (50 credits/page), or turbo (35 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
+   * agentic_plus (50 credits/page)
    */
-  tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string

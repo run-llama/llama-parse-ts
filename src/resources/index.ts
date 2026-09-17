@@ -51,12 +51,8 @@ export {
   type DataSink,
   type DataSinkListResponse,
   type DataSinkListParams,
-  type DataSinkListPaginatedParams,
   type DataSinkCreateParams,
-  type DataSinkGetParams,
   type DataSinkUpdateParams,
-  type DataSinkDeleteParams,
-  type DataSinksPaginatedCursor,
 } from './data-sinks';
 export {
   DataSources,
@@ -65,9 +61,7 @@ export {
   type DataSourceListResponse,
   type DataSourceListParams,
   type DataSourceCreateParams,
-  type DataSourceGetParams,
   type DataSourceUpdateParams,
-  type DataSourceDeleteParams,
 } from './data-sources';
 export {
   Extract,
@@ -92,12 +86,6 @@ export {
   type ExtractV2JobsPaginatedCursor,
 } from './extract';
 export {
-  ExtractionAgents,
-  type ExtractAgent,
-  type ExtractionAgentListParams,
-  type ExtractAgentsPaginatedCursor,
-} from './extraction-agents';
-export {
   Files,
   type File,
   type PresignedURL,
@@ -113,7 +101,6 @@ export {
   type FileContentParams,
   type FileListResponsesPaginatedCursor,
 } from './files';
-export { JobDataPoints } from './job-data-points';
 export {
   Parsing,
   type BBox,
@@ -141,7 +128,6 @@ export {
   type TextItem,
   type ParsingCreateResponse,
   type ParsingListResponse,
-  type ParsingDeleteResponse,
   type ParsingCancelResponse,
   type ParsingGetResponse,
   type ParsingListVersionsResponse,
@@ -149,7 +135,6 @@ export {
   type ParsingGetParams,
   type ParsingListParams,
   type ParsingCancelParams,
-  type ParsingDeleteParams,
   type ParsingListResponsesPaginatedCursor,
 } from './parsing';
 export {
@@ -187,17 +172,12 @@ export {
   type VertexTextEmbedding,
   type PipelineRetrieveResponse,
   type PipelineListResponse,
-  type PipelineListPaginatedResponse,
   type PipelineListParams,
-  type PipelineListPaginatedParams,
   type PipelineCreateParams,
-  type PipelineGetParams,
   type PipelineUpdateParams,
-  type PipelineDeleteParams,
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
   type PipelineRetrieveParams,
-  type PipelineListPaginatedResponsesPaginatedCursor,
 } from './pipelines/pipelines';
 export {
   Projects,
@@ -225,6 +205,15 @@ export {
   type RetrieverSearchParams,
   type RetrieversPaginatedCursor,
 } from './retrievers/retrievers';
+export {
+  Sheets,
+  type SheetDeleteJobResponse,
+  type SheetCreateParams,
+  type SheetListParams,
+  type SheetGetParams,
+  type SheetGetResultTableParams,
+  type SheetDeleteJobParams,
+} from './sheets';
 export {
   Split,
   type SplitCreateResponse,

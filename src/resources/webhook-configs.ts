@@ -137,8 +137,7 @@ export interface WebhookConfigCreate {
   webhook_url: string;
 
   /**
-   * Events to subscribe to. If null, all events are delivered. An empty list
-   * subscribes to nothing and is rejected.
+   * Events to subscribe to. If null, all events are delivered.
    */
   webhook_events?: Array<
     | 'batch.cancelled'
@@ -301,8 +300,7 @@ export interface WebhookConfigCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Events to subscribe to. If null, all events are delivered. An empty
-   * list subscribes to nothing and is rejected.
+   * Body param: Events to subscribe to. If null, all events are delivered.
    */
   webhook_events?: Array<
     | 'batch.cancelled'
@@ -393,8 +391,7 @@ export interface WebhookConfigUpdateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Updated event subscriptions. Omit to leave unchanged; [] is
-   * rejected.
+   * Body param: Updated event subscriptions.
    */
   webhook_events?: Array<
     | 'batch.cancelled'

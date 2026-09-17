@@ -139,32 +139,7 @@ export class Parsing extends APIResource {
   }
 
   /**
-   * Delete a parse job and its results.
-   *
-   * The job must be in a terminal state (COMPLETED, FAILED, CANCELLED). Cancel a job
-   * that is still running before deleting it.
-   *
-   * Returns the identifiers of the deleted job.
-   *
-   * @example
-   * ```ts
-   * const parsing = await client.parsing.delete('job_id');
-   * ```
-   */
-  delete(
-    jobID: string,
-    params: ParsingDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ParsingDeleteResponse> {
-    const { organization_id, project_id } = params ?? {};
-    return this._client.delete(path`/api/v2/parse/${jobID}`, {
-      query: { organization_id, project_id },
-      ...options,
-    });
-  }
-
-  /**
-   * List the parse versions accepted by each tier and what `latest` resolves to.
+   * List the parse versions accepted by each tier.
    *
    * @example
    * ```ts
@@ -468,12 +443,6 @@ export interface FormField {
   bbox?: Array<BBox> | null;
 
   /**
-   * Optional grounding for a field's printed text; boolean states have no text
-   * spans.
-   */
-  grounding?: FormField.Grounding | null;
-
-  /**
    * True for a printed-but-blank text field (mutually exclusive with value)
    */
   isEmpty?: boolean | null;
@@ -499,187 +468,6 @@ export interface FormField {
    * Options of a single_select/multi_select group (only on select fields)
    */
   valueItems?: Array<FormField | FormSection | FormTable> | null;
-}
-
-export namespace FormField {
-  /**
-   * Optional grounding for a field's printed text; boolean states have no text
-   * spans.
-   */
-  export interface Grounding {
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    id?: Grounding.ID | null;
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    label?: Grounding.Label | null;
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    value?: Grounding.Value | null;
-  }
-
-  export namespace Grounding {
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface ID {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<ID.Line>;
-    }
-
-    export namespace ID {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface Label {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<Label.Line>;
-    }
-
-    export namespace Label {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface Value {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<Value.Line>;
-    }
-
-    export namespace Value {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-  }
 }
 
 /**
@@ -742,11 +530,6 @@ export interface FormSection {
   id?: string | null;
 
   /**
-   * Optional grounding for printed identifiers and headings.
-   */
-  grounding?: FormSection.Grounding | null;
-
-  /**
    * Printed section heading, if any
    */
   label?: string | null;
@@ -755,129 +538,6 @@ export interface FormSection {
    * Form section node
    */
   type?: 'section';
-}
-
-export namespace FormSection {
-  /**
-   * Optional grounding for printed identifiers and headings.
-   */
-  export interface Grounding {
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    id?: Grounding.ID | null;
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    label?: Grounding.Label | null;
-  }
-
-  export namespace Grounding {
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface ID {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<ID.Line>;
-    }
-
-    export namespace ID {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface Label {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<Label.Line>;
-    }
-
-    export namespace Label {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-  }
 }
 
 /**
@@ -907,11 +567,6 @@ export interface FormTable {
   columns?: Array<string> | null;
 
   /**
-   * Scalar text grounding aligned with the table's columns and ragged rows.
-   */
-  grounding?: FormTable.Grounding | null;
-
-  /**
    * Printed table caption, if any
    */
   label?: string | null;
@@ -920,242 +575,6 @@ export interface FormTable {
    * Form table node
    */
   type?: 'table';
-}
-
-export namespace FormTable {
-  /**
-   * Scalar text grounding aligned with the table's columns and ragged rows.
-   */
-  export interface Grounding {
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    id?: Grounding.ID | null;
-
-    /**
-     * Column text grounding in source order; blank slots have empty lines
-     */
-    columns?: Array<Grounding.Column> | null;
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    label?: Grounding.Label | null;
-
-    /**
-     * Scalar cell text grounding aligned with rows; blank and structured slots have
-     * empty lines. Structured children carry their own grounding.
-     */
-    rows?: Array<Array<Grounding.Row>> | null;
-  }
-
-  export namespace Grounding {
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface ID {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<ID.Line>;
-    }
-
-    export namespace ID {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface Column {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<Column.Line>;
-    }
-
-    export namespace Column {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface Label {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<Label.Line>;
-    }
-
-    export namespace Label {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-
-    /**
-     * Supported text with half-open UTF-8 byte spans into the complete property
-     * string.
-     */
-    export interface Row {
-      /**
-       * Supported lines. Word requests include supported words; gaps are valid. Boxes
-       * use final page coordinates and optional local rotation r.
-       */
-      lines: Array<Row.Line>;
-    }
-
-    export namespace Row {
-      /**
-       * One grounded line of text with an optional per-word breakdown.
-       */
-      export interface Line {
-        /**
-         * Line bounding box
-         */
-        bbox: ParsingAPI.BBox;
-
-        /**
-         * `[start, end)` UTF-8 byte span in the complete source property string
-         */
-        span: Array<unknown>;
-
-        /**
-         * Per-word grounding within the line, when available
-         */
-        words?: Array<Line.Word> | null;
-      }
-
-      export namespace Line {
-        /**
-         * One grounded word: a `[start, end)` span in the source text and its bbox.
-         */
-        export interface Word {
-          /**
-           * Word bounding box
-           */
-          bbox: ParsingAPI.BBox;
-
-          /**
-           * `[start, end)` UTF-8 byte span in the complete source property string
-           */
-          span: Array<unknown>;
-        }
-      }
-    }
-  }
 }
 
 /**
@@ -1806,25 +1225,6 @@ export namespace ParsingListResponse {
 }
 
 /**
- * Confirmation that a parse job was deleted.
- *
- * A deleted job can no longer be fetched, so the response echoes back what it was
- * rather than pointing at it. Returning the identifiers instead of an empty body
- * lets a caller assert on the delete it just made without a follow-up request.
- */
-export interface ParsingDeleteResponse {
-  /**
-   * Identifier of the deleted parse job
-   */
-  id: string;
-
-  /**
-   * Project the deleted job belonged to
-   */
-  project_id: string;
-}
-
-/**
  * A parse job.
  */
 export interface ParsingCancelResponse {
@@ -2053,11 +1453,6 @@ export namespace ParsingGetResponse {
        * Success indicator
        */
       success: true;
-
-      /**
-       * Form types detected on the page (e.g. 'w2', 'other'), or null if not a form
-       */
-      detected_form_types?: Array<string> | null;
 
       /**
        * Height of the page in points
@@ -2443,33 +1838,6 @@ export namespace ParsingGetResponse {
        * Header of the page in markdown
        */
       header?: string | null;
-
-      /**
-       * Printed line numbers linked to final page markdown
-       */
-      line_numbers?: Array<MarkdownResultPage.LineNumber> | null;
-    }
-
-    export namespace MarkdownResultPage {
-      /**
-       * Source line number linked to final page markdown.
-       */
-      export interface LineNumber {
-        /**
-         * Zero-based exclusive UTF-16 code-unit offset in final page markdown
-         */
-        end_index: number;
-
-        /**
-         * Printed source line number
-         */
-        line_number: string;
-
-        /**
-         * Zero-based inclusive UTF-16 code-unit offset in final page markdown
-         */
-        start_index: number;
-      }
     }
 
     export interface FailedMarkdownPage {
@@ -2498,11 +1866,6 @@ export namespace ParsingGetResponse {
      * List of page metadata entries
      */
     pages: Array<Metadata.Page>;
-
-    /**
-     * Document-level metadata information.
-     */
-    document?: Metadata.Document | null;
   }
 
   export namespace Metadata {
@@ -2549,44 +1912,6 @@ export namespace ParsingGetResponse {
        * Whether auto mode was triggered for the page
        */
       triggered_auto_mode?: boolean | null;
-    }
-
-    /**
-     * Document-level metadata information.
-     */
-    export interface Document {
-      /**
-       * Mean confidence score across pages scored by the high-effort confidence judge
-       * (0-1)
-       */
-      confidence?: number | null;
-
-      /**
-       * Coverage and worst-page details for document confidence.
-       */
-      confidence_breakdown?: Document.ConfidenceBreakdown | null;
-    }
-
-    export namespace Document {
-      /**
-       * Coverage and worst-page details for document confidence.
-       */
-      export interface ConfidenceBreakdown {
-        /**
-         * Lowest confidence score among pages scored by the high-effort confidence judge
-         */
-        min_page_score: number;
-
-        /**
-         * Number of pages successfully scored by the high-effort confidence judge
-         */
-        scored_pages: number;
-
-        /**
-         * Total number of pages in the parsed document
-         */
-        total_pages: number;
-      }
     }
   }
 
@@ -2695,7 +2020,6 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic_plus tier
    */
   agentic_plus: Array<
-    | '2026-09-11'
     | '2026-08-19'
     | '2026-07-08'
     | '2026-06-18'
@@ -2763,38 +2087,6 @@ export interface ParsingListVersionsResponse {
    * Versions for the fast tier
    */
   fast: Array<'2026-06-15' | '2025-12-11'>;
-
-  /**
-   * Version `latest` currently resolves to, per tier
-   */
-  latest: ParsingListVersionsResponse.Latest;
-}
-
-export namespace ParsingListVersionsResponse {
-  /**
-   * Version `latest` currently resolves to, per tier
-   */
-  export interface Latest {
-    /**
-     * Version `latest` resolves to for the agentic tier
-     */
-    agentic: string;
-
-    /**
-     * Version `latest` resolves to for the agentic_plus tier
-     */
-    agentic_plus: string;
-
-    /**
-     * Version `latest` resolves to for the cost_effective tier
-     */
-    cost_effective: string;
-
-    /**
-     * Version `latest` resolves to for the fast tier
-     */
-    fast: string;
-  }
 }
 
 export interface ParsingCreateParams {
@@ -3166,11 +2458,6 @@ export namespace ParsingCreateParams {
      * Markdown formatting options including table styles and link annotations
      */
     export interface Markdown {
-      /**
-       * Detect printed gutter line numbers and return their Markdown offsets
-       */
-      annotate_line_numbers?: boolean | null;
-
       /**
        * Add link annotations to markdown output in the format [text](url). When false,
        * only the link text is included
@@ -3923,12 +3210,6 @@ export interface ParsingCancelParams {
   project_id?: string | null;
 }
 
-export interface ParsingDeleteParams {
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export declare namespace Parsing {
   export {
     type BBox as BBox,
@@ -3956,7 +3237,6 @@ export declare namespace Parsing {
     type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
-    type ParsingDeleteResponse as ParsingDeleteResponse,
     type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
     type ParsingListVersionsResponse as ParsingListVersionsResponse,
@@ -3965,6 +3245,5 @@ export declare namespace Parsing {
     type ParsingGetParams as ParsingGetParams,
     type ParsingListParams as ParsingListParams,
     type ParsingCancelParams as ParsingCancelParams,
-    type ParsingDeleteParams as ParsingDeleteParams,
   };
 }

@@ -71,6 +71,18 @@ export {
   type RetrievalGrepResponsesPaginatedCursorPost,
 } from './retrieval';
 export {
+  Sheets,
+  type SheetsJob,
+  type SheetsParsingConfig,
+  type SheetDeleteJobResponse,
+  type SheetCreateParams,
+  type SheetListParams,
+  type SheetGetParams,
+  type SheetGetResultTableParams,
+  type SheetDeleteJobParams,
+  type SheetsJobsPaginatedCursor,
+} from './sheets';
+export {
   Split,
   type SplitCategory,
   type SplitDocumentInput,

@@ -403,7 +403,7 @@ export interface ExtractV2Parameters {
    * specified. Turbo extract does not support parse configuration or produce a parse
    * output; use another tier if your workflow requires parsed text.
    */
-  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
+  parse_tier?: string | null;
 
   /**
    * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
@@ -434,10 +434,10 @@ export interface ExtractV2Parameters {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
-   * agentic_plus (50 credits/page), or turbo (35 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
+   * agentic_plus (50 credits/page)
    */
-  tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
 
   /**
    * Use 'latest' for the latest release for the selected tier or a date string
@@ -788,11 +788,6 @@ export namespace ParseV2Parameters {
      * Markdown formatting options including table styles and link annotations
      */
     export interface Markdown {
-      /**
-       * Detect printed gutter line numbers and return their Markdown offsets
-       */
-      annotate_line_numbers?: boolean | null;
-
       /**
        * Add link annotations to markdown output in the format [text](url). When false,
        * only the link text is included
@@ -1508,11 +1503,11 @@ export interface SplitV1Parameters {
   product_type: 'split_v1';
 
   /**
-   * Saved parse configuration ID controlling how the document is read before
-   * splitting. Takes precedence over parse_tier. Configurations restricted to a page
-   * subset (target_pages or max_pages) are rejected, since split results always
-   * number pages relative to the full document. Ignored when a completed parse job
-   * is supplied as file_input.
+   * Saved parse configuration ID to control how the document is parsed before
+   * splitting. Takes precedence over parse_tier. Configurations that restrict pages
+   * (`target_pages` or `max_pages` on the parse configuration) are rejected: split
+   * results number pages relative to the full document. Ignored when a completed
+   * parse job is supplied as file_input.
    */
   parse_config_id?: string | null;
 
@@ -1526,6 +1521,12 @@ export interface SplitV1Parameters {
    * Strategy for splitting documents.
    */
   splitting_strategy?: SplitV1Parameters.SplittingStrategy;
+
+  /**
+   * Comma-separated page numbers or ranges to split (1-based). Omit to split all
+   * pages. Requires a completed parse job as file_input.
+   */
+  target_pages?: string | null;
 }
 
 export namespace SplitV1Parameters {
@@ -1540,17 +1541,6 @@ export namespace SplitV1Parameters {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
-
-    /**
-     * Free-form guidance for where segment boundaries are placed.
-     */
-    custom_instructions?: string | null;
-
-    /**
-     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
-     * 1 disables merging.
-     */
-    min_pages_per_split?: number;
   }
 }
 

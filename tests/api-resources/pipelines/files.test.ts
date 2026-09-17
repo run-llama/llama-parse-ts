@@ -26,11 +26,7 @@ describe('resource files', () => {
     await expect(
       client.pipelines.files.getStatusCounts(
         '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        {
-          data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          only_manually_uploaded: true,
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
+        { data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', only_manually_uploaded: true },
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(LlamaCloud.NotFoundError);
@@ -54,7 +50,6 @@ describe('resource files', () => {
   test.skip('getStatus: required and optional params', async () => {
     const response = await client.pipelines.files.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -81,7 +76,6 @@ describe('resource files', () => {
           custom_metadata: { foo: { foo: 'bar' } },
         },
       ],
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -103,7 +97,6 @@ describe('resource files', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.pipelines.files.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       custom_metadata: { foo: { foo: 'bar' } },
     });
   });
@@ -126,7 +119,6 @@ describe('resource files', () => {
   test.skip('delete: required and optional params', async () => {
     const response = await client.pipelines.files.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -155,7 +147,6 @@ describe('resource files', () => {
           offset: 0,
           only_manually_uploaded: true,
           order_by: 'order_by',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           statuses: ['CANCELLED', 'ERROR'],
         },
         { path: '/_stainless_unknown_path' },

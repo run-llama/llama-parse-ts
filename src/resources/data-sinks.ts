@@ -3,37 +3,19 @@
 import { APIResource } from '../core/resource';
 import * as Shared from './shared';
 import { APIPromise } from '../core/api-promise';
-import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
 import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
 export class DataSinks extends APIResource {
   /**
-   * List a project's data sinks. Returns at most the first 50.
-   *
-   * Deprecated: use `GET /api/v1/beta/data-sinks`, which is paginated.
-   *
-   * @deprecated
+   * List data sinks for a given project.
    */
   list(
     query: DataSinkListParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<DataSinkListResponse> {
     return this._client.get('/api/v1/data-sinks', { query, ...options });
-  }
-
-  /**
-   * List the data sinks in a project, newest first.
-   */
-  listPaginated(
-    query: DataSinkListPaginatedParams | null | undefined = {},
-    options?: RequestOptions,
-  ): PagePromise<DataSinksPaginatedCursor, DataSink> {
-    return this._client.getAPIList('/api/v1/beta/data-sinks', PaginatedCursor<DataSink>, {
-      query,
-      ...options,
-    });
   }
 
   /**
@@ -51,44 +33,27 @@ export class DataSinks extends APIResource {
   /**
    * Get a data sink by ID.
    */
-  get(
-    dataSinkID: string,
-    query: DataSinkGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DataSink> {
-    return this._client.get(path`/api/v1/data-sinks/${dataSinkID}`, { query, ...options });
+  get(dataSinkID: string, options?: RequestOptions): APIPromise<DataSink> {
+    return this._client.get(path`/api/v1/data-sinks/${dataSinkID}`, options);
   }
 
   /**
    * Update a data sink by ID.
    */
-  update(dataSinkID: string, params: DataSinkUpdateParams, options?: RequestOptions): APIPromise<DataSink> {
-    const { project_id, ...body } = params;
-    return this._client.put(path`/api/v1/data-sinks/${dataSinkID}`, {
-      query: { project_id },
-      body,
-      ...options,
-    });
+  update(dataSinkID: string, body: DataSinkUpdateParams, options?: RequestOptions): APIPromise<DataSink> {
+    return this._client.put(path`/api/v1/data-sinks/${dataSinkID}`, { body, ...options });
   }
 
   /**
    * Delete a data sink by ID.
    */
-  delete(
-    dataSinkID: string,
-    params: DataSinkDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { project_id } = params ?? {};
+  delete(dataSinkID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/v1/data-sinks/${dataSinkID}`, {
-      query: { project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
 }
-
-export type DataSinksPaginatedCursor = PaginatedCursor<DataSink>;
 
 /**
  * Schema for a data sink.
@@ -140,18 +105,6 @@ export interface DataSinkListParams {
   project_id?: string | null;
 }
 
-export interface DataSinkListPaginatedParams extends PaginatedCursorParams {
-  /**
-   * Return `total_size`, a count of every row matching the filter. It is a second
-   * query on every page, so it is off unless asked for.
-   */
-  include_total?: boolean;
-
-  organization_id?: string | null;
-
-  project_id?: string | null;
-}
-
 export interface DataSinkCreateParams {
   /**
    * Body param: Component that implements the data sink
@@ -187,23 +140,11 @@ export interface DataSinkCreateParams {
   project_id?: string | null;
 }
 
-export interface DataSinkGetParams {
-  project_id?: string | null;
-}
-
 export interface DataSinkUpdateParams {
-  /**
-   * Body param
-   */
   sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT';
 
   /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Component that implements the data sink
+   * Component that implements the data sink
    */
   component?:
     | { [key: string]: unknown }
@@ -217,25 +158,17 @@ export interface DataSinkUpdateParams {
     | null;
 
   /**
-   * Body param: The name of the data sink.
+   * The name of the data sink.
    */
   name?: string | null;
-}
-
-export interface DataSinkDeleteParams {
-  project_id?: string | null;
 }
 
 export declare namespace DataSinks {
   export {
     type DataSink as DataSink,
     type DataSinkListResponse as DataSinkListResponse,
-    type DataSinksPaginatedCursor as DataSinksPaginatedCursor,
     type DataSinkListParams as DataSinkListParams,
-    type DataSinkListPaginatedParams as DataSinkListPaginatedParams,
     type DataSinkCreateParams as DataSinkCreateParams,
-    type DataSinkGetParams as DataSinkGetParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
-    type DataSinkDeleteParams as DataSinkDeleteParams,
   };
 }

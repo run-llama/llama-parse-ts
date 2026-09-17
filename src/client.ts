@@ -79,20 +79,14 @@ import {
 import {
   DataSink,
   DataSinkCreateParams,
-  DataSinkDeleteParams,
-  DataSinkGetParams,
-  DataSinkListPaginatedParams,
   DataSinkListParams,
   DataSinkListResponse,
   DataSinkUpdateParams,
   DataSinks,
-  DataSinksPaginatedCursor,
 } from './resources/data-sinks';
 import {
   DataSource,
   DataSourceCreateParams,
-  DataSourceDeleteParams,
-  DataSourceGetParams,
   DataSourceListParams,
   DataSourceListResponse,
   DataSourceReaderVersionMetadata,
@@ -122,12 +116,6 @@ import {
   ExtractedFieldMetadata,
 } from './resources/extract';
 import {
-  ExtractAgent,
-  ExtractAgentsPaginatedCursor,
-  ExtractionAgentListParams,
-  ExtractionAgents,
-} from './resources/extraction-agents';
-import {
   File,
   FileContentParams,
   FileCreateParams,
@@ -143,7 +131,6 @@ import {
   Files,
   PresignedURL,
 } from './resources/files';
-import { JobDataPoints } from './resources/job-data-points';
 import {
   BBox,
   CodeItem,
@@ -167,8 +154,6 @@ import {
   ParsingCancelResponse,
   ParsingCreateParams,
   ParsingCreateResponse,
-  ParsingDeleteParams,
-  ParsingDeleteResponse,
   ParsingGetParams,
   ParsingGetResponse,
   ParsingJob,
@@ -189,6 +174,15 @@ import {
   ProjectListResponse,
   Projects,
 } from './resources/projects';
+import {
+  SheetCreateParams,
+  SheetDeleteJobParams,
+  SheetDeleteJobResponse,
+  SheetGetParams,
+  SheetGetResultTableParams,
+  SheetListParams,
+  Sheets,
+} from './resources/sheets';
 import {
   Split,
   SplitCancelParams,
@@ -252,12 +246,7 @@ import {
   Pipeline,
   PipelineCreate,
   PipelineCreateParams,
-  PipelineDeleteParams,
-  PipelineGetParams,
   PipelineGetStatusParams,
-  PipelineListPaginatedParams,
-  PipelineListPaginatedResponse,
-  PipelineListPaginatedResponsesPaginatedCursor,
   PipelineListParams,
   PipelineListResponse,
   PipelineMetadataConfig,
@@ -1033,6 +1022,7 @@ export class LlamaCloud {
   static toFile = Uploads.toFile;
 
   files: API.Files = new API.Files(this);
+  sheets: API.Sheets = new API.Sheets(this);
   split: API.Split = new API.Split(this);
   parsing: API.Parsing = new API.Parsing(this);
   extract: API.Extract = new API.Extract(this);
@@ -1043,9 +1033,7 @@ export class LlamaCloud {
   webhookConfigs: API.WebhookConfigs = new API.WebhookConfigs(this);
   projects: API.Projects = new API.Projects(this);
   v2Projects: API.V2Projects = new API.V2Projects(this);
-  jobDataPoints: API.JobDataPoints = new API.JobDataPoints(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
-  extractionAgents: API.ExtractionAgents = new API.ExtractionAgents(this);
   dataSources: API.DataSources = new API.DataSources(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
   retrievers: API.Retrievers = new API.Retrievers(this);
@@ -1053,6 +1041,7 @@ export class LlamaCloud {
 }
 
 LlamaCloud.Files = Files;
+LlamaCloud.Sheets = Sheets;
 LlamaCloud.Split = Split;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
@@ -1063,9 +1052,7 @@ LlamaCloud.Configurations = Configurations;
 LlamaCloud.WebhookConfigs = WebhookConfigs;
 LlamaCloud.Projects = Projects;
 LlamaCloud.V2Projects = V2Projects;
-LlamaCloud.JobDataPoints = JobDataPoints;
 LlamaCloud.DataSinks = DataSinks;
-LlamaCloud.ExtractionAgents = ExtractionAgents;
 LlamaCloud.DataSources = DataSources;
 LlamaCloud.Pipelines = Pipelines;
 LlamaCloud.Retrievers = Retrievers;
@@ -1128,6 +1115,16 @@ export declare namespace LlamaCloud {
   };
 
   export {
+    Sheets as Sheets,
+    type SheetDeleteJobResponse as SheetDeleteJobResponse,
+    type SheetCreateParams as SheetCreateParams,
+    type SheetListParams as SheetListParams,
+    type SheetGetParams as SheetGetParams,
+    type SheetGetResultTableParams as SheetGetResultTableParams,
+    type SheetDeleteJobParams as SheetDeleteJobParams,
+  };
+
+  export {
     Split as Split,
     type SplitCreateResponse as SplitCreateResponse,
     type SplitListResponse as SplitListResponse,
@@ -1169,7 +1166,6 @@ export declare namespace LlamaCloud {
     type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
-    type ParsingDeleteResponse as ParsingDeleteResponse,
     type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
     type ParsingListVersionsResponse as ParsingListVersionsResponse,
@@ -1178,7 +1174,6 @@ export declare namespace LlamaCloud {
     type ParsingGetParams as ParsingGetParams,
     type ParsingListParams as ParsingListParams,
     type ParsingCancelParams as ParsingCancelParams,
-    type ParsingDeleteParams as ParsingDeleteParams,
   };
 
   export {
@@ -1283,26 +1278,13 @@ export declare namespace LlamaCloud {
     type V2ProjectGetParams as V2ProjectGetParams,
   };
 
-  export { JobDataPoints as JobDataPoints };
-
   export {
     DataSinks as DataSinks,
     type DataSink as DataSink,
     type DataSinkListResponse as DataSinkListResponse,
-    type DataSinksPaginatedCursor as DataSinksPaginatedCursor,
     type DataSinkListParams as DataSinkListParams,
-    type DataSinkListPaginatedParams as DataSinkListPaginatedParams,
     type DataSinkCreateParams as DataSinkCreateParams,
-    type DataSinkGetParams as DataSinkGetParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
-    type DataSinkDeleteParams as DataSinkDeleteParams,
-  };
-
-  export {
-    ExtractionAgents as ExtractionAgents,
-    type ExtractAgent as ExtractAgent,
-    type ExtractAgentsPaginatedCursor as ExtractAgentsPaginatedCursor,
-    type ExtractionAgentListParams as ExtractionAgentListParams,
   };
 
   export {
@@ -1312,9 +1294,7 @@ export declare namespace LlamaCloud {
     type DataSourceListResponse as DataSourceListResponse,
     type DataSourceListParams as DataSourceListParams,
     type DataSourceCreateParams as DataSourceCreateParams,
-    type DataSourceGetParams as DataSourceGetParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
-    type DataSourceDeleteParams as DataSourceDeleteParams,
   };
 
   export {
@@ -1352,14 +1332,9 @@ export declare namespace LlamaCloud {
     type VertexTextEmbedding as VertexTextEmbedding,
     type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
-    type PipelineListPaginatedResponse as PipelineListPaginatedResponse,
-    type PipelineListPaginatedResponsesPaginatedCursor as PipelineListPaginatedResponsesPaginatedCursor,
     type PipelineListParams as PipelineListParams,
-    type PipelineListPaginatedParams as PipelineListPaginatedParams,
     type PipelineCreateParams as PipelineCreateParams,
-    type PipelineGetParams as PipelineGetParams,
     type PipelineUpdateParams as PipelineUpdateParams,
-    type PipelineDeleteParams as PipelineDeleteParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,
     type PipelineUpsertParams as PipelineUpsertParams,
     type PipelineRetrieveParams as PipelineRetrieveParams,

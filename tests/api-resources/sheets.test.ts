@@ -7,16 +7,10 @@ const client = new LlamaCloud({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource configurations', () => {
+describe('resource sheets', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.configurations.create({
-      name: 'x',
-      parameters: {
-        product_type: 'classify_v2',
-        rules: [{ description: 'contains invoice number, line items, and total amount', type: 'invoice' }],
-      },
-    });
+    const responsePromise = client.sheets.create({ file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -28,26 +22,49 @@ describe('resource configurations', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.configurations.create({
-      name: 'x',
-      parameters: {
-        product_type: 'classify_v2',
-        rules: [{ description: 'contains invoice number, line items, and total amount', type: 'invoice' }],
-        mode: 'FAST',
-        parsing_configuration: {
-          lang: 'en',
-          max_pages: 10,
-          target_pages: '1,3,5-7',
-        },
-      },
+    const response = await client.sheets.create({
+      file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      config: {
+        extraction_range: 'extraction_range',
+        flatten_hierarchical_tables: true,
+        generate_additional_metadata: true,
+        include_hidden_cells: true,
+        sheet_names: ['string'],
+        specialization: 'specialization',
+        table_merge_sensitivity: 'strong',
+        tier: 'agentic',
+        use_experimental_processing: true,
+      },
+      configuration: {
+        extraction_range: 'extraction_range',
+        flatten_hierarchical_tables: true,
+        generate_additional_metadata: true,
+        include_hidden_cells: true,
+        sheet_names: ['string'],
+        specialization: 'specialization',
+        table_merge_sensitivity: 'strong',
+        tier: 'agentic',
+        use_experimental_processing: true,
+      },
+      configuration_id: 'cfg-11111111-2222-3333-4444-555555555555',
+      webhook_configuration_ids: ['whc-...', 'whc-...'],
+      webhook_configurations: [
+        {
+          webhook_events: ['parse.success', 'parse.error'],
+          webhook_headers: { Authorization: 'Bearer sk-...' },
+          webhook_output_format: 'json',
+          webhook_signing_secret: 'whsec_...',
+          webhook_url: 'https://example.com/webhooks/llamacloud',
+        },
+      ],
     });
   });
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.configurations.list();
+    const responsePromise = client.sheets.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -61,15 +78,18 @@ describe('resource configurations', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.configurations.list(
+      client.sheets.list(
         {
-          latest_only: true,
-          name: 'name',
+          configuration_id: 'configuration_id',
+          created_at_on_or_after: '2019-12-27T18:11:19.117Z',
+          created_at_on_or_before: '2019-12-27T18:11:19.117Z',
+          include_results: true,
+          job_ids: ['string', 'string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,
           page_token: 'page_token',
-          product_type: ['classify_v2', 'extract_v2'],
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          status: 'CANCELLED',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -77,8 +97,8 @@ describe('resource configurations', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.configurations.retrieve('config_id');
+  test.skip('get', async () => {
+    const responsePromise = client.sheets.get('spreadsheet_job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -89,12 +109,14 @@ describe('resource configurations', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
+  test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.configurations.retrieve(
-        'config_id',
+      client.sheets.get(
+        'spreadsheet_job_id',
         {
+          expand: ['string'],
+          include_results: true,
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         },
@@ -104,8 +126,11 @@ describe('resource configurations', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('update', async () => {
-    const responsePromise = client.configurations.update('config_id', {});
+  test.skip('getResultTable: only required params', async () => {
+    const responsePromise = client.sheets.getResultTable('cell_metadata', {
+      spreadsheet_job_id: 'spreadsheet_job_id',
+      region_id: 'region_id',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -116,8 +141,19 @@ describe('resource configurations', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.configurations.delete('config_id');
+  test.skip('getResultTable: required and optional params', async () => {
+    const response = await client.sheets.getResultTable('cell_metadata', {
+      spreadsheet_job_id: 'spreadsheet_job_id',
+      region_id: 'region_id',
+      expires_at_seconds: 0,
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('deleteJob', async () => {
+    const responsePromise = client.sheets.deleteJob('spreadsheet_job_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -128,11 +164,11 @@ describe('resource configurations', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete: request options and params are passed correctly', async () => {
+  test.skip('deleteJob: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.configurations.delete(
-        'config_id',
+      client.sheets.deleteJob(
+        'spreadsheet_job_id',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
