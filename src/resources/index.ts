@@ -22,12 +22,14 @@ export {
   type ClassifyResult,
   type ClassifyCreateResponse,
   type ClassifyListResponse,
+  type ClassifyDeleteResponse,
   type ClassifyCancelResponse,
   type ClassifyGetResponse,
   type ClassifyCreateParams,
   type ClassifyListParams,
   type ClassifyGetParams,
   type ClassifyCancelParams,
+  type ClassifyDeleteParams,
   type ClassifyListResponsesPaginatedCursor,
 } from './classify';
 export {

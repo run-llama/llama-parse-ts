@@ -185,6 +185,7 @@ Types:
 - <code><a href="./src/resources/classify.ts">ClassifyResult</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyCreateResponse</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyListResponse</a></code>
+- <code><a href="./src/resources/classify.ts">ClassifyDeleteResponse</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyCancelResponse</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyGetResponse</a></code>
 
@@ -194,6 +195,7 @@ Methods:
 - <code title="get /api/v2/classify">client.classify.<a href="./src/resources/classify.ts">list</a>({ ...params }) -> ClassifyListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/classify/{job_id}">client.classify.<a href="./src/resources/classify.ts">get</a>(jobID, { ...params }) -> ClassifyGetResponse</code>
 - <code title="post /api/v2/classify/{job_id}/cancel">client.classify.<a href="./src/resources/classify.ts">cancel</a>(jobID, { ...params }) -> ClassifyCancelResponse</code>
+- <code title="delete /api/v2/classify/{job_id}">client.classify.<a href="./src/resources/classify.ts">delete</a>(jobID, { ...params }) -> ClassifyDeleteResponse</code>
 
 # Configurations
 

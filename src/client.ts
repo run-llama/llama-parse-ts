@@ -53,6 +53,8 @@ import {
   ClassifyCreateParams,
   ClassifyCreateRequest,
   ClassifyCreateResponse,
+  ClassifyDeleteParams,
+  ClassifyDeleteResponse,
   ClassifyGetParams,
   ClassifyGetResponse,
   ClassifyListParams,
@@ -1221,6 +1223,7 @@ export declare namespace LlamaCloud {
     type ClassifyResult as ClassifyResult,
     type ClassifyCreateResponse as ClassifyCreateResponse,
     type ClassifyListResponse as ClassifyListResponse,
+    type ClassifyDeleteResponse as ClassifyDeleteResponse,
     type ClassifyCancelResponse as ClassifyCancelResponse,
     type ClassifyGetResponse as ClassifyGetResponse,
     type ClassifyListResponsesPaginatedCursor as ClassifyListResponsesPaginatedCursor,
@@ -1228,6 +1231,7 @@ export declare namespace LlamaCloud {
     type ClassifyListParams as ClassifyListParams,
     type ClassifyGetParams as ClassifyGetParams,
     type ClassifyCancelParams as ClassifyCancelParams,
+    type ClassifyDeleteParams as ClassifyDeleteParams,
   };
 
   export {

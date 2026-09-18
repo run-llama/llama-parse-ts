@@ -146,6 +146,7 @@ const fuse = new Fuse(
     'client.batches.list',
     'client.classify.cancel',
     'client.classify.create',
+    'client.classify.delete',
     'client.classify.get',
     'client.classify.list',
     'client.configurations.create',

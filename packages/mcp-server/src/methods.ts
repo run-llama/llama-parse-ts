@@ -251,6 +251,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/classify/{job_id}/cancel',
   },
   {
+    clientCallName: 'client.classify.delete',
+    fullyQualifiedName: 'classify.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v2/classify/{job_id}',
+  },
+  {
     clientCallName: 'client.configurations.create',
     fullyQualifiedName: 'configurations.create',
     httpMethod: 'post',

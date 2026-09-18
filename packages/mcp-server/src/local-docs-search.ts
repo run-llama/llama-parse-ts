@@ -1787,6 +1787,55 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'delete',
+    endpoint: '/api/v2/classify/{job_id}',
+    httpMethod: 'delete',
+    summary: 'Delete Classify Job',
+    description:
+      'Delete a classify job and its result.\n\nThe job must be in a terminal state (COMPLETED, FAILED, CANCELLED). Cancel a job that is still running before deleting it.\n\nReturns the identifiers of the deleted job.',
+    stainlessPath: '(resource) classify > (method) delete',
+    qualified: 'client.classify.delete',
+    params: ['job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response: '{ id: string; project_id?: string; }',
+    markdown:
+      "## delete\n\n`client.classify.delete(job_id: string, organization_id?: string, project_id?: string): { id: string; project_id?: string; }`\n\n**delete** `/api/v2/classify/{job_id}`\n\nDelete a classify job and its result.\n\nThe job must be in a terminal state (COMPLETED, FAILED, CANCELLED). Cancel a job that is still running before deleting it.\n\nReturns the identifiers of the deleted job.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; project_id?: string; }`\n  Identifiers for a deleted classify job.\n\n  - `id: string`\n  - `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst classify = await client.classify.delete('job_id');\n\nconsole.log(classify);\n```",
+    perLanguage: {
+      python: {
+        method: 'classify.delete',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nclassify = client.classify.delete(\n    job_id="job_id",\n)\nprint(classify.id)',
+      },
+      go: {
+        method: 'client.Classify.Delete',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tclassify, err := client.Classify.Delete(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ClassifyDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", classify.ID)\n}\n',
+      },
+      java: {
+        method: 'classify().delete',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyDeleteParams;\nimport ai.llamaindex.llamacloud.models.classify.ClassifyDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ClassifyDeleteResponse classify = client.classify().delete("job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Classify.Delete',
+        example:
+          'ClassifyDeleteParams parameters = new() { JobID = "job_id" };\n\nvar classify = await client.Classify.Delete(parameters);\n\nConsole.WriteLine(classify);',
+      },
+      typescript: {
+        method: 'client.classify.delete',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst classify = await client.classify.delete('job_id');\n\nconsole.log(classify.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/classify/$JOB_ID \\\n    -X DELETE \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'classify delete',
+        example: "llp classify delete \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
+    },
+  },
+  {
     name: 'create',
     endpoint: '/api/v1/beta/configurations',
     httpMethod: 'post',
