@@ -166,6 +166,7 @@ describe('resource chat', () => {
       prompt: 'What were the main findings in Q3?',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      require_all_indexes: true,
     });
   });
 });

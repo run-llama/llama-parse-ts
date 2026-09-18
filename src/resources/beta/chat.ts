@@ -230,6 +230,11 @@ export namespace ChatRetrieveResponse {
 
     usage: StopEvent.Usage;
 
+    /**
+     * Requested indexes this turn could not query.
+     */
+    skipped_index_ids?: Array<string>;
+
     type?: 'stop';
   }
 
@@ -503,6 +508,11 @@ export interface ChatStreamParams {
    * Query param
    */
   project_id?: string | null;
+
+  /**
+   * Body param: Fail the turn if any requested index cannot be queried.
+   */
+  require_all_indexes?: boolean;
 }
 
 export declare namespace Chat {
