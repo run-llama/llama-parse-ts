@@ -139,6 +139,12 @@ export interface ChatCreateResponse {
   session_id: string;
 
   /**
+   * What this chat's share link grants: read_only (transcript only) or query
+   * (viewers may ask new questions).
+   */
+  shared_access: 'query' | 'read_only';
+
+  /**
    * Auto-generated title derived from the first user message.
    */
   generated_title?: string | null;
@@ -204,6 +210,12 @@ export interface ChatRetrieveResponse {
    * Unique session identifier.
    */
   session_id: string;
+
+  /**
+   * What this chat's share link grants: read_only (transcript only) or query
+   * (viewers may ask new questions).
+   */
+  shared_access: 'query' | 'read_only';
 
   /**
    * Auto-generated title derived from the first user message.
@@ -352,6 +364,12 @@ export interface ChatListResponse {
   session_id: string;
 
   /**
+   * What this chat's share link grants: read_only (transcript only) or query
+   * (viewers may ask new questions).
+   */
+  shared_access: 'query' | 'read_only';
+
+  /**
    * Auto-generated title derived from the first user message.
    */
   generated_title?: string | null;
@@ -403,6 +421,12 @@ export interface ChatGetSummaryResponse {
    * Unique session identifier.
    */
   session_id: string;
+
+  /**
+   * What this chat's share link grants: read_only (transcript only) or query
+   * (viewers may ask new questions).
+   */
+  shared_access: 'query' | 'read_only';
 
   /**
    * Auto-generated title derived from the first user message.
@@ -468,6 +492,12 @@ export interface ChatCreateParams {
    * Leave null to create an unbound session.
    */
   index_ids?: Array<string> | null;
+
+  /**
+   * Body param: What this chat's share link grants: read_only (transcript only) or
+   * query (viewers may ask new questions). Null follows the deployment default.
+   */
+  shared_access?: 'query' | 'read_only' | null;
 }
 
 export interface ChatRetrieveParams {

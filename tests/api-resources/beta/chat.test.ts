@@ -57,6 +57,7 @@ describe('resource chat', () => {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           index_ids: ['idx-abc123', 'idx-def456'],
+          shared_access: 'read_only',
         },
         { path: '/_stainless_unknown_path' },
       ),
