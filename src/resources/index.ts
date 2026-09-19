@@ -22,12 +22,14 @@ export {
   type ClassifyResult,
   type ClassifyCreateResponse,
   type ClassifyListResponse,
+  type ClassifyDeleteResponse,
   type ClassifyCancelResponse,
   type ClassifyGetResponse,
   type ClassifyCreateParams,
   type ClassifyListParams,
   type ClassifyGetParams,
   type ClassifyCancelParams,
+  type ClassifyDeleteParams,
   type ClassifyListResponsesPaginatedCursor,
 } from './classify';
 export {
@@ -52,9 +54,7 @@ export {
   type DataSinkListResponse,
   type DataSinkListParams,
   type DataSinkCreateParams,
-  type DataSinkGetParams,
   type DataSinkUpdateParams,
-  type DataSinkDeleteParams,
 } from './data-sinks';
 export {
   DataSources,
@@ -63,9 +63,7 @@ export {
   type DataSourceListResponse,
   type DataSourceListParams,
   type DataSourceCreateParams,
-  type DataSourceGetParams,
   type DataSourceUpdateParams,
-  type DataSourceDeleteParams,
 } from './data-sources';
 export {
   Extract,
@@ -106,12 +104,6 @@ export {
   type FileListResponsesPaginatedCursor,
 } from './files';
 export {
-  JobDataPoints,
-  type JobDataPoint,
-  type JobDataPointListParams,
-  type JobDataPointsPaginatedCursor,
-} from './job-data-points';
-export {
   Parsing,
   type BBox,
   type CodeItem,
@@ -138,7 +130,6 @@ export {
   type TextItem,
   type ParsingCreateResponse,
   type ParsingListResponse,
-  type ParsingDeleteResponse,
   type ParsingCancelResponse,
   type ParsingGetResponse,
   type ParsingListVersionsResponse,
@@ -146,7 +137,6 @@ export {
   type ParsingGetParams,
   type ParsingListParams,
   type ParsingCancelParams,
-  type ParsingDeleteParams,
   type ParsingListResponsesPaginatedCursor,
 } from './parsing';
 export {
@@ -184,17 +174,12 @@ export {
   type VertexTextEmbedding,
   type PipelineRetrieveResponse,
   type PipelineListResponse,
-  type PipelineListPaginatedResponse,
   type PipelineListParams,
-  type PipelineListPaginatedParams,
   type PipelineCreateParams,
-  type PipelineGetParams,
   type PipelineUpdateParams,
-  type PipelineDeleteParams,
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
   type PipelineRetrieveParams,
-  type PipelineListPaginatedResponsesPaginatedCursor,
 } from './pipelines/pipelines';
 export {
   Projects,
@@ -215,11 +200,22 @@ export {
   type RetrieverCreateParams,
   type RetrieverUpsertParams,
   type RetrieverListParams,
+  type RetrieverListPaginatedParams,
   type RetrieverGetParams,
   type RetrieverUpdateParams,
   type RetrieverDeleteParams,
   type RetrieverSearchParams,
+  type RetrieversPaginatedCursor,
 } from './retrievers/retrievers';
+export {
+  Sheets,
+  type SheetDeleteJobResponse,
+  type SheetCreateParams,
+  type SheetListParams,
+  type SheetGetParams,
+  type SheetGetResultTableParams,
+  type SheetDeleteJobParams,
+} from './sheets';
 export {
   Split,
   type SplitCreateResponse,
@@ -249,7 +245,9 @@ export {
   type WebhookConfigListResponse,
   type WebhookConfigCreateParams,
   type WebhookConfigListParams,
+  type WebhookConfigListPaginatedParams,
   type WebhookConfigRetrieveParams,
   type WebhookConfigUpdateParams,
   type WebhookConfigDeleteParams,
+  type WebhookConfigResponsesPaginatedCursor,
 } from './webhook-configs';

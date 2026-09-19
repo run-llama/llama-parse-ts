@@ -14,12 +14,8 @@ export class DataSources extends APIResource {
    *
    * @deprecated
    */
-  getDataSources(
-    pipelineID: string,
-    query: DataSourceGetDataSourcesParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DataSourceGetDataSourcesResponse> {
-    return this._client.get(path`/api/v1/pipelines/${pipelineID}/data-sources`, { query, ...options });
+  getDataSources(pipelineID: string, options?: RequestOptions): APIPromise<DataSourceGetDataSourcesResponse> {
+    return this._client.get(path`/api/v1/pipelines/${pipelineID}/data-sources`, options);
   }
 
   /**
@@ -32,12 +28,8 @@ export class DataSources extends APIResource {
     params: DataSourceUpdateDataSourcesParams,
     options?: RequestOptions,
   ): APIPromise<DataSourceUpdateDataSourcesResponse> {
-    const { body, project_id } = params;
-    return this._client.put(path`/api/v1/pipelines/${pipelineID}/data-sources`, {
-      query: { project_id },
-      body: body,
-      ...options,
-    });
+    const { body } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipelineID}/data-sources`, { body: body, ...options });
   }
 
   /**
@@ -50,9 +42,8 @@ export class DataSources extends APIResource {
     params: DataSourceUpdateParams,
     options?: RequestOptions,
   ): APIPromise<PipelineDataSource> {
-    const { pipeline_id, project_id, ...body } = params;
+    const { pipeline_id, ...body } = params;
     return this._client.put(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}`, {
-      query: { project_id },
       body,
       ...options,
     });
@@ -68,11 +59,11 @@ export class DataSources extends APIResource {
     params: DataSourceGetStatusParams,
     options?: RequestOptions,
   ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
-    const { pipeline_id, ...query } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}/status`, {
-      query,
-      ...options,
-    });
+    const { pipeline_id } = params;
+    return this._client.get(
+      path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}/status`,
+      options,
+    );
   }
 
   /**
@@ -86,9 +77,8 @@ export class DataSources extends APIResource {
     params: DataSourceSyncParams,
     options?: RequestOptions,
   ): APIPromise<PipelinesAPI.Pipeline> {
-    const { pipeline_id, project_id, ...body } = params;
+    const { pipeline_id, ...body } = params;
     return this._client.post(path`/api/v1/pipelines/${pipeline_id}/data-sources/${dataSourceID}/sync`, {
-      query: { project_id },
       body,
       ...options,
     });
@@ -203,20 +193,8 @@ export type DataSourceGetDataSourcesResponse = Array<PipelineDataSource>;
 
 export type DataSourceUpdateDataSourcesResponse = Array<PipelineDataSource>;
 
-export interface DataSourceGetDataSourcesParams {
-  project_id?: string | null;
-}
-
 export interface DataSourceUpdateDataSourcesParams {
-  /**
-   * Body param
-   */
   body: Array<DataSourceUpdateDataSourcesParams.Body>;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
 }
 
 export namespace DataSourceUpdateDataSourcesParams {
@@ -244,26 +222,13 @@ export interface DataSourceUpdateParams {
   pipeline_id: string;
 
   /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
    * Body param: The interval at which the data source should be synced.
    */
   sync_interval?: number | null;
 }
 
 export interface DataSourceGetStatusParams {
-  /**
-   * Path param
-   */
   pipeline_id: string;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
 }
 
 export interface DataSourceSyncParams {
@@ -271,11 +236,6 @@ export interface DataSourceSyncParams {
    * Path param
    */
   pipeline_id: string;
-
-  /**
-   * Query param
-   */
-  project_id?: string | null;
 
   /**
    * Body param
@@ -288,7 +248,6 @@ export declare namespace DataSources {
     type PipelineDataSource as PipelineDataSource,
     type DataSourceGetDataSourcesResponse as DataSourceGetDataSourcesResponse,
     type DataSourceUpdateDataSourcesResponse as DataSourceUpdateDataSourcesResponse,
-    type DataSourceGetDataSourcesParams as DataSourceGetDataSourcesParams,
     type DataSourceUpdateDataSourcesParams as DataSourceUpdateDataSourcesParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
     type DataSourceGetStatusParams as DataSourceGetStatusParams,

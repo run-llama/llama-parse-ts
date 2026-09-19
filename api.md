@@ -43,6 +43,20 @@ Methods:
 - <code title="delete /api/v1/beta/files/{file_id}">client.files.<a href="./src/resources/files.ts">delete</a>(fileID, { ...params }) -> void</code>
 - <code title="get /api/v1/beta/files/{file_id}/content">client.files.<a href="./src/resources/files.ts">content</a>(fileID, { ...params }) -> PresignedURL</code>
 
+# Sheets
+
+Types:
+
+- <code><a href="./src/resources/sheets.ts">SheetDeleteJobResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/sheets/jobs">client.sheets.<a href="./src/resources/sheets.ts">create</a>({ ...params }) -> SheetsJob</code>
+- <code title="get /api/v1/sheets/jobs">client.sheets.<a href="./src/resources/sheets.ts">list</a>({ ...params }) -> SheetsJobsPaginatedCursor</code>
+- <code title="get /api/v1/sheets/jobs/{spreadsheet_job_id}">client.sheets.<a href="./src/resources/sheets.ts">get</a>(spreadsheetJobID, { ...params }) -> SheetsJob</code>
+- <code title="get /api/v1/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}">client.sheets.<a href="./src/resources/sheets.ts">getResultTable</a>(regionType, { ...params }) -> PresignedURL</code>
+- <code title="delete /api/v1/sheets/jobs/{spreadsheet_job_id}">client.sheets.<a href="./src/resources/sheets.ts">deleteJob</a>(spreadsheetJobID, { ...params }) -> unknown</code>
+
 # Split
 
 Types:
@@ -90,7 +104,6 @@ Types:
 - <code><a href="./src/resources/parsing.ts">TextItem</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingCreateResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingListResponse</a></code>
-- <code><a href="./src/resources/parsing.ts">ParsingDeleteResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingCancelResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingGetResponse</a></code>
 - <code><a href="./src/resources/parsing.ts">ParsingListVersionsResponse</a></code>
@@ -101,7 +114,6 @@ Methods:
 - <code title="get /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">get</a>(jobID, { ...params }) -> ParsingGetResponse</code>
 - <code title="get /api/v2/parse">client.parsing.<a href="./src/resources/parsing.ts">list</a>({ ...params }) -> ParsingListResponsesPaginatedCursor</code>
 - <code title="post /api/v2/parse/{job_id}/cancel">client.parsing.<a href="./src/resources/parsing.ts">cancel</a>(jobID, { ...params }) -> ParsingCancelResponse</code>
-- <code title="delete /api/v2/parse/{job_id}">client.parsing.<a href="./src/resources/parsing.ts">delete</a>(jobID, { ...params }) -> ParsingDeleteResponse</code>
 - <code title="get /api/v2/parse/versions">client.parsing.<a href="./src/resources/parsing.ts">listVersions</a>() -> ParsingListVersionsResponse</code>
 
 # Extract
@@ -139,6 +151,14 @@ Types:
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifierRule</a></code>
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifyJob</a></code>
 - <code><a href="./src/resources/classifier/jobs.ts">ClassifyParsingConfiguration</a></code>
+- <code><a href="./src/resources/classifier/jobs.ts">JobGetResultsResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">create</a>({ ...params }) -> ClassifyJob</code>
+- <code title="get /api/v1/classifier/jobs">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">list</a>({ ...params }) -> ClassifyJobsPaginatedCursor</code>
+- <code title="get /api/v1/classifier/jobs/{classify_job_id}">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">get</a>(classifyJobID, { ...params }) -> ClassifyJob</code>
+- <code title="get /api/v1/classifier/jobs/{classify_job_id}/results">client.classifier.jobs.<a href="./src/resources/classifier/jobs.ts">getResults</a>(classifyJobID, { ...params }) -> JobGetResultsResponse</code>
 
 # Batches
 
@@ -165,6 +185,7 @@ Types:
 - <code><a href="./src/resources/classify.ts">ClassifyResult</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyCreateResponse</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyListResponse</a></code>
+- <code><a href="./src/resources/classify.ts">ClassifyDeleteResponse</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyCancelResponse</a></code>
 - <code><a href="./src/resources/classify.ts">ClassifyGetResponse</a></code>
 
@@ -174,6 +195,7 @@ Methods:
 - <code title="get /api/v2/classify">client.classify.<a href="./src/resources/classify.ts">list</a>({ ...params }) -> ClassifyListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/classify/{job_id}">client.classify.<a href="./src/resources/classify.ts">get</a>(jobID, { ...params }) -> ClassifyGetResponse</code>
 - <code title="post /api/v2/classify/{job_id}/cancel">client.classify.<a href="./src/resources/classify.ts">cancel</a>(jobID, { ...params }) -> ClassifyCancelResponse</code>
+- <code title="delete /api/v2/classify/{job_id}">client.classify.<a href="./src/resources/classify.ts">delete</a>(jobID, { ...params }) -> ClassifyDeleteResponse</code>
 
 # Configurations
 
@@ -207,6 +229,7 @@ Methods:
 
 - <code title="post /api/v1/beta/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">create</a>({ ...params }) -> WebhookConfigResponse</code>
 - <code title="get /api/v1/beta/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">list</a>({ ...params }) -> WebhookConfigListResponse</code>
+- <code title="get /api/v2/webhook-configs">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">listPaginated</a>({ ...params }) -> WebhookConfigResponsesPaginatedCursor</code>
 - <code title="get /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">retrieve</a>(configID, { ...params }) -> WebhookConfigResponse</code>
 - <code title="put /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">update</a>(configID, { ...params }) -> WebhookConfigResponse</code>
 - <code title="delete /api/v1/beta/webhook-configs/{config_id}">client.webhookConfigs.<a href="./src/resources/webhook-configs.ts">delete</a>(configID, { ...params }) -> void</code>
@@ -235,16 +258,6 @@ Methods:
 - <code title="get /api/v2/projects">client.v2Projects.<a href="./src/resources/v2-projects.ts">list</a>({ ...params }) -> V2ProjectListResponsesPaginatedCursor</code>
 - <code title="get /api/v2/projects/{project_id}">client.v2Projects.<a href="./src/resources/v2-projects.ts">get</a>(projectID, { ...params }) -> V2ProjectGetResponse</code>
 
-# JobDataPoints
-
-Types:
-
-- <code><a href="./src/resources/job-data-points.ts">JobDataPoint</a></code>
-
-Methods:
-
-- <code title="get /api/v1/job-data-points">client.jobDataPoints.<a href="./src/resources/job-data-points.ts">list</a>({ ...params }) -> JobDataPointsPaginatedCursor</code>
-
 # DataSinks
 
 Types:
@@ -256,9 +269,9 @@ Methods:
 
 - <code title="get /api/v1/data-sinks">client.dataSinks.<a href="./src/resources/data-sinks.ts">list</a>({ ...params }) -> DataSinkListResponse</code>
 - <code title="post /api/v1/data-sinks">client.dataSinks.<a href="./src/resources/data-sinks.ts">create</a>({ ...params }) -> DataSink</code>
-- <code title="get /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">get</a>(dataSinkID, { ...params }) -> DataSink</code>
+- <code title="get /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">get</a>(dataSinkID) -> DataSink</code>
 - <code title="put /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">update</a>(dataSinkID, { ...params }) -> DataSink</code>
-- <code title="delete /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">delete</a>(dataSinkID, { ...params }) -> void</code>
+- <code title="delete /api/v1/data-sinks/{data_sink_id}">client.dataSinks.<a href="./src/resources/data-sinks.ts">delete</a>(dataSinkID) -> void</code>
 
 # DataSources
 
@@ -272,9 +285,9 @@ Methods:
 
 - <code title="get /api/v1/data-sources">client.dataSources.<a href="./src/resources/data-sources.ts">list</a>({ ...params }) -> DataSourceListResponse</code>
 - <code title="post /api/v1/data-sources">client.dataSources.<a href="./src/resources/data-sources.ts">create</a>({ ...params }) -> DataSource</code>
-- <code title="get /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">get</a>(dataSourceID, { ...params }) -> DataSource</code>
+- <code title="get /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">get</a>(dataSourceID) -> DataSource</code>
 - <code title="put /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">update</a>(dataSourceID, { ...params }) -> DataSource</code>
-- <code title="delete /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">delete</a>(dataSourceID, { ...params }) -> void</code>
+- <code title="delete /api/v1/data-sources/{data_source_id}">client.dataSources.<a href="./src/resources/data-sources.ts">delete</a>(dataSourceID) -> void</code>
 
 # Pipelines
 
@@ -313,16 +326,14 @@ Types:
 - <code><a href="./src/resources/pipelines/pipelines.ts">VertexTextEmbedding</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineRetrieveResponse</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListResponse</a></code>
-- <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListPaginatedResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">list</a>({ ...params }) -> PipelineListResponse</code>
-- <code title="get /api/v2/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">listPaginated</a>({ ...params }) -> PipelineListPaginatedResponsesPaginatedCursor</code>
 - <code title="post /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">create</a>({ ...params }) -> Pipeline</code>
-- <code title="get /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">get</a>(pipelineID, { ...params }) -> Pipeline</code>
+- <code title="get /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">get</a>(pipelineID) -> Pipeline</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">update</a>(pipelineID, { ...params }) -> Pipeline</code>
-- <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">delete</a>(pipelineID, { ...params }) -> void</code>
+- <code title="delete /api/v1/pipelines/{pipeline_id}">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">delete</a>(pipelineID) -> void</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/status">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">getStatus</a>(pipelineID, { ...params }) -> ManagedIngestionStatusResponse</code>
 - <code title="put /api/v1/pipelines">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">upsert</a>({ ...params }) -> Pipeline</code>
 - <code title="post /api/v1/pipelines/{pipeline_id}/retrieve">client.pipelines.<a href="./src/resources/pipelines/pipelines.ts">retrieve</a>(pipelineID, { ...params }) -> PipelineRetrieveResponse</code>
@@ -331,8 +342,8 @@ Methods:
 
 Methods:
 
-- <code title="post /api/v1/pipelines/{pipeline_id}/sync">client.pipelines.sync.<a href="./src/resources/pipelines/sync.ts">create</a>(pipelineID, { ...params }) -> Pipeline</code>
-- <code title="post /api/v1/pipelines/{pipeline_id}/sync/cancel">client.pipelines.sync.<a href="./src/resources/pipelines/sync.ts">cancel</a>(pipelineID, { ...params }) -> Pipeline</code>
+- <code title="post /api/v1/pipelines/{pipeline_id}/sync">client.pipelines.sync.<a href="./src/resources/pipelines/sync.ts">create</a>(pipelineID) -> Pipeline</code>
+- <code title="post /api/v1/pipelines/{pipeline_id}/sync/cancel">client.pipelines.sync.<a href="./src/resources/pipelines/sync.ts">cancel</a>(pipelineID) -> Pipeline</code>
 
 ## DataSources
 
@@ -344,7 +355,7 @@ Types:
 
 Methods:
 
-- <code title="get /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">getDataSources</a>(pipelineID, { ...params }) -> DataSourceGetDataSourcesResponse</code>
+- <code title="get /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">getDataSources</a>(pipelineID) -> DataSourceGetDataSourcesResponse</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/data-sources">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">updateDataSources</a>(pipelineID, [ ...body ]) -> DataSourceUpdateDataSourcesResponse</code>
 - <code title="put /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">update</a>(dataSourceID, { ...params }) -> PipelineDataSource</code>
 - <code title="get /api/v1/pipelines/{pipeline_id}/data-sources/{data_source_id}/status">client.pipelines.dataSources.<a href="./src/resources/pipelines/data-sources.ts">getStatus</a>(dataSourceID, { ...params }) -> ManagedIngestionStatusResponse</code>
@@ -392,7 +403,7 @@ Types:
 Methods:
 
 - <code title="put /api/v1/pipelines/{pipeline_id}/metadata">client.pipelines.metadata.<a href="./src/resources/pipelines/metadata.ts">create</a>(pipelineID, { ...params }) -> MetadataCreateResponse</code>
-- <code title="delete /api/v1/pipelines/{pipeline_id}/metadata">client.pipelines.metadata.<a href="./src/resources/pipelines/metadata.ts">deleteAll</a>(pipelineID, { ...params }) -> void</code>
+- <code title="delete /api/v1/pipelines/{pipeline_id}/metadata">client.pipelines.metadata.<a href="./src/resources/pipelines/metadata.ts">deleteAll</a>(pipelineID) -> void</code>
 
 ## Documents
 
@@ -436,6 +447,7 @@ Methods:
 - <code title="post /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">create</a>({ ...params }) -> Retriever</code>
 - <code title="put /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">upsert</a>({ ...params }) -> Retriever</code>
 - <code title="get /api/v1/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">list</a>({ ...params }) -> RetrieverListResponse</code>
+- <code title="get /api/v1/beta/retrievers">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">listPaginated</a>({ ...params }) -> RetrieversPaginatedCursor</code>
 - <code title="get /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">get</a>(retrieverID, { ...params }) -> Retriever</code>
 - <code title="put /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">update</a>(retrieverID, { ...params }) -> Retriever</code>
 - <code title="delete /api/v1/retrievers/{retriever_id}">client.retrievers.<a href="./src/resources/retrievers/retrievers.ts">delete</a>(retrieverID, { ...params }) -> void</code>
@@ -519,6 +531,22 @@ Methods:
 - <code title="post /api/v1/beta/agent-data/:search">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">search</a>({ ...params }) -> AgentDataPaginatedCursorPost</code>
 - <code title="post /api/v1/beta/agent-data/:aggregate">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">aggregate</a>({ ...params }) -> AgentDataAggregateResponsesPaginatedCursorPost</code>
 - <code title="post /api/v1/beta/agent-data/:delete">client.beta.agentData.<a href="./src/resources/beta/agent-data.ts">deleteByQuery</a>({ ...params }) -> AgentDataDeleteByQueryResponse</code>
+
+## Sheets
+
+Types:
+
+- <code><a href="./src/resources/beta/sheets.ts">SheetsJob</a></code>
+- <code><a href="./src/resources/beta/sheets.ts">SheetsParsingConfig</a></code>
+- <code><a href="./src/resources/beta/sheets.ts">SheetDeleteJobResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">create</a>({ ...params }) -> SheetsJob</code>
+- <code title="get /api/v1/beta/sheets/jobs">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">list</a>({ ...params }) -> SheetsJobsPaginatedCursor</code>
+- <code title="get /api/v1/beta/sheets/jobs/{spreadsheet_job_id}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">get</a>(spreadsheetJobID, { ...params }) -> SheetsJob</code>
+- <code title="get /api/v1/beta/sheets/jobs/{spreadsheet_job_id}/regions/{region_id}/result/{region_type}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">getResultTable</a>(regionType, { ...params }) -> PresignedURL</code>
+- <code title="delete /api/v1/beta/sheets/jobs/{spreadsheet_job_id}">client.beta.sheets.<a href="./src/resources/beta/sheets.ts">deleteJob</a>(spreadsheetJobID, { ...params }) -> unknown</code>
 
 ## Directories
 

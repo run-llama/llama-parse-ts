@@ -9,7 +9,31 @@ import { path } from '../internal/utils/path';
 
 export class Split extends APIResource {
   /**
-   * Create a document split job.
+   * Create a split job.
+   *
+   * ## Document input
+   *
+   * Set `file_input` to a file ID or a completed parse job ID (`pjb-...`). Supplying
+   * a parse job reuses its output instead of reading the document again.
+   *
+   * ## Page selection
+   *
+   * `configuration.target_pages` selects which pages of a supplied parse job to
+   * split (1-based; `1-50`, `1,3,5-7`). Pages are read in ascending document order,
+   * and each segment's `pages` are the parse job's own page numbers, so segments map
+   * straight back to the original document. Requires a parse job as `file_input`;
+   * passing it with a file ID returns 400.
+   *
+   * ## Parse settings
+   *
+   * `configuration.parse_tier` and `configuration.parse_config_id` control how the
+   * document is read before splitting; both are ignored when a parse job is
+   * supplied. A parse configuration restricted to a page subset (`target_pages` or
+   * `max_pages`) is rejected, since split results always number pages relative to
+   * the full document.
+   *
+   * The job runs asynchronously. Poll `GET /split/jobs/{split_job_id}` or register a
+   * webhook to monitor completion.
    *
    * @example
    * ```ts
@@ -168,6 +192,16 @@ export interface SplitCreateResponse {
   error_message?: string | null;
 
   /**
+   * Saved parse configuration ID requested for this job, if any.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier requested for this job, if any.
+   */
+  parse_tier?: string | null;
+
+  /**
    * Result of a completed split job.
    */
   result?: BetaSplitAPI.SplitResultResponse | null;
@@ -176,6 +210,11 @@ export interface SplitCreateResponse {
    * Strategy used for splitting.
    */
   splitting_strategy?: SplitCreateResponse.SplittingStrategy;
+
+  /**
+   * Page selection requested for this job, if any.
+   */
+  target_pages?: string | null;
 
   /**
    * Idempotency key scoped to the project, if one was provided.
@@ -270,6 +309,16 @@ export interface SplitListResponse {
   error_message?: string | null;
 
   /**
+   * Saved parse configuration ID requested for this job, if any.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier requested for this job, if any.
+   */
+  parse_tier?: string | null;
+
+  /**
    * Result of a completed split job.
    */
   result?: BetaSplitAPI.SplitResultResponse | null;
@@ -278,6 +327,11 @@ export interface SplitListResponse {
    * Strategy used for splitting.
    */
   splitting_strategy?: SplitListResponse.SplittingStrategy;
+
+  /**
+   * Page selection requested for this job, if any.
+   */
+  target_pages?: string | null;
 
   /**
    * Idempotency key scoped to the project, if one was provided.
@@ -374,6 +428,16 @@ export interface SplitCancelResponse {
   error_message?: string | null;
 
   /**
+   * Saved parse configuration ID requested for this job, if any.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier requested for this job, if any.
+   */
+  parse_tier?: string | null;
+
+  /**
    * Result of a completed split job.
    */
   result?: BetaSplitAPI.SplitResultResponse | null;
@@ -382,6 +446,11 @@ export interface SplitCancelResponse {
    * Strategy used for splitting.
    */
   splitting_strategy?: SplitCancelResponse.SplittingStrategy;
+
+  /**
+   * Page selection requested for this job, if any.
+   */
+  target_pages?: string | null;
 
   /**
    * Idempotency key scoped to the project, if one was provided.
@@ -476,6 +545,16 @@ export interface SplitGetResponse {
   error_message?: string | null;
 
   /**
+   * Saved parse configuration ID requested for this job, if any.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier requested for this job, if any.
+   */
+  parse_tier?: string | null;
+
+  /**
    * Result of a completed split job.
    */
   result?: BetaSplitAPI.SplitResultResponse | null;
@@ -484,6 +563,11 @@ export interface SplitGetResponse {
    * Strategy used for splitting.
    */
   splitting_strategy?: SplitGetResponse.SplittingStrategy;
+
+  /**
+   * Page selection requested for this job, if any.
+   */
+  target_pages?: string | null;
 
   /**
    * Idempotency key scoped to the project, if one was provided.
@@ -576,9 +660,36 @@ export namespace SplitCreateParams {
     categories: Array<BetaSplitAPI.SplitCategory>;
 
     /**
+     * Saved parse configuration ID to control how the document is parsed before
+     * splitting. Takes precedence over parse_tier. Configurations that restrict pages
+     * (`target_pages` or `max_pages` on the parse configuration) are rejected: split
+     * results number pages relative to the full document. Ignored when a completed
+     * parse job is supplied as file_input.
+     */
+    parse_config_id?: string | null;
+
+    /**
+     * Parse tier used to read the document before splitting. Defaults to fast. Ignored
+     * when a completed parse job is supplied as file_input.
+     */
+    parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
+
+    /**
      * Strategy for splitting documents.
      */
     splitting_strategy?: Configuration.SplittingStrategy;
+
+    /**
+     * Comma-separated page numbers or ranges to split (1-based). Omit to split all
+     * pages. Requires a completed parse job as file_input.
+     */
+    target_pages?: string | null;
+
+    /**
+     * Split version to run. Omit for the current release. Preview versions are
+     * selectable by name and never resolved automatically.
+     */
+    version?: string | null;
   }
 
   export namespace Configuration {

@@ -33,37 +33,22 @@ export class DataSinks extends APIResource {
   /**
    * Get a data sink by ID.
    */
-  get(
-    dataSinkID: string,
-    query: DataSinkGetParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<DataSink> {
-    return this._client.get(path`/api/v1/data-sinks/${dataSinkID}`, { query, ...options });
+  get(dataSinkID: string, options?: RequestOptions): APIPromise<DataSink> {
+    return this._client.get(path`/api/v1/data-sinks/${dataSinkID}`, options);
   }
 
   /**
    * Update a data sink by ID.
    */
-  update(dataSinkID: string, params: DataSinkUpdateParams, options?: RequestOptions): APIPromise<DataSink> {
-    const { project_id, ...body } = params;
-    return this._client.put(path`/api/v1/data-sinks/${dataSinkID}`, {
-      query: { project_id },
-      body,
-      ...options,
-    });
+  update(dataSinkID: string, body: DataSinkUpdateParams, options?: RequestOptions): APIPromise<DataSink> {
+    return this._client.put(path`/api/v1/data-sinks/${dataSinkID}`, { body, ...options });
   }
 
   /**
    * Delete a data sink by ID.
    */
-  delete(
-    dataSinkID: string,
-    params: DataSinkDeleteParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<void> {
-    const { project_id } = params ?? {};
+  delete(dataSinkID: string, options?: RequestOptions): APIPromise<void> {
     return this._client.delete(path`/api/v1/data-sinks/${dataSinkID}`, {
-      query: { project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -155,23 +140,11 @@ export interface DataSinkCreateParams {
   project_id?: string | null;
 }
 
-export interface DataSinkGetParams {
-  project_id?: string | null;
-}
-
 export interface DataSinkUpdateParams {
-  /**
-   * Body param
-   */
   sink_type: 'ASTRA_DB' | 'AZUREAI_SEARCH' | 'MILVUS' | 'MONGODB_ATLAS' | 'PINECONE' | 'POSTGRES' | 'QDRANT';
 
   /**
-   * Query param
-   */
-  project_id?: string | null;
-
-  /**
-   * Body param: Component that implements the data sink
+   * Component that implements the data sink
    */
   component?:
     | { [key: string]: unknown }
@@ -185,13 +158,9 @@ export interface DataSinkUpdateParams {
     | null;
 
   /**
-   * Body param: The name of the data sink.
+   * The name of the data sink.
    */
   name?: string | null;
-}
-
-export interface DataSinkDeleteParams {
-  project_id?: string | null;
 }
 
 export declare namespace DataSinks {
@@ -200,8 +169,6 @@ export declare namespace DataSinks {
     type DataSinkListResponse as DataSinkListResponse,
     type DataSinkListParams as DataSinkListParams,
     type DataSinkCreateParams as DataSinkCreateParams,
-    type DataSinkGetParams as DataSinkGetParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
-    type DataSinkDeleteParams as DataSinkDeleteParams,
   };
 }

@@ -28,11 +28,15 @@ describe('resource split', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       configuration: {
         categories: [{ name: 'x', description: 'x' }],
+        parse_config_id: 'cfg-11111111-2222-3333-4444-555555555555',
+        parse_tier: 'fast',
         splitting_strategy: {
           allow_uncategorized: 'forbid',
           custom_instructions: 'Start a new segment at every signature page.',
           min_pages_per_split: 1,
         },
+        target_pages: '1,3,5-7',
+        version: 'latest',
       },
       configuration_id: 'cfg-11111111-2222-3333-4444-555555555555',
       transaction_id: 'tx-unique-idempotency-key',
