@@ -36,6 +36,7 @@ describe('resource split', () => {
           min_pages_per_split: 1,
         },
         target_pages: '1,3,5-7',
+        version: 'latest',
       },
       configuration_id: 'cfg-11111111-2222-3333-4444-555555555555',
       transaction_id: 'tx-unique-idempotency-key',

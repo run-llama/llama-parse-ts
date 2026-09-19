@@ -495,6 +495,12 @@ export namespace SplitCreateParams {
      * Strategy for splitting documents.
      */
     splitting_strategy?: Configuration.SplittingStrategy;
+
+    /**
+     * Split version to run. Omit for the current release. Preview versions are
+     * selectable by name and never resolved automatically.
+     */
+    version?: string | null;
   }
 
   export namespace Configuration {

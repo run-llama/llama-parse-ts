@@ -1527,6 +1527,12 @@ export interface SplitV1Parameters {
    * pages. Requires a completed parse job as file_input.
    */
   target_pages?: string | null;
+
+  /**
+   * Split version to run. Omit for the current release. Preview versions are
+   * selectable by name and never resolved automatically.
+   */
+  version?: string | null;
 }
 
 export namespace SplitV1Parameters {
