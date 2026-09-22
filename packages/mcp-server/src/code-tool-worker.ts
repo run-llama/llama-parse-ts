@@ -234,6 +234,8 @@ const fuse = new Fuse(
     'client.beta.chat.list',
     'client.beta.chat.retrieve',
     'client.beta.chat.stream',
+    'client.beta.attachments.get',
+    'client.beta.attachments.list',
     'client.beta.agentData.aggregate',
     'client.beta.agentData.create',
     'client.beta.agentData.delete',

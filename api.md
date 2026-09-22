@@ -513,6 +513,17 @@ Methods:
 - <code title="get /api/v1/chat/{session_id}/summary">client.beta.chat.<a href="./src/resources/beta/chat.ts">getSummary</a>(sessionID, { ...params }) -> ChatGetSummaryResponse</code>
 - <code title="post /api/v1/chat/{session_id}/messages/stream">client.beta.chat.<a href="./src/resources/beta/chat.ts">stream</a>(sessionID, { ...params }) -> unknown</code>
 
+## Attachments
+
+Types:
+
+- <code><a href="./src/resources/beta/attachments.ts">AttachmentListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/beta/attachments">client.beta.attachments.<a href="./src/resources/beta/attachments.ts">list</a>({ ...params }) -> AttachmentListResponsesPaginatedCursor</code>
+- <code title="get /api/v1/beta/attachments/{attachment_name}">client.beta.attachments.<a href="./src/resources/beta/attachments.ts">get</a>(attachmentName, { ...params }) -> PresignedURL</code>
+
 ## AgentData
 
 Types:

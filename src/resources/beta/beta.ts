@@ -17,6 +17,14 @@ import {
   AgentDataSearchParams,
   AgentDataUpdateParams,
 } from './agent-data';
+import * as AttachmentsAPI from './attachments';
+import {
+  AttachmentGetParams,
+  AttachmentListParams,
+  AttachmentListResponse,
+  AttachmentListResponsesPaginatedCursor,
+  Attachments,
+} from './attachments';
 import * as ChatAPI from './chat';
 import {
   Chat,
@@ -108,6 +116,7 @@ export class Beta extends APIResource {
   indexes: IndexesAPI.Indexes = new IndexesAPI.Indexes(this._client);
   retrieval: RetrievalAPI.Retrieval = new RetrievalAPI.Retrieval(this._client);
   chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
+  attachments: AttachmentsAPI.Attachments = new AttachmentsAPI.Attachments(this._client);
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
   sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
@@ -117,6 +126,7 @@ export class Beta extends APIResource {
 Beta.Indexes = Indexes;
 Beta.Retrieval = Retrieval;
 Beta.Chat = Chat;
+Beta.Attachments = Attachments;
 Beta.Sheets = Sheets;
 Beta.Directories = Directories;
 Beta.Split = Split;
@@ -164,6 +174,14 @@ export declare namespace Beta {
     type ChatDeleteParams as ChatDeleteParams,
     type ChatGetSummaryParams as ChatGetSummaryParams,
     type ChatStreamParams as ChatStreamParams,
+  };
+
+  export {
+    Attachments as Attachments,
+    type AttachmentListResponse as AttachmentListResponse,
+    type AttachmentListResponsesPaginatedCursor as AttachmentListResponsesPaginatedCursor,
+    type AttachmentListParams as AttachmentListParams,
+    type AttachmentGetParams as AttachmentGetParams,
   };
 
   export {

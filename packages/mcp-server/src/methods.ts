@@ -767,6 +767,18 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v1/chat/{session_id}/messages/stream',
   },
   {
+    clientCallName: 'client.beta.attachments.list',
+    fullyQualifiedName: 'beta.attachments.list',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/attachments',
+  },
+  {
+    clientCallName: 'client.beta.attachments.get',
+    fullyQualifiedName: 'beta.attachments.get',
+    httpMethod: 'get',
+    httpPath: '/api/v1/beta/attachments/{attachment_name}',
+  },
+  {
     clientCallName: 'client.beta.agentData.get',
     fullyQualifiedName: 'beta.agentData.get',
     httpMethod: 'get',

@@ -15,6 +15,13 @@ export {
   type AgentDataPaginatedCursorPost,
   type AgentDataAggregateResponsesPaginatedCursorPost,
 } from './agent-data';
+export {
+  Attachments,
+  type AttachmentListResponse,
+  type AttachmentListParams,
+  type AttachmentGetParams,
+  type AttachmentListResponsesPaginatedCursor,
+} from './attachments';
 export { Beta } from './beta';
 export {
   Chat,
