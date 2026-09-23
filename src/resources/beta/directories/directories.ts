@@ -29,6 +29,10 @@ export class Directories extends APIResource {
   /**
    * Create a new directory within the specified project.
    *
+   * A connector subscription syncs into at most one directory. Creating a second one
+   * for the same subscription returns `409` with the existing directory's id in
+   * `detail.directory_id`.
+   *
    * @example
    * ```ts
    * const directory = await client.beta.directories.create({
