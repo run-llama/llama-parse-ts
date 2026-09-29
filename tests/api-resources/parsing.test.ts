@@ -78,6 +78,7 @@ describe('resource parsing', () => {
           preserve_very_small_text: true,
         },
         tables_as_spreadsheet: { enable: true, guess_sheet_name: true },
+        watermark_handling: 'remove',
       },
       page_ranges: { max_pages: 1, target_pages: 'target_pages' },
       processing_control: {

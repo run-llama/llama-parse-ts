@@ -2549,6 +2549,13 @@ export namespace ParsingGetResponse {
        * Whether auto mode was triggered for the page
        */
       triggered_auto_mode?: boolean | null;
+
+      /**
+       * Watermark text detected on the page (e.g., 'CONFIDENTIAL'). Only reported on
+       * version 2026-09-28 or later of the cost_effective, agentic, and agentic_plus
+       * tiers
+       */
+      watermark?: string | null;
     }
 
     /**
@@ -2643,6 +2650,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic tier
    */
   agentic: Array<
+    | '2026-09-28'
     | '2026-09-24'
     | '2026-09-13'
     | '2026-09-09'
@@ -2696,6 +2704,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic_plus tier
    */
   agentic_plus: Array<
+    | '2026-09-28'
     | '2026-09-24'
     | '2026-09-11'
     | '2026-08-19'
@@ -2744,6 +2753,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the cost_effective tier
    */
   cost_effective: Array<
+    | '2026-09-28'
     | '2026-08-19'
     | '2026-08-11'
     | '2026-08-08'
@@ -2814,13 +2824,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2026-06-15`
-   * - `cost_effective`: `2026-08-19`
-   * - `agentic`: `2026-09-24`
-   * - `agentic_plus`: `2026-09-24`
+   * - `cost_effective`: `2026-09-28`
+   * - `agentic`: `2026-09-28`
+   * - `agentic_plus`: `2026-09-28`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-09-24' | '2026-08-19' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-09-28' | '2026-06-15' | (string & {});
 
   /**
    * Query param
@@ -3161,6 +3171,16 @@ export namespace ParsingCreateParams {
      * Options for exporting tables as XLSX spreadsheets
      */
     tables_as_spreadsheet?: OutputOptions.TablesAsSpreadsheet;
+
+    /**
+     * What to do with watermark text stamped across the page (e.g., 'CONFIDENTIAL',
+     * 'DRAFT'): 'move_to_end' (default) keeps it as the last block of the page's
+     * markdown and text output, 'move_to_start' as the first block, and 'remove' drops
+     * it. In every mode the detected text is reported in the page's `watermark`
+     * metadata. Requires version 2026-09-28 or later on the cost_effective, agentic,
+     * and agentic_plus tiers; ignored otherwise
+     */
+    watermark_handling?: 'move_to_end' | 'move_to_start' | 'remove' | null;
   }
 
   export namespace OutputOptions {
@@ -3692,13 +3712,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2026-06-15`
-         * - `cost_effective`: `2026-08-19`
-         * - `agentic`: `2026-09-24`
-         * - `agentic_plus`: `2026-09-24`
+         * - `cost_effective`: `2026-09-28`
+         * - `agentic`: `2026-09-28`
+         * - `agentic_plus`: `2026-09-28`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-09-24' | '2026-08-19' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-09-28' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
