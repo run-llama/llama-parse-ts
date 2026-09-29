@@ -48,7 +48,11 @@ describe('resource parsing', () => {
         },
         image: { camera_photo_correction: true },
         pdf: {},
-        presentation: { out_of_bounds_content: true, skip_embedded_data: true },
+        presentation: {
+          include_hidden_slides: true,
+          out_of_bounds_content: true,
+          skip_embedded_data: true,
+        },
         spreadsheet: {
           detect_sub_tables_in_sheets: true,
           force_formula_computation_in_sheets: true,

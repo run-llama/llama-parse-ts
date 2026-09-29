@@ -676,6 +676,11 @@ export namespace ParseV2Parameters {
      */
     export interface Presentation {
       /**
+       * Include hidden PPTX slides in the output. Omitted or false skips hidden slides.
+       */
+      include_hidden_slides?: boolean | null;
+
+      /**
        * Extract content positioned outside the visible slide area. Some presentations
        * have hidden notes or content that extends beyond slide boundaries
        */
