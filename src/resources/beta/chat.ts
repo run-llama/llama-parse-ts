@@ -139,6 +139,12 @@ export interface ChatCreateResponse {
   session_id: string;
 
   /**
+   * What this chat's share link grants: read_only (transcript only) or query
+   * (viewers may ask new questions).
+   */
+  shared_access: 'query' | 'read_only';
+
+  /**
    * Auto-generated title derived from the first user message.
    */
   generated_title?: string | null;
@@ -206,6 +212,12 @@ export interface ChatRetrieveResponse {
   session_id: string;
 
   /**
+   * What this chat's share link grants: read_only (transcript only) or query
+   * (viewers may ask new questions).
+   */
+  shared_access: 'query' | 'read_only';
+
+  /**
    * Auto-generated title derived from the first user message.
    */
   generated_title?: string | null;
@@ -229,6 +241,11 @@ export namespace ChatRetrieveResponse {
     is_error: boolean;
 
     usage: StopEvent.Usage;
+
+    /**
+     * Requested indexes this turn could not query.
+     */
+    skipped_index_ids?: Array<string>;
 
     type?: 'stop';
   }
@@ -347,6 +364,12 @@ export interface ChatListResponse {
   session_id: string;
 
   /**
+   * What this chat's share link grants: read_only (transcript only) or query
+   * (viewers may ask new questions).
+   */
+  shared_access: 'query' | 'read_only';
+
+  /**
    * Auto-generated title derived from the first user message.
    */
   generated_title?: string | null;
@@ -398,6 +421,12 @@ export interface ChatGetSummaryResponse {
    * Unique session identifier.
    */
   session_id: string;
+
+  /**
+   * What this chat's share link grants: read_only (transcript only) or query
+   * (viewers may ask new questions).
+   */
+  shared_access: 'query' | 'read_only';
 
   /**
    * Auto-generated title derived from the first user message.
@@ -463,6 +492,12 @@ export interface ChatCreateParams {
    * Leave null to create an unbound session.
    */
   index_ids?: Array<string> | null;
+
+  /**
+   * Body param: What this chat's share link grants: read_only (transcript only) or
+   * query (viewers may ask new questions). Null follows the deployment default.
+   */
+  shared_access?: 'query' | 'read_only' | null;
 }
 
 export interface ChatRetrieveParams {
@@ -503,6 +538,11 @@ export interface ChatStreamParams {
    * Query param
    */
   project_id?: string | null;
+
+  /**
+   * Body param: Fail the turn if any requested index cannot be queried.
+   */
+  require_all_indexes?: boolean;
 }
 
 export declare namespace Chat {

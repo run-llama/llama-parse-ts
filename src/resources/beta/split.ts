@@ -229,7 +229,9 @@ export interface SplitCategory {
  */
 export interface SplitDocumentInput {
   /**
-   * Type of document input. Valid values are: file_id
+   * The beta `POST /api/v1/beta/split/jobs` endpoint accepts only `file_id`. To use
+   * a Parse job as input, call `POST /api/v1/split/jobs` instead, where you can pass
+   * the Parse job ID as `file_input`.
    */
   type: string;
 
@@ -264,7 +266,7 @@ export interface SplitSegmentResponse {
   confidence_category: string;
 
   /**
-   * 1-indexed page numbers in this split.
+   * Page numbers in this segment, as numbered by the input document.
    */
   pages: Array<number>;
 }
@@ -493,6 +495,12 @@ export namespace SplitCreateParams {
      * Strategy for splitting documents.
      */
     splitting_strategy?: Configuration.SplittingStrategy;
+
+    /**
+     * Split version to run. Omit for the current release. Preview versions are
+     * selectable by name and never resolved automatically.
+     */
+    version?: string | null;
   }
 
   export namespace Configuration {
@@ -507,17 +515,6 @@ export namespace SplitCreateParams {
        * 'uncategorized' but are excluded from results.
        */
       allow_uncategorized?: 'forbid' | 'include' | 'omit';
-
-      /**
-       * Free-form guidance for where segment boundaries are placed.
-       */
-      custom_instructions?: string | null;
-
-      /**
-       * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
-       * 1 disables merging.
-       */
-      min_pages_per_split?: number;
     }
   }
 }

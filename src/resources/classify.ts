@@ -103,6 +103,31 @@ export class Classify extends APIResource {
   }
 
   /**
+   * Delete a classify job and its result.
+   *
+   * The job must be in a terminal state (COMPLETED, FAILED, CANCELLED). Cancel a job
+   * that is still running before deleting it.
+   *
+   * Returns the identifiers of the deleted job.
+   *
+   * @example
+   * ```ts
+   * const classify = await client.classify.delete('job_id');
+   * ```
+   */
+  delete(
+    jobID: string,
+    params: ClassifyDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ClassifyDeleteResponse> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.delete(path`/api/v2/classify/${jobID}`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
    * Wait for a classify job to complete by polling until it reaches a terminal state.
    *
    * @param jobID - The ID of the classify job to wait for
@@ -561,6 +586,21 @@ export interface ClassifyListResponse {
 }
 
 /**
+ * Identifiers for a deleted classify job.
+ */
+export interface ClassifyDeleteResponse {
+  /**
+   * Identifier of the deleted classify job
+   */
+  id: string;
+
+  /**
+   * Project the deleted job belonged to
+   */
+  project_id?: string | null;
+}
+
+/**
  * Response for a classify job.
  */
 export interface ClassifyCancelResponse {
@@ -876,6 +916,12 @@ export interface ClassifyCancelParams {
   project_id?: string | null;
 }
 
+export interface ClassifyDeleteParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export declare namespace Classify {
   export {
     type ClassifyConfiguration as ClassifyConfiguration,
@@ -883,6 +929,7 @@ export declare namespace Classify {
     type ClassifyResult as ClassifyResult,
     type ClassifyCreateResponse as ClassifyCreateResponse,
     type ClassifyListResponse as ClassifyListResponse,
+    type ClassifyDeleteResponse as ClassifyDeleteResponse,
     type ClassifyCancelResponse as ClassifyCancelResponse,
     type ClassifyGetResponse as ClassifyGetResponse,
     type ClassifyListResponsesPaginatedCursor as ClassifyListResponsesPaginatedCursor,
@@ -890,5 +937,6 @@ export declare namespace Classify {
     type ClassifyListParams as ClassifyListParams,
     type ClassifyGetParams as ClassifyGetParams,
     type ClassifyCancelParams as ClassifyCancelParams,
+    type ClassifyDeleteParams as ClassifyDeleteParams,
   };
 }

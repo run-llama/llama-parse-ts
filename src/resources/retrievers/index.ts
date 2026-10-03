@@ -12,8 +12,10 @@ export {
   type RetrieverCreateParams,
   type RetrieverUpsertParams,
   type RetrieverListParams,
+  type RetrieverListPaginatedParams,
   type RetrieverGetParams,
   type RetrieverUpdateParams,
   type RetrieverDeleteParams,
   type RetrieverSearchParams,
+  type RetrieversPaginatedCursor,
 } from './retrievers';
