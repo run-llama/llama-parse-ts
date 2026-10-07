@@ -1,5 +1,37 @@
 # Changelog
 
+## [2.17.0](https://github.com/run-llama/llama-parse-ts/compare/v2.16.0...v2.17.0) (2026-10-07)
+
+
+### Features
+
+* add redline prompt changes to new prod version ([#27635](https://github.com/run-llama/llama-parse-ts/issues/27635)) ([707e112](https://github.com/run-llama/llama-parse-ts/commit/707e11297741fb4cb176efc0feb7124cfa783f67))
+* **chat:** let a chat session refuse queries from its share link ([#27012](https://github.com/run-llama/llama-parse-ts/issues/27012)) ([d280021](https://github.com/run-llama/llama-parse-ts/commit/d280021ae230ae4dad0d45c0b9f6bf310c1ac352))
+* **parse:** add detected_form_types to the per-page enriched forms output ([#26052](https://github.com/run-llama/llama-parse-ts/issues/26052)) ([bd48711](https://github.com/run-llama/llama-parse-ts/commit/bd48711cacb7797e5d81e27c80108b4f6a7ebc84))
+* **parse:** add option to include hidden PPTX slides ([#27938](https://github.com/run-llama/llama-parse-ts/issues/27938)) ([6bca4de](https://github.com/run-llama/llama-parse-ts/commit/6bca4de54d103e9d1911a8e5e7e3142fddc7a328))
+* **parse:** agentic 2026-09-09 — cache-stable prompt order + Flash Lite MINIMAL thinking ([#26273](https://github.com/run-llama/llama-parse-ts/issues/26273)) ([ec4e4a6](https://github.com/run-llama/llama-parse-ts/commit/ec4e4a692daa12d36e23e2d937b5b677890af216))
+* **parse:** apply watermark_handling to text output; add watermark e2e test ([#27932](https://github.com/run-llama/llama-parse-ts/issues/27932)) ([ffdb962](https://github.com/run-llama/llama-parse-ts/commit/ffdb96264e4f492cdaba664a5d453f1efa812f22))
+* **parse:** display enriched Forms granular highlights ([#26366](https://github.com/run-llama/llama-parse-ts/issues/26366)) ([f3bd48f](https://github.com/run-llama/llama-parse-ts/commit/f3bd48fa5129efc0837507be2970d8ff3d3ae5a8))
+* **parse:** remove_watermark output option with 2026-09-28 tier versions ([#27813](https://github.com/run-llama/llama-parse-ts/issues/27813)) ([f578a05](https://github.com/run-llama/llama-parse-ts/commit/f578a052e053c3be4e42d2c695e5883b7d21d0dd))
+* **parse:** ship the illegible-classification prompts as agentic_plus 2026-09-11 (latest) ([#26490](https://github.com/run-llama/llama-parse-ts/issues/26490)) ([7fbc672](https://github.com/run-llama/llama-parse-ts/commit/7fbc672718d95e2c03e2909d8f0e9c346e32bb41))
+* **sdk:** publish beta.attachments list and get ([d5c9d25](https://github.com/run-llama/llama-parse-ts/commit/d5c9d253be7a0d6d6f8e39146df62ab56c679de5))
+* **split:** accept a parse config or parse_job_id like extract_v2 ([#26303](https://github.com/run-llama/llama-parse-ts/issues/26303)) ([d7d3283](https://github.com/run-llama/llama-parse-ts/commit/d7d32830b2a33790aa081f29c40846c2ee0acdb8))
+
+
+### Bug Fixes
+
+* **chat:** report every index a chat turn could not query ([#26981](https://github.com/run-llama/llama-parse-ts/issues/26981)) ([37ecf9d](https://github.com/run-llama/llama-parse-ts/commit/37ecf9dd0bcc33c0dff612ce7302e87bbd0c5e23))
+* **classifier:** drop the dead classify v1 job mappings (methods were removed from the SDKs in 2.16.0 / 1.7.0) ([5a74795](https://github.com/run-llama/llama-parse-ts/commit/5a74795e2cf3fb49bcf4613a4c35fa437de5674d))
+* **extract:** refuse to delete a non-terminal job (LI-8700) ([#23793](https://github.com/run-llama/llama-parse-ts/issues/23793)) ([eb97463](https://github.com/run-llama/llama-parse-ts/commit/eb974639c89e3e977fd32604c19d20fe6cf7a53f))
+* **split:** process target_pages in the order written, matching Extract ([#28173](https://github.com/run-llama/llama-parse-ts/issues/28173)) ([9f29030](https://github.com/run-llama/llama-parse-ts/commit/9f29030ae35a5baa35440636dec3396f2cadf8e3))
+
+
+### Documentation
+
+* **changelog:** record the classify v1 removal in 2.16.0 ([f65c1b3](https://github.com/run-llama/llama-parse-ts/commit/f65c1b3cb9e9292df991810e3a67f0fb1cecb5e0))
+* **changelog:** record the classify v1 removal in 2.16.0 ([e3d9c9a](https://github.com/run-llama/llama-parse-ts/commit/e3d9c9afc263a4db2e23b9a38cb32c20351c8618))
+* update Extract versions and pricing ([#28128](https://github.com/run-llama/llama-parse-ts/issues/28128)) ([7a3dd36](https://github.com/run-llama/llama-parse-ts/commit/7a3dd36844024d97757e18fa5ff6479ef64c23e9))
+
 ## [2.14.1](https://github.com/run-llama/llama-parse-ts/compare/v2.14.0...v2.14.1) (2026-08-20)
 
 
