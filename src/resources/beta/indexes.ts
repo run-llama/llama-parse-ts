@@ -170,7 +170,8 @@ export interface IndexCreateResponse {
   metadata?: { [key: string]: unknown };
 
   /**
-   * Whether a sync is running. Set only when getting a single index.
+   * Whether the index is syncing its source or exporting the result. Requires
+   * `expand=sync_in_progress`.
    */
   sync_in_progress?: boolean | null;
 
@@ -245,7 +246,8 @@ export interface IndexListResponse {
   metadata?: { [key: string]: unknown };
 
   /**
-   * Whether a sync is running. Set only when getting a single index.
+   * Whether the index is syncing its source or exporting the result. Requires
+   * `expand=sync_in_progress`.
    */
   sync_in_progress?: boolean | null;
 
@@ -320,7 +322,8 @@ export interface IndexGetResponse {
   metadata?: { [key: string]: unknown };
 
   /**
-   * Whether a sync is running. Set only when getting a single index.
+   * Whether the index is syncing its source or exporting the result. Requires
+   * `expand=sync_in_progress`.
    */
   sync_in_progress?: boolean | null;
 
@@ -333,6 +336,11 @@ export interface IndexGetResponse {
 export type IndexSyncResponse = unknown;
 
 export interface IndexGetParams {
+  /**
+   * Fields to expand. Supported value: sync_in_progress.
+   */
+  expand?: Array<'sync_in_progress'>;
+
   organization_id?: string | null;
 
   project_id?: string | null;
