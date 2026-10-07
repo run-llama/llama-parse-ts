@@ -74,18 +74,6 @@ describe('resource dataSinks', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('get: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.dataSinks.get(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
-  });
-
-  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.dataSinks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       sink_type: 'ASTRA_DB',
@@ -103,7 +91,6 @@ describe('resource dataSinks', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.dataSinks.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       sink_type: 'ASTRA_DB',
-      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       component: { foo: 'bar' },
       name: 'name',
     });
@@ -119,17 +106,5 @@ describe('resource dataSinks', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.dataSinks.delete(
-        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
   });
 });

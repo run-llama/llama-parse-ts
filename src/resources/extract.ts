@@ -86,7 +86,8 @@ export class Extract extends APIResource {
   }
 
   /**
-   * Delete an extraction job and its results.
+   * Delete an extraction job and its results. A non-terminal job is refused; cancel
+   * it first, or pass force=true to delete a job whose workflow is gone.
    *
    * @example
    * ```ts
@@ -98,9 +99,9 @@ export class Extract extends APIResource {
     params: ExtractDeleteParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<unknown> {
-    const { organization_id, project_id } = params ?? {};
+    const { force, organization_id, project_id } = params ?? {};
     return this._client.delete(path`/api/v2/extract/${jobID}`, {
-      query: { organization_id, project_id },
+      query: { force, organization_id, project_id },
       ...options,
     });
   }
@@ -320,8 +321,10 @@ export interface ExtractConfiguration {
   disable_cache?: boolean;
 
   /**
+   * Deprecated. Applies only to Agentic and Cost Effective versions 2.0 or earlier.
    * Granularity of extraction: per_doc returns one object per document, per_page
-   * returns one object per page, per_table_row returns one object per table row
+   * returns one object per page, per_table_row returns one object per table row.
+   * Agentic Plus supports per_doc only.
    */
   extraction_target?: 'per_doc' | 'per_page' | 'per_table_row';
 
@@ -342,7 +345,7 @@ export interface ExtractConfiguration {
    * specified. Turbo extract does not support parse configuration or produce a parse
    * output; use another tier if your workflow requires parsed text.
    */
-  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
+  parse_tier?: string | null;
 
   /**
    * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
@@ -373,16 +376,15 @@ export interface ExtractConfiguration {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
-   * agentic_plus (50 credits/page), or turbo (35 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
+   * agentic_plus (50 credits/page)
    */
-  tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
 
   /**
-   * Use 'latest' for the latest release for the selected tier or a date string
-   * (YYYY-MM-DD format) to pin to the nearest release at or before that date. Job
-   * responses always report the concrete resolved version the job runs, fixed at job
-   * creation; saved configurations keep the value as provided.
+   * Extract version name, such as '2.5'. Use 'latest' for the newest compatible
+   * release for the selected tier. Dates (YYYY-MM-DD) are also supported, which will
+   * use the latest version on or before the specified date.
    */
   version?: string;
 }
@@ -919,6 +921,8 @@ export interface ExtractGetParams {
 }
 
 export interface ExtractDeleteParams {
+  force?: boolean;
+
   organization_id?: string | null;
 
   project_id?: string | null;

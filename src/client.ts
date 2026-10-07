@@ -53,6 +53,8 @@ import {
   ClassifyCreateParams,
   ClassifyCreateRequest,
   ClassifyCreateResponse,
+  ClassifyDeleteParams,
+  ClassifyDeleteResponse,
   ClassifyGetParams,
   ClassifyGetResponse,
   ClassifyListParams,
@@ -79,8 +81,6 @@ import {
 import {
   DataSink,
   DataSinkCreateParams,
-  DataSinkDeleteParams,
-  DataSinkGetParams,
   DataSinkListParams,
   DataSinkListResponse,
   DataSinkUpdateParams,
@@ -89,8 +89,6 @@ import {
 import {
   DataSource,
   DataSourceCreateParams,
-  DataSourceDeleteParams,
-  DataSourceGetParams,
   DataSourceListParams,
   DataSourceListResponse,
   DataSourceReaderVersionMetadata,
@@ -136,12 +134,6 @@ import {
   PresignedURL,
 } from './resources/files';
 import {
-  JobDataPoint,
-  JobDataPointListParams,
-  JobDataPoints,
-  JobDataPointsPaginatedCursor,
-} from './resources/job-data-points';
-import {
   BBox,
   CodeItem,
   FailPageMode,
@@ -164,8 +156,6 @@ import {
   ParsingCancelResponse,
   ParsingCreateParams,
   ParsingCreateResponse,
-  ParsingDeleteParams,
-  ParsingDeleteResponse,
   ParsingGetParams,
   ParsingGetResponse,
   ParsingJob,
@@ -186,6 +176,15 @@ import {
   ProjectListResponse,
   Projects,
 } from './resources/projects';
+import {
+  SheetCreateParams,
+  SheetDeleteJobParams,
+  SheetDeleteJobResponse,
+  SheetGetParams,
+  SheetGetResultTableParams,
+  SheetListParams,
+  Sheets,
+} from './resources/sheets';
 import {
   Split,
   SplitCancelParams,
@@ -212,9 +211,11 @@ import {
   WebhookConfigCreate,
   WebhookConfigCreateParams,
   WebhookConfigDeleteParams,
+  WebhookConfigListPaginatedParams,
   WebhookConfigListParams,
   WebhookConfigListResponse,
   WebhookConfigResponse,
+  WebhookConfigResponsesPaginatedCursor,
   WebhookConfigRetrieveParams,
   WebhookConfigUpdateParams,
   WebhookConfigs,
@@ -247,12 +248,7 @@ import {
   Pipeline,
   PipelineCreate,
   PipelineCreateParams,
-  PipelineDeleteParams,
-  PipelineGetParams,
   PipelineGetStatusParams,
-  PipelineListPaginatedParams,
-  PipelineListPaginatedResponse,
-  PipelineListPaginatedResponsesPaginatedCursor,
   PipelineListParams,
   PipelineListResponse,
   PipelineMetadataConfig,
@@ -277,6 +273,7 @@ import {
   RetrieverCreateParams,
   RetrieverDeleteParams,
   RetrieverGetParams,
+  RetrieverListPaginatedParams,
   RetrieverListParams,
   RetrieverListResponse,
   RetrieverPipeline,
@@ -284,6 +281,7 @@ import {
   RetrieverUpdateParams,
   RetrieverUpsertParams,
   Retrievers,
+  RetrieversPaginatedCursor,
 } from './resources/retrievers/retrievers';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -1026,6 +1024,7 @@ export class LlamaCloud {
   static toFile = Uploads.toFile;
 
   files: API.Files = new API.Files(this);
+  sheets: API.Sheets = new API.Sheets(this);
   split: API.Split = new API.Split(this);
   parsing: API.Parsing = new API.Parsing(this);
   extract: API.Extract = new API.Extract(this);
@@ -1036,7 +1035,6 @@ export class LlamaCloud {
   webhookConfigs: API.WebhookConfigs = new API.WebhookConfigs(this);
   projects: API.Projects = new API.Projects(this);
   v2Projects: API.V2Projects = new API.V2Projects(this);
-  jobDataPoints: API.JobDataPoints = new API.JobDataPoints(this);
   dataSinks: API.DataSinks = new API.DataSinks(this);
   dataSources: API.DataSources = new API.DataSources(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
@@ -1045,6 +1043,7 @@ export class LlamaCloud {
 }
 
 LlamaCloud.Files = Files;
+LlamaCloud.Sheets = Sheets;
 LlamaCloud.Split = Split;
 LlamaCloud.Parsing = Parsing;
 LlamaCloud.Extract = Extract;
@@ -1055,7 +1054,6 @@ LlamaCloud.Configurations = Configurations;
 LlamaCloud.WebhookConfigs = WebhookConfigs;
 LlamaCloud.Projects = Projects;
 LlamaCloud.V2Projects = V2Projects;
-LlamaCloud.JobDataPoints = JobDataPoints;
 LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
 LlamaCloud.Pipelines = Pipelines;
@@ -1119,6 +1117,16 @@ export declare namespace LlamaCloud {
   };
 
   export {
+    Sheets as Sheets,
+    type SheetDeleteJobResponse as SheetDeleteJobResponse,
+    type SheetCreateParams as SheetCreateParams,
+    type SheetListParams as SheetListParams,
+    type SheetGetParams as SheetGetParams,
+    type SheetGetResultTableParams as SheetGetResultTableParams,
+    type SheetDeleteJobParams as SheetDeleteJobParams,
+  };
+
+  export {
     Split as Split,
     type SplitCreateResponse as SplitCreateResponse,
     type SplitListResponse as SplitListResponse,
@@ -1160,7 +1168,6 @@ export declare namespace LlamaCloud {
     type TextItem as TextItem,
     type ParsingCreateResponse as ParsingCreateResponse,
     type ParsingListResponse as ParsingListResponse,
-    type ParsingDeleteResponse as ParsingDeleteResponse,
     type ParsingCancelResponse as ParsingCancelResponse,
     type ParsingGetResponse as ParsingGetResponse,
     type ParsingListVersionsResponse as ParsingListVersionsResponse,
@@ -1169,7 +1176,6 @@ export declare namespace LlamaCloud {
     type ParsingGetParams as ParsingGetParams,
     type ParsingListParams as ParsingListParams,
     type ParsingCancelParams as ParsingCancelParams,
-    type ParsingDeleteParams as ParsingDeleteParams,
   };
 
   export {
@@ -1217,6 +1223,7 @@ export declare namespace LlamaCloud {
     type ClassifyResult as ClassifyResult,
     type ClassifyCreateResponse as ClassifyCreateResponse,
     type ClassifyListResponse as ClassifyListResponse,
+    type ClassifyDeleteResponse as ClassifyDeleteResponse,
     type ClassifyCancelResponse as ClassifyCancelResponse,
     type ClassifyGetResponse as ClassifyGetResponse,
     type ClassifyListResponsesPaginatedCursor as ClassifyListResponsesPaginatedCursor,
@@ -1224,6 +1231,7 @@ export declare namespace LlamaCloud {
     type ClassifyListParams as ClassifyListParams,
     type ClassifyGetParams as ClassifyGetParams,
     type ClassifyCancelParams as ClassifyCancelParams,
+    type ClassifyDeleteParams as ClassifyDeleteParams,
   };
 
   export {
@@ -1248,8 +1256,10 @@ export declare namespace LlamaCloud {
     type WebhookConfigCreate as WebhookConfigCreate,
     type WebhookConfigResponse as WebhookConfigResponse,
     type WebhookConfigListResponse as WebhookConfigListResponse,
+    type WebhookConfigResponsesPaginatedCursor as WebhookConfigResponsesPaginatedCursor,
     type WebhookConfigCreateParams as WebhookConfigCreateParams,
     type WebhookConfigListParams as WebhookConfigListParams,
+    type WebhookConfigListPaginatedParams as WebhookConfigListPaginatedParams,
     type WebhookConfigRetrieveParams as WebhookConfigRetrieveParams,
     type WebhookConfigUpdateParams as WebhookConfigUpdateParams,
     type WebhookConfigDeleteParams as WebhookConfigDeleteParams,
@@ -1273,21 +1283,12 @@ export declare namespace LlamaCloud {
   };
 
   export {
-    JobDataPoints as JobDataPoints,
-    type JobDataPoint as JobDataPoint,
-    type JobDataPointsPaginatedCursor as JobDataPointsPaginatedCursor,
-    type JobDataPointListParams as JobDataPointListParams,
-  };
-
-  export {
     DataSinks as DataSinks,
     type DataSink as DataSink,
     type DataSinkListResponse as DataSinkListResponse,
     type DataSinkListParams as DataSinkListParams,
     type DataSinkCreateParams as DataSinkCreateParams,
-    type DataSinkGetParams as DataSinkGetParams,
     type DataSinkUpdateParams as DataSinkUpdateParams,
-    type DataSinkDeleteParams as DataSinkDeleteParams,
   };
 
   export {
@@ -1297,9 +1298,7 @@ export declare namespace LlamaCloud {
     type DataSourceListResponse as DataSourceListResponse,
     type DataSourceListParams as DataSourceListParams,
     type DataSourceCreateParams as DataSourceCreateParams,
-    type DataSourceGetParams as DataSourceGetParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
-    type DataSourceDeleteParams as DataSourceDeleteParams,
   };
 
   export {
@@ -1337,14 +1336,9 @@ export declare namespace LlamaCloud {
     type VertexTextEmbedding as VertexTextEmbedding,
     type PipelineRetrieveResponse as PipelineRetrieveResponse,
     type PipelineListResponse as PipelineListResponse,
-    type PipelineListPaginatedResponse as PipelineListPaginatedResponse,
-    type PipelineListPaginatedResponsesPaginatedCursor as PipelineListPaginatedResponsesPaginatedCursor,
     type PipelineListParams as PipelineListParams,
-    type PipelineListPaginatedParams as PipelineListPaginatedParams,
     type PipelineCreateParams as PipelineCreateParams,
-    type PipelineGetParams as PipelineGetParams,
     type PipelineUpdateParams as PipelineUpdateParams,
-    type PipelineDeleteParams as PipelineDeleteParams,
     type PipelineGetStatusParams as PipelineGetStatusParams,
     type PipelineUpsertParams as PipelineUpsertParams,
     type PipelineRetrieveParams as PipelineRetrieveParams,
@@ -1359,9 +1353,11 @@ export declare namespace LlamaCloud {
     type RetrieverCreate as RetrieverCreate,
     type RetrieverPipeline as RetrieverPipeline,
     type RetrieverListResponse as RetrieverListResponse,
+    type RetrieversPaginatedCursor as RetrieversPaginatedCursor,
     type RetrieverCreateParams as RetrieverCreateParams,
     type RetrieverUpsertParams as RetrieverUpsertParams,
     type RetrieverListParams as RetrieverListParams,
+    type RetrieverListPaginatedParams as RetrieverListPaginatedParams,
     type RetrieverGetParams as RetrieverGetParams,
     type RetrieverUpdateParams as RetrieverUpdateParams,
     type RetrieverDeleteParams as RetrieverDeleteParams,

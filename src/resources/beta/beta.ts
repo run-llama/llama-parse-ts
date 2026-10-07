@@ -17,6 +17,14 @@ import {
   AgentDataSearchParams,
   AgentDataUpdateParams,
 } from './agent-data';
+import * as AttachmentsAPI from './attachments';
+import {
+  AttachmentGetParams,
+  AttachmentListParams,
+  AttachmentListResponse,
+  AttachmentListResponsesPaginatedCursor,
+  Attachments,
+} from './attachments';
 import * as ChatAPI from './chat';
 import {
   Chat,
@@ -61,6 +69,19 @@ import {
   RetrievalRetrieveParams,
   RetrievalRetrieveResponse,
 } from './retrieval';
+import * as SheetsAPI from './sheets';
+import {
+  SheetCreateParams,
+  SheetDeleteJobParams,
+  SheetDeleteJobResponse,
+  SheetGetParams,
+  SheetGetResultTableParams,
+  SheetListParams,
+  Sheets,
+  SheetsJob,
+  SheetsJobsPaginatedCursor,
+  SheetsParsingConfig,
+} from './sheets';
 import * as SplitAPI from './split';
 import {
   Split,
@@ -95,7 +116,9 @@ export class Beta extends APIResource {
   indexes: IndexesAPI.Indexes = new IndexesAPI.Indexes(this._client);
   retrieval: RetrievalAPI.Retrieval = new RetrievalAPI.Retrieval(this._client);
   chat: ChatAPI.Chat = new ChatAPI.Chat(this._client);
+  attachments: AttachmentsAPI.Attachments = new AttachmentsAPI.Attachments(this._client);
   agentData: AgentDataAPI.AgentData = new AgentDataAPI.AgentData(this._client);
+  sheets: SheetsAPI.Sheets = new SheetsAPI.Sheets(this._client);
   directories: DirectoriesAPI.Directories = new DirectoriesAPI.Directories(this._client);
   split: SplitAPI.Split = new SplitAPI.Split(this._client);
 }
@@ -103,6 +126,8 @@ export class Beta extends APIResource {
 Beta.Indexes = Indexes;
 Beta.Retrieval = Retrieval;
 Beta.Chat = Chat;
+Beta.Attachments = Attachments;
+Beta.Sheets = Sheets;
 Beta.Directories = Directories;
 Beta.Split = Split;
 
@@ -152,6 +177,14 @@ export declare namespace Beta {
   };
 
   export {
+    Attachments as Attachments,
+    type AttachmentListResponse as AttachmentListResponse,
+    type AttachmentListResponsesPaginatedCursor as AttachmentListResponsesPaginatedCursor,
+    type AttachmentListParams as AttachmentListParams,
+    type AttachmentGetParams as AttachmentGetParams,
+  };
+
+  export {
     type AgentData as AgentData,
     type AgentDataDeleteResponse as AgentDataDeleteResponse,
     type AgentDataAggregateResponse as AgentDataAggregateResponse,
@@ -165,6 +198,19 @@ export declare namespace Beta {
     type AgentDataSearchParams as AgentDataSearchParams,
     type AgentDataAggregateParams as AgentDataAggregateParams,
     type AgentDataDeleteByQueryParams as AgentDataDeleteByQueryParams,
+  };
+
+  export {
+    Sheets as Sheets,
+    type SheetsJob as SheetsJob,
+    type SheetsParsingConfig as SheetsParsingConfig,
+    type SheetDeleteJobResponse as SheetDeleteJobResponse,
+    type SheetsJobsPaginatedCursor as SheetsJobsPaginatedCursor,
+    type SheetCreateParams as SheetCreateParams,
+    type SheetListParams as SheetListParams,
+    type SheetGetParams as SheetGetParams,
+    type SheetGetResultTableParams as SheetGetResultTableParams,
+    type SheetDeleteJobParams as SheetDeleteJobParams,
   };
 
   export {

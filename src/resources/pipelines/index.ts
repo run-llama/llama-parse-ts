@@ -5,7 +5,6 @@ export {
   type PipelineDataSource,
   type DataSourceGetDataSourcesResponse,
   type DataSourceUpdateDataSourcesResponse,
-  type DataSourceGetDataSourcesParams,
   type DataSourceUpdateDataSourcesParams,
   type DataSourceUpdateParams,
   type DataSourceGetStatusParams,
@@ -56,12 +55,7 @@ export {
   type ImageGetPageFigureParams,
   type ImageListPageFiguresParams,
 } from './images';
-export {
-  Metadata,
-  type MetadataCreateResponse,
-  type MetadataCreateParams,
-  type MetadataDeleteAllParams,
-} from './metadata';
+export { Metadata, type MetadataCreateResponse, type MetadataCreateParams } from './metadata';
 export {
   Pipelines,
   type AdvancedModeTransformConfig,
@@ -97,16 +91,11 @@ export {
   type VertexTextEmbedding,
   type PipelineRetrieveResponse,
   type PipelineListResponse,
-  type PipelineListPaginatedResponse,
   type PipelineListParams,
-  type PipelineListPaginatedParams,
   type PipelineCreateParams,
-  type PipelineGetParams,
   type PipelineUpdateParams,
-  type PipelineDeleteParams,
   type PipelineGetStatusParams,
   type PipelineUpsertParams,
   type PipelineRetrieveParams,
-  type PipelineListPaginatedResponsesPaginatedCursor,
 } from './pipelines';
-export { Sync, type SyncCreateParams, type SyncCancelParams } from './sync';
+export { Sync } from './sync';

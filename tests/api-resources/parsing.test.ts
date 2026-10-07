@@ -48,7 +48,11 @@ describe('resource parsing', () => {
         },
         image: { camera_photo_correction: true },
         pdf: {},
-        presentation: { out_of_bounds_content: true, skip_embedded_data: true },
+        presentation: {
+          include_hidden_slides: true,
+          out_of_bounds_content: true,
+          skip_embedded_data: true,
+        },
         spreadsheet: {
           detect_sub_tables_in_sheets: true,
           force_formula_computation_in_sheets: true,
@@ -61,7 +65,6 @@ describe('resource parsing', () => {
         granular_bboxes: ['word', 'line', 'cell'],
         images_to_save: ['embedded'],
         markdown: {
-          annotate_line_numbers: true,
           annotate_links: true,
           annotate_revisions: true,
           inline_images: true,
@@ -79,6 +82,7 @@ describe('resource parsing', () => {
           preserve_very_small_text: true,
         },
         tables_as_spreadsheet: { enable: true, guess_sheet_name: true },
+        watermark_handling: 'remove',
       },
       page_ranges: { max_pages: 1, target_pages: 'target_pages' },
       processing_control: {
@@ -235,7 +239,7 @@ describe('resource parsing', () => {
           created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           job_ids: ['string', 'string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          page_size: 1,
+          page_size: 0,
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           status: 'CANCELLED',
@@ -262,33 +266,6 @@ describe('resource parsing', () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.parsing.cancel(
-        'job_id',
-        {
-          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(LlamaCloud.NotFoundError);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete', async () => {
-    const responsePromise = client.parsing.delete('job_id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.parsing.delete(
         'job_id',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',

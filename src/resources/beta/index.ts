@@ -15,6 +15,13 @@ export {
   type AgentDataPaginatedCursorPost,
   type AgentDataAggregateResponsesPaginatedCursorPost,
 } from './agent-data';
+export {
+  Attachments,
+  type AttachmentListResponse,
+  type AttachmentListParams,
+  type AttachmentGetParams,
+  type AttachmentListResponsesPaginatedCursor,
+} from './attachments';
 export { Beta } from './beta';
 export {
   Chat,
@@ -70,6 +77,18 @@ export {
   type RetrievalFindResponsesPaginatedCursorPost,
   type RetrievalGrepResponsesPaginatedCursorPost,
 } from './retrieval';
+export {
+  Sheets,
+  type SheetsJob,
+  type SheetsParsingConfig,
+  type SheetDeleteJobResponse,
+  type SheetCreateParams,
+  type SheetListParams,
+  type SheetGetParams,
+  type SheetGetResultTableParams,
+  type SheetDeleteJobParams,
+  type SheetsJobsPaginatedCursor,
+} from './sheets';
 export {
   Split,
   type SplitCategory,

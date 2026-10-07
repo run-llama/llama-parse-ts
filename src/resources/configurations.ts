@@ -381,8 +381,10 @@ export interface ExtractV2Parameters {
   disable_cache?: boolean;
 
   /**
+   * Deprecated. Applies only to Agentic and Cost Effective versions 2.0 or earlier.
    * Granularity of extraction: per_doc returns one object per document, per_page
-   * returns one object per page, per_table_row returns one object per table row
+   * returns one object per page, per_table_row returns one object per table row.
+   * Agentic Plus supports per_doc only.
    */
   extraction_target?: 'per_doc' | 'per_page' | 'per_table_row';
 
@@ -403,7 +405,7 @@ export interface ExtractV2Parameters {
    * specified. Turbo extract does not support parse configuration or produce a parse
    * output; use another tier if your workflow requires parsed text.
    */
-  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
+  parse_tier?: string | null;
 
   /**
    * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
@@ -434,16 +436,15 @@ export interface ExtractV2Parameters {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
-   * agentic_plus (50 credits/page), or turbo (35 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
+   * agentic_plus (50 credits/page)
    */
-  tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
 
   /**
-   * Use 'latest' for the latest release for the selected tier or a date string
-   * (YYYY-MM-DD format) to pin to the nearest release at or before that date. Job
-   * responses always report the concrete resolved version the job runs, fixed at job
-   * creation; saved configurations keep the value as provided.
+   * Extract version name, such as '2.5'. Use 'latest' for the newest compatible
+   * release for the selected tier. Dates (YYYY-MM-DD) are also supported, which will
+   * use the latest version on or before the specified date.
    */
   version?: string;
 }
@@ -475,13 +476,13 @@ export interface ParseV2Parameters {
    * Current `latest` by tier:
    *
    * - `fast`: `2026-06-15`
-   * - `cost_effective`: `2026-08-19`
-   * - `agentic`: `2026-09-07`
-   * - `agentic_plus`: `2026-08-19`
+   * - `cost_effective`: `2026-09-28`
+   * - `agentic`: `2026-09-29`
+   * - `agentic_plus`: `2026-09-28`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-09-07' | '2026-08-19' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-09-29' | '2026-09-28' | '2026-06-15' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -676,6 +677,11 @@ export namespace ParseV2Parameters {
      */
     export interface Presentation {
       /**
+       * Include hidden PPTX slides in the output. Omitted or false skips hidden slides.
+       */
+      include_hidden_slides?: boolean | null;
+
+      /**
        * Extract content positioned outside the visible slide area. Some presentations
        * have hidden notes or content that extends beyond slide boundaries
        */
@@ -781,6 +787,17 @@ export namespace ParseV2Parameters {
      * Options for exporting tables as XLSX spreadsheets
      */
     tables_as_spreadsheet?: OutputOptions.TablesAsSpreadsheet;
+
+    /**
+     * What to do with watermark text stamped across the page (e.g., 'CONFIDENTIAL',
+     * 'DRAFT'): 'move_to_end' (default) keeps it as the last block of the page's
+     * markdown, 'move_to_start' as the first block, and 'remove' drops it. The text
+     * output follows the same choice where the watermark is a line of its own in the
+     * PDF text layer. In every mode the detected text is reported in the page's
+     * `watermark` metadata. Requires version 2026-09-28 or later on the
+     * cost_effective, agentic, and agentic_plus tiers; ignored otherwise
+     */
+    watermark_handling?: 'move_to_end' | 'move_to_start' | 'remove' | null;
   }
 
   export namespace OutputOptions {
@@ -788,11 +805,6 @@ export namespace ParseV2Parameters {
      * Markdown formatting options including table styles and link annotations
      */
     export interface Markdown {
-      /**
-       * Detect printed gutter line numbers and return their Markdown offsets
-       */
-      annotate_line_numbers?: boolean | null;
-
       /**
        * Add link annotations to markdown output in the format [text](url). When false,
        * only the link text is included
@@ -1312,13 +1324,13 @@ export namespace ParseV2Parameters {
          * Current `latest` by tier:
          *
          * - `fast`: `2026-06-15`
-         * - `cost_effective`: `2026-08-19`
-         * - `agentic`: `2026-09-07`
-         * - `agentic_plus`: `2026-08-19`
+         * - `cost_effective`: `2026-09-28`
+         * - `agentic`: `2026-09-29`
+         * - `agentic_plus`: `2026-09-28`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-09-07' | '2026-08-19' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-09-29' | '2026-09-28' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1508,9 +1520,37 @@ export interface SplitV1Parameters {
   product_type: 'split_v1';
 
   /**
+   * Saved parse configuration ID to control how the document is parsed before
+   * splitting. Takes precedence over parse_tier. Configurations that restrict pages
+   * (`target_pages` or `max_pages` on the parse configuration) are rejected: split
+   * results number pages relative to the full document. Ignored when a completed
+   * parse job is supplied as file_input.
+   */
+  parse_config_id?: string | null;
+
+  /**
+   * Parse tier used to read the document before splitting. Defaults to fast. Ignored
+   * when a completed parse job is supplied as file_input.
+   */
+  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
+
+  /**
    * Strategy for splitting documents.
    */
   splitting_strategy?: SplitV1Parameters.SplittingStrategy;
+
+  /**
+   * Comma-separated page numbers or ranges to split (1-based). Pages are split in
+   * the order listed. Omit to split all pages. Requires a completed parse job as
+   * file_input.
+   */
+  target_pages?: string | null;
+
+  /**
+   * Split version to run. Omit for the current release. Preview versions are
+   * selectable by name and never resolved automatically.
+   */
+  version?: string | null;
 }
 
 export namespace SplitV1Parameters {
@@ -1525,17 +1565,6 @@ export namespace SplitV1Parameters {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
-
-    /**
-     * Free-form guidance for where segment boundaries are placed.
-     */
-    custom_instructions?: string | null;
-
-    /**
-     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
-     * 1 disables merging.
-     */
-    min_pages_per_split?: number;
   }
 }
 

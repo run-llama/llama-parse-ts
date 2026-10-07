@@ -170,6 +170,11 @@ export interface IndexCreateResponse {
   metadata?: { [key: string]: unknown };
 
   /**
+   * Whether a sync is running. Set only when getting a single index.
+   */
+  sync_in_progress?: boolean | null;
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -240,6 +245,11 @@ export interface IndexListResponse {
   metadata?: { [key: string]: unknown };
 
   /**
+   * Whether a sync is running. Set only when getting a single index.
+   */
+  sync_in_progress?: boolean | null;
+
+  /**
    * Update datetime
    */
   updated_at?: string | null;
@@ -308,6 +318,11 @@ export interface IndexGetResponse {
    * Build state and diagnostic info.
    */
   metadata?: { [key: string]: unknown };
+
+  /**
+   * Whether a sync is running. Set only when getting a single index.
+   */
+  sync_in_progress?: boolean | null;
 
   /**
    * Update datetime
