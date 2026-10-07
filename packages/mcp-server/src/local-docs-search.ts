@@ -1152,13 +1152,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/v2/extract/{job_id}',
     httpMethod: 'delete',
     summary: 'Delete Extract Job',
-    description: 'Delete an extraction job and its results.',
+    description:
+      'Delete an extraction job and its results. A non-terminal job is refused; cancel it first, or pass force=true to delete a job whose workflow is gone.',
     stainlessPath: '(resource) extract > (method) delete',
     qualified: 'client.extract.delete',
-    params: ['job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    params: ['job_id: string;', 'force?: boolean;', 'organization_id?: string;', 'project_id?: string;'],
     response: 'object',
     markdown:
-      "## delete\n\n`client.extract.delete(job_id: string, organization_id?: string, project_id?: string): object`\n\n**delete** `/api/v2/extract/{job_id}`\n\nDelete an extraction job and its results.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extract = await client.extract.delete('job_id');\n\nconsole.log(extract);\n```",
+      "## delete\n\n`client.extract.delete(job_id: string, force?: boolean, organization_id?: string, project_id?: string): object`\n\n**delete** `/api/v2/extract/{job_id}`\n\nDelete an extraction job and its results. A non-terminal job is refused; cancel it first, or pass force=true to delete a job whose workflow is gone.\n\n### Parameters\n\n- `job_id: string`\n\n- `force?: boolean`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extract = await client.extract.delete('job_id');\n\nconsole.log(extract);\n```",
     perLanguage: {
       python: {
         method: 'extract.delete',

@@ -86,7 +86,8 @@ export class Extract extends APIResource {
   }
 
   /**
-   * Delete an extraction job and its results.
+   * Delete an extraction job and its results. A non-terminal job is refused; cancel
+   * it first, or pass force=true to delete a job whose workflow is gone.
    *
    * @example
    * ```ts
@@ -98,9 +99,9 @@ export class Extract extends APIResource {
     params: ExtractDeleteParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<unknown> {
-    const { organization_id, project_id } = params ?? {};
+    const { force, organization_id, project_id } = params ?? {};
     return this._client.delete(path`/api/v2/extract/${jobID}`, {
-      query: { organization_id, project_id },
+      query: { force, organization_id, project_id },
       ...options,
     });
   }
@@ -920,6 +921,8 @@ export interface ExtractGetParams {
 }
 
 export interface ExtractDeleteParams {
+  force?: boolean;
+
   organization_id?: string | null;
 
   project_id?: string | null;
