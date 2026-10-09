@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.18.0](https://github.com/run-llama/llama-parse-ts/compare/v2.17.0...v2.18.0) (2026-10-09)
+
+
+### Features
+
+* **sdk:** publish Verify as client.alpha.verify (PROD-10334) ([3006cd4](https://github.com/run-llama/llama-parse-ts/commit/3006cd4830dbde27a39fb66160a81c192373f2f5))
+
+
+### Chores
+
+* **stlc:** seal custom-code tracking files ([f4e293b](https://github.com/run-llama/llama-parse-ts/commit/f4e293babd0f1fd8bec7fec31a9278d96912258e))
+
 ## [2.17.0](https://github.com/run-llama/llama-parse-ts/compare/v2.16.0...v2.17.0) (2026-10-07)
 
 
