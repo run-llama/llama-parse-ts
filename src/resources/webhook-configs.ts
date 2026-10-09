@@ -173,6 +173,11 @@ export interface WebhookConfigCreate {
     | 'split.processing'
     | 'split.success'
     | 'unmapped_event'
+    | 'verify.cancelled'
+    | 'verify.error'
+    | 'verify.pending'
+    | 'verify.running'
+    | 'verify.success'
   > | null;
 
   /**
@@ -268,6 +273,11 @@ export interface WebhookConfigResponse {
     | 'split.processing'
     | 'split.success'
     | 'unmapped_event'
+    | 'verify.cancelled'
+    | 'verify.error'
+    | 'verify.pending'
+    | 'verify.running'
+    | 'verify.success'
   > | null;
 
   /**
@@ -336,6 +346,11 @@ export interface WebhookConfigCreateParams {
     | 'split.processing'
     | 'split.success'
     | 'unmapped_event'
+    | 'verify.cancelled'
+    | 'verify.error'
+    | 'verify.pending'
+    | 'verify.running'
+    | 'verify.success'
   > | null;
 
   /**
@@ -427,6 +442,11 @@ export interface WebhookConfigUpdateParams {
     | 'split.processing'
     | 'split.success'
     | 'unmapped_event'
+    | 'verify.cancelled'
+    | 'verify.error'
+    | 'verify.pending'
+    | 'verify.running'
+    | 'verify.success'
   > | null;
 
   /**

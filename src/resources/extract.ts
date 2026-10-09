@@ -618,6 +618,11 @@ export namespace ExtractV2JobCreate {
       | 'split.processing'
       | 'split.success'
       | 'unmapped_event'
+      | 'verify.cancelled'
+      | 'verify.error'
+      | 'verify.pending'
+      | 'verify.running'
+      | 'verify.success'
     > | null;
 
     /**
@@ -831,6 +836,11 @@ export namespace ExtractCreateParams {
       | 'split.processing'
       | 'split.success'
       | 'unmapped_event'
+      | 'verify.cancelled'
+      | 'verify.error'
+      | 'verify.pending'
+      | 'verify.running'
+      | 'verify.success'
     > | null;
 
     /**

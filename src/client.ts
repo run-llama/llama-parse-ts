@@ -46,6 +46,21 @@ import {
   Batches,
 } from './resources/batches';
 import {
+  Chat,
+  ChatCreateParams,
+  ChatCreateResponse,
+  ChatDeleteParams,
+  ChatGetSummaryParams,
+  ChatGetSummaryResponse,
+  ChatListParams,
+  ChatListResponse,
+  ChatListResponsesPaginatedCursor,
+  ChatRetrieveParams,
+  ChatRetrieveResponse,
+  ChatStreamParams,
+  ChatStreamResponse,
+} from './resources/chat';
+import {
   Classify,
   ClassifyCancelParams,
   ClassifyCancelResponse,
@@ -134,6 +149,21 @@ import {
   PresignedURL,
 } from './resources/files';
 import {
+  IndexCancelSyncParams,
+  IndexCancelSyncResponse,
+  IndexCreateParams,
+  IndexCreateResponse,
+  IndexDeleteParams,
+  IndexGetParams,
+  IndexGetResponse,
+  IndexListParams,
+  IndexListResponse,
+  IndexListResponsesPaginatedCursor,
+  IndexSyncParams,
+  IndexSyncResponse,
+  Indexes,
+} from './resources/indexes';
+import {
   BBox,
   CodeItem,
   FailPageMode,
@@ -176,6 +206,19 @@ import {
   ProjectListResponse,
   Projects,
 } from './resources/projects';
+import {
+  Retrieval,
+  RetrievalFindParams,
+  RetrievalFindResponse,
+  RetrievalFindResponsesPaginatedCursorPost,
+  RetrievalGrepParams,
+  RetrievalGrepResponse,
+  RetrievalGrepResponsesPaginatedCursorPost,
+  RetrievalReadParams,
+  RetrievalReadResponse,
+  RetrievalRetrieveParams,
+  RetrievalRetrieveResponse,
+} from './resources/retrieval';
 import {
   SheetCreateParams,
   SheetDeleteJobParams,
@@ -220,6 +263,7 @@ import {
   WebhookConfigUpdateParams,
   WebhookConfigs,
 } from './resources/webhook-configs';
+import { Alpha } from './resources/alpha/alpha';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
 import {
@@ -1039,7 +1083,11 @@ export class LlamaCloud {
   dataSources: API.DataSources = new API.DataSources(this);
   pipelines: API.Pipelines = new API.Pipelines(this);
   retrievers: API.Retrievers = new API.Retrievers(this);
+  indexes: API.Indexes = new API.Indexes(this);
+  retrieval: API.Retrieval = new API.Retrieval(this);
+  chat: API.Chat = new API.Chat(this);
   beta: API.Beta = new API.Beta(this);
+  alpha: API.Alpha = new API.Alpha(this);
 }
 
 LlamaCloud.Files = Files;
@@ -1058,7 +1106,11 @@ LlamaCloud.DataSinks = DataSinks;
 LlamaCloud.DataSources = DataSources;
 LlamaCloud.Pipelines = Pipelines;
 LlamaCloud.Retrievers = Retrievers;
+LlamaCloud.Indexes = Indexes;
+LlamaCloud.Retrieval = Retrieval;
+LlamaCloud.Chat = Chat;
 LlamaCloud.Beta = Beta;
+LlamaCloud.Alpha = Alpha;
 
 export declare namespace LlamaCloud {
   export type RequestOptions = Opts.RequestOptions;
@@ -1364,7 +1416,55 @@ export declare namespace LlamaCloud {
     type RetrieverSearchParams as RetrieverSearchParams,
   };
 
+  export {
+    Indexes as Indexes,
+    type IndexCreateResponse as IndexCreateResponse,
+    type IndexListResponse as IndexListResponse,
+    type IndexCancelSyncResponse as IndexCancelSyncResponse,
+    type IndexGetResponse as IndexGetResponse,
+    type IndexSyncResponse as IndexSyncResponse,
+    type IndexListResponsesPaginatedCursor as IndexListResponsesPaginatedCursor,
+    type IndexGetParams as IndexGetParams,
+    type IndexDeleteParams as IndexDeleteParams,
+    type IndexCreateParams as IndexCreateParams,
+    type IndexSyncParams as IndexSyncParams,
+    type IndexCancelSyncParams as IndexCancelSyncParams,
+    type IndexListParams as IndexListParams,
+  };
+
+  export {
+    Retrieval as Retrieval,
+    type RetrievalRetrieveResponse as RetrievalRetrieveResponse,
+    type RetrievalFindResponse as RetrievalFindResponse,
+    type RetrievalGrepResponse as RetrievalGrepResponse,
+    type RetrievalReadResponse as RetrievalReadResponse,
+    type RetrievalFindResponsesPaginatedCursorPost as RetrievalFindResponsesPaginatedCursorPost,
+    type RetrievalGrepResponsesPaginatedCursorPost as RetrievalGrepResponsesPaginatedCursorPost,
+    type RetrievalRetrieveParams as RetrievalRetrieveParams,
+    type RetrievalFindParams as RetrievalFindParams,
+    type RetrievalGrepParams as RetrievalGrepParams,
+    type RetrievalReadParams as RetrievalReadParams,
+  };
+
+  export {
+    Chat as Chat,
+    type ChatCreateResponse as ChatCreateResponse,
+    type ChatRetrieveResponse as ChatRetrieveResponse,
+    type ChatListResponse as ChatListResponse,
+    type ChatGetSummaryResponse as ChatGetSummaryResponse,
+    type ChatStreamResponse as ChatStreamResponse,
+    type ChatListResponsesPaginatedCursor as ChatListResponsesPaginatedCursor,
+    type ChatListParams as ChatListParams,
+    type ChatCreateParams as ChatCreateParams,
+    type ChatRetrieveParams as ChatRetrieveParams,
+    type ChatDeleteParams as ChatDeleteParams,
+    type ChatGetSummaryParams as ChatGetSummaryParams,
+    type ChatStreamParams as ChatStreamParams,
+  };
+
   export { Beta as Beta };
+
+  export { Alpha as Alpha };
 
   export type CloudAstraDBVectorStore = API.CloudAstraDBVectorStore;
   export type CloudAzStorageBlobDataSource = API.CloudAzStorageBlobDataSource;

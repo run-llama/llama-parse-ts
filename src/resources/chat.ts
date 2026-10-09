@@ -1,17 +1,23 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
-import { APIPromise } from '../../core/api-promise';
-import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
-import { buildHeaders } from '../../internal/headers';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Chat extends APIResource {
   /**
    * List all chat sessions for the current project.
    *
-   * @deprecated Moved out of beta. Use the top-level chat resource instead
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const chatListResponse of client.chat.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: ChatListParams | null | undefined = {},
@@ -24,7 +30,10 @@ export class Chat extends APIResource {
    * Create a chat session, optionally bound to indexes (locked after the first
    * message).
    *
-   * @deprecated Moved out of beta. Use the top-level chat resource instead
+   * @example
+   * ```ts
+   * const chat = await client.chat.create();
+   * ```
    */
   create(
     params: ChatCreateParams | null | undefined = {},
@@ -37,7 +46,10 @@ export class Chat extends APIResource {
   /**
    * Retrieve a full session by ID, including its event history.
    *
-   * @deprecated Moved out of beta. Use the top-level chat resource instead
+   * @example
+   * ```ts
+   * const chat = await client.chat.retrieve('session_id');
+   * ```
    */
   retrieve(
     sessionID: string,
@@ -50,7 +62,10 @@ export class Chat extends APIResource {
   /**
    * Delete a session.
    *
-   * @deprecated Moved out of beta. Use the top-level chat resource instead
+   * @example
+   * ```ts
+   * await client.chat.delete('session_id');
+   * ```
    */
   delete(
     sessionID: string,
@@ -68,7 +83,10 @@ export class Chat extends APIResource {
   /**
    * Retrieve a session summary by ID.
    *
-   * @deprecated Moved out of beta. Use the top-level chat resource instead
+   * @example
+   * ```ts
+   * const response = await client.chat.getSummary('session_id');
+   * ```
    */
   getSummary(
     sessionID: string,
@@ -81,7 +99,13 @@ export class Chat extends APIResource {
   /**
    * Stream agent events for a chat turn as Server-Sent Events.
    *
-   * @deprecated Moved out of beta. Use the top-level chat resource instead
+   * @example
+   * ```ts
+   * const response = await client.chat.stream('session_id', {
+   *   index_ids: ['idx-abc123', 'idx-def456'],
+   *   prompt: 'What were the main findings in Q3?',
+   * });
+   * ```
    */
   stream(sessionID: string, params: ChatStreamParams, options?: RequestOptions): APIPromise<unknown> {
     const { organization_id, project_id, ...body } = params;

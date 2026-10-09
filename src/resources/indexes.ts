@@ -1,17 +1,20 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
-import { APIPromise } from '../../core/api-promise';
-import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../../core/pagination';
-import { buildHeaders } from '../../internal/headers';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { PagePromise, PaginatedCursor, type PaginatedCursorParams } from '../core/pagination';
+import { buildHeaders } from '../internal/headers';
+import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Indexes extends APIResource {
   /**
    * Get an index by ID.
    *
-   * @deprecated Moved out of beta. Use the top-level indexes resource instead
+   * @example
+   * ```ts
+   * const index = await client.indexes.get('index_id');
+   * ```
    */
   get(
     indexID: string,
@@ -24,7 +27,10 @@ export class Indexes extends APIResource {
   /**
    * Delete an index.
    *
-   * @deprecated Moved out of beta. Use the top-level indexes resource instead
+   * @example
+   * ```ts
+   * await client.indexes.delete('index_id');
+   * ```
    */
   delete(
     indexID: string,
@@ -42,7 +48,12 @@ export class Indexes extends APIResource {
   /**
    * Create a searchable index over a source directory.
    *
-   * @deprecated Moved out of beta. Use the top-level indexes resource instead
+   * @example
+   * ```ts
+   * const index = await client.indexes.create({
+   *   source_directory_id: 'dir-abc123',
+   * });
+   * ```
    */
   create(params: IndexCreateParams, options?: RequestOptions): APIPromise<IndexCreateResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -53,7 +64,10 @@ export class Indexes extends APIResource {
    * Trigger a sync and export for an existing index, re-parsing changed files and
    * exporting updated chunks.
    *
-   * @deprecated Moved out of beta. Use the top-level indexes resource instead
+   * @example
+   * ```ts
+   * const response = await client.indexes.sync('index_id');
+   * ```
    */
   sync(
     indexID: string,
@@ -68,9 +82,37 @@ export class Indexes extends APIResource {
   }
 
   /**
+   * Cancel the running sync for an index. Returns 409 if no sync is running.
+   *
+   * @example
+   * ```ts
+   * const response = await client.indexes.cancelSync(
+   *   'index_id',
+   * );
+   * ```
+   */
+  cancelSync(
+    indexID: string,
+    params: IndexCancelSyncParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<unknown> {
+    const { organization_id, project_id } = params ?? {};
+    return this._client.post(path`/api/v1/indexes/${indexID}/sync/cancel`, {
+      query: { organization_id, project_id },
+      ...options,
+    });
+  }
+
+  /**
    * List indexes for the current project.
    *
-   * @deprecated Moved out of beta. Use the top-level indexes resource instead
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const indexListResponse of client.indexes.list()) {
+   *   // ...
+   * }
+   * ```
    */
   list(
     query: IndexListParams | null | undefined = {},
@@ -236,6 +278,8 @@ export interface IndexListResponse {
    */
   updated_at?: string | null;
 }
+
+export type IndexCancelSyncResponse = unknown;
 
 /**
  * A searchable index over a directory of documents.
@@ -415,6 +459,12 @@ export interface IndexSyncParams {
   project_id?: string | null;
 }
 
+export interface IndexCancelSyncParams {
+  organization_id?: string | null;
+
+  project_id?: string | null;
+}
+
 export interface IndexListParams extends PaginatedCursorParams {
   organization_id?: string | null;
 
@@ -427,6 +477,7 @@ export declare namespace Indexes {
   export {
     type IndexCreateResponse as IndexCreateResponse,
     type IndexListResponse as IndexListResponse,
+    type IndexCancelSyncResponse as IndexCancelSyncResponse,
     type IndexGetResponse as IndexGetResponse,
     type IndexSyncResponse as IndexSyncResponse,
     type IndexListResponsesPaginatedCursor as IndexListResponsesPaginatedCursor,
@@ -434,6 +485,7 @@ export declare namespace Indexes {
     type IndexDeleteParams as IndexDeleteParams,
     type IndexCreateParams as IndexCreateParams,
     type IndexSyncParams as IndexSyncParams,
+    type IndexCancelSyncParams as IndexCancelSyncParams,
     type IndexListParams as IndexListParams,
   };
 }

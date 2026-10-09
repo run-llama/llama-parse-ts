@@ -10,7 +10,7 @@ const client = new LlamaCloud({
 describe('resource indexes', () => {
   // Mock server tests are disabled
   test.skip('get', async () => {
-    const responsePromise = client.beta.indexes.get('index_id');
+    const responsePromise = client.indexes.get('index_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +24,7 @@ describe('resource indexes', () => {
   test.skip('get: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.beta.indexes.get(
+      client.indexes.get(
         'index_id',
         {
           expand: ['sync_in_progress'],
@@ -38,7 +38,7 @@ describe('resource indexes', () => {
 
   // Mock server tests are disabled
   test.skip('delete', async () => {
-    const responsePromise = client.beta.indexes.delete('index_id');
+    const responsePromise = client.indexes.delete('index_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -52,7 +52,7 @@ describe('resource indexes', () => {
   test.skip('delete: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.beta.indexes.delete(
+      client.indexes.delete(
         'index_id',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -65,7 +65,7 @@ describe('resource indexes', () => {
 
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.beta.indexes.create({ source_directory_id: 'dir-abc123' });
+    const responsePromise = client.indexes.create({ source_directory_id: 'dir-abc123' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -77,7 +77,7 @@ describe('resource indexes', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.beta.indexes.create({
+    const response = await client.indexes.create({
       source_directory_id: 'dir-abc123',
       organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -92,7 +92,7 @@ describe('resource indexes', () => {
 
   // Mock server tests are disabled
   test.skip('sync', async () => {
-    const responsePromise = client.beta.indexes.sync('index_id');
+    const responsePromise = client.indexes.sync('index_id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -106,7 +106,34 @@ describe('resource indexes', () => {
   test.skip('sync: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.beta.indexes.sync(
+      client.indexes.sync(
+        'index_id',
+        {
+          organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancelSync', async () => {
+    const responsePromise = client.indexes.cancelSync('index_id');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('cancelSync: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.indexes.cancelSync(
         'index_id',
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -119,7 +146,7 @@ describe('resource indexes', () => {
 
   // Mock server tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.beta.indexes.list();
+    const responsePromise = client.indexes.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -133,7 +160,7 @@ describe('resource indexes', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.beta.indexes.list(
+      client.indexes.list(
         {
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           page_size: 0,
