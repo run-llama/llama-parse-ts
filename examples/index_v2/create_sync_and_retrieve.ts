@@ -82,7 +82,7 @@ async function createIndexFromDirectory(): Promise<[string, string]> {
     )}`,
   );
 
-  const idx = await client.beta.indexes.create({
+  const idx = await client.indexes.create({
     source_directory_id: cloudDir.id,
     project_id: getProjectId() ?? null,
     name: process.env.INDEX_NAME ?? 'index-v2-demo',
@@ -97,10 +97,10 @@ async function createIndexFromDirectory(): Promise<[string, string]> {
 
 async function syncAndWait(indexId: string): Promise<void> {
   const client = getClient();
-  await client.beta.indexes.sync(indexId);
+  await client.indexes.sync(indexId);
 
   for (let attempts = 0; attempts < MAX_POLLING_ATTEMPTS; attempts++) {
-    const idx = await client.beta.indexes.get(indexId);
+    const idx = await client.indexes.get(indexId);
     const status = getStatus(idx.metadata);
 
     if (status === 'ready') return;
@@ -113,7 +113,7 @@ async function syncAndWait(indexId: string): Promise<void> {
 async function retrieve(exportConfigId: string): Promise<void> {
   const client = getClient();
 
-  const retrieved = await client.beta.retrieval.retrieve({
+  const retrieved = await client.retrieval.retrieve({
     index_id: exportConfigId,
     query: process.env.INDEX_RETRIEVAL_QUERY ?? 'What information is available for retrieval?',
     top_k: 10,
