@@ -459,6 +459,60 @@ Methods:
 
 - <code title="post /api/v1/retrievers/{retriever_id}/retrieve">client.retrievers.retriever.<a href="./src/resources/retrievers/retriever.ts">search</a>(retrieverID, { ...params }) -> CompositeRetrievalResult</code>
 
+# Indexes
+
+Types:
+
+- <code><a href="./src/resources/indexes.ts">IndexCreateResponse</a></code>
+- <code><a href="./src/resources/indexes.ts">IndexListResponse</a></code>
+- <code><a href="./src/resources/indexes.ts">IndexCancelSyncResponse</a></code>
+- <code><a href="./src/resources/indexes.ts">IndexGetResponse</a></code>
+- <code><a href="./src/resources/indexes.ts">IndexSyncResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/indexes/{index_id}">client.indexes.<a href="./src/resources/indexes.ts">get</a>(indexID, { ...params }) -> IndexGetResponse</code>
+- <code title="delete /api/v1/indexes/{index_id}">client.indexes.<a href="./src/resources/indexes.ts">delete</a>(indexID, { ...params }) -> void</code>
+- <code title="post /api/v1/indexes">client.indexes.<a href="./src/resources/indexes.ts">create</a>({ ...params }) -> IndexCreateResponse</code>
+- <code title="post /api/v1/indexes/{index_id}/sync">client.indexes.<a href="./src/resources/indexes.ts">sync</a>(indexID, { ...params }) -> unknown</code>
+- <code title="post /api/v1/indexes/{index_id}/sync/cancel">client.indexes.<a href="./src/resources/indexes.ts">cancelSync</a>(indexID, { ...params }) -> unknown</code>
+- <code title="get /api/v1/indexes">client.indexes.<a href="./src/resources/indexes.ts">list</a>({ ...params }) -> IndexListResponsesPaginatedCursor</code>
+
+# Retrieval
+
+Types:
+
+- <code><a href="./src/resources/retrieval.ts">RetrievalRetrieveResponse</a></code>
+- <code><a href="./src/resources/retrieval.ts">RetrievalFindResponse</a></code>
+- <code><a href="./src/resources/retrieval.ts">RetrievalGrepResponse</a></code>
+- <code><a href="./src/resources/retrieval.ts">RetrievalReadResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v1/retrieval/retrieve">client.retrieval.<a href="./src/resources/retrieval.ts">retrieve</a>({ ...params }) -> RetrievalRetrieveResponse</code>
+- <code title="post /api/v1/retrieval/files/find">client.retrieval.<a href="./src/resources/retrieval.ts">find</a>({ ...params }) -> RetrievalFindResponsesPaginatedCursorPost</code>
+- <code title="post /api/v1/retrieval/files/grep">client.retrieval.<a href="./src/resources/retrieval.ts">grep</a>({ ...params }) -> RetrievalGrepResponsesPaginatedCursorPost</code>
+- <code title="post /api/v1/retrieval/files/read">client.retrieval.<a href="./src/resources/retrieval.ts">read</a>({ ...params }) -> RetrievalReadResponse</code>
+
+# Chat
+
+Types:
+
+- <code><a href="./src/resources/chat.ts">ChatCreateResponse</a></code>
+- <code><a href="./src/resources/chat.ts">ChatRetrieveResponse</a></code>
+- <code><a href="./src/resources/chat.ts">ChatListResponse</a></code>
+- <code><a href="./src/resources/chat.ts">ChatGetSummaryResponse</a></code>
+- <code><a href="./src/resources/chat.ts">ChatStreamResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v1/chat">client.chat.<a href="./src/resources/chat.ts">list</a>({ ...params }) -> ChatListResponsesPaginatedCursor</code>
+- <code title="post /api/v1/chat">client.chat.<a href="./src/resources/chat.ts">create</a>({ ...params }) -> ChatCreateResponse</code>
+- <code title="get /api/v1/chat/{session_id}">client.chat.<a href="./src/resources/chat.ts">retrieve</a>(sessionID, { ...params }) -> ChatRetrieveResponse</code>
+- <code title="delete /api/v1/chat/{session_id}">client.chat.<a href="./src/resources/chat.ts">delete</a>(sessionID, { ...params }) -> void</code>
+- <code title="get /api/v1/chat/{session_id}/summary">client.chat.<a href="./src/resources/chat.ts">getSummary</a>(sessionID, { ...params }) -> ChatGetSummaryResponse</code>
+- <code title="post /api/v1/chat/{session_id}/messages/stream">client.chat.<a href="./src/resources/chat.ts">stream</a>(sessionID, { ...params }) -> unknown</code>
+
 # Beta
 
 ## Indexes
@@ -612,3 +666,23 @@ Methods:
 - <code title="post /api/v1/beta/split/jobs">client.beta.split.<a href="./src/resources/beta/split.ts">create</a>({ ...params }) -> SplitCreateResponse</code>
 - <code title="get /api/v1/beta/split/jobs">client.beta.split.<a href="./src/resources/beta/split.ts">list</a>({ ...params }) -> SplitListResponsesPaginatedCursor</code>
 - <code title="get /api/v1/beta/split/jobs/{split_job_id}">client.beta.split.<a href="./src/resources/beta/split.ts">get</a>(splitJobID, { ...params }) -> SplitGetResponse</code>
+
+# Alpha
+
+## Verify
+
+Types:
+
+- <code><a href="./src/resources/alpha/verify.ts">VerifyCreateResponse</a></code>
+- <code><a href="./src/resources/alpha/verify.ts">VerifyListResponse</a></code>
+- <code><a href="./src/resources/alpha/verify.ts">VerifyCancelResponse</a></code>
+- <code><a href="./src/resources/alpha/verify.ts">VerifyGetResponse</a></code>
+- <code><a href="./src/resources/alpha/verify.ts">VerifyGetDetailsResponse</a></code>
+
+Methods:
+
+- <code title="get /api/alpha/verify">client.alpha.verify.<a href="./src/resources/alpha/verify.ts">list</a>({ ...params }) -> VerifyListResponsesPaginatedCursor</code>
+- <code title="post /api/alpha/verify">client.alpha.verify.<a href="./src/resources/alpha/verify.ts">create</a>({ ...params }) -> VerifyCreateResponse</code>
+- <code title="get /api/alpha/verify/{job_id}">client.alpha.verify.<a href="./src/resources/alpha/verify.ts">get</a>(jobID, { ...params }) -> VerifyGetResponse</code>
+- <code title="post /api/alpha/verify/{job_id}/cancel">client.alpha.verify.<a href="./src/resources/alpha/verify.ts">cancel</a>(jobID, { ...params }) -> VerifyCancelResponse</code>
+- <code title="get /api/alpha/verify/{job_id}/details">client.alpha.verify.<a href="./src/resources/alpha/verify.ts">getDetails</a>(jobID, { ...params }) -> VerifyGetDetailsResponse</code>

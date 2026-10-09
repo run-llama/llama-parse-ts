@@ -1,16 +1,22 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
-import { APIPromise } from '../../core/api-promise';
-import { PagePromise, PaginatedCursorPost, type PaginatedCursorPostParams } from '../../core/pagination';
-import { RequestOptions } from '../../internal/request-options';
+import { APIResource } from '../core/resource';
+import { APIPromise } from '../core/api-promise';
+import { PagePromise, PaginatedCursorPost, type PaginatedCursorPostParams } from '../core/pagination';
+import { RequestOptions } from '../internal/request-options';
 
 export class Retrieval extends APIResource {
   /**
    * Retrieve relevant chunks via hybrid search (vector + full-text), with filtering
    * on built-in or user-defined metadata.
    *
-   * @deprecated Moved out of beta. Use the top-level retrieval resource instead
+   * @example
+   * ```ts
+   * const retrieval = await client.retrieval.retrieve({
+   *   index_id: 'idx-abc123',
+   *   query: 'What are the key findings?',
+   * });
+   * ```
    */
   retrieve(params: RetrievalRetrieveParams, options?: RequestOptions): APIPromise<RetrievalRetrieveResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -24,7 +30,15 @@ export class Retrieval extends APIResource {
   /**
    * Search for files by name.
    *
-   * @deprecated Moved out of beta. Use the top-level retrieval resource instead
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const retrievalFindResponse of client.retrieval.find(
+   *   { index_id: 'idx-abc123' },
+   * )) {
+   *   // ...
+   * }
+   * ```
    */
   find(
     params: RetrievalFindParams,
@@ -41,7 +55,19 @@ export class Retrieval extends APIResource {
   /**
    * Grep within a file's parsed content using a regex pattern.
    *
-   * @deprecated Moved out of beta. Use the top-level retrieval resource instead
+   * @example
+   * ```ts
+   * // Automatically fetches more pages as needed.
+   * for await (const retrievalGrepResponse of client.retrieval.grep(
+   *   {
+   *     file_id: 'file_id',
+   *     index_id: 'idx-abc123',
+   *     pattern: 'revenue|profit',
+   *   },
+   * )) {
+   *   // ...
+   * }
+   * ```
    */
   grep(
     params: RetrievalGrepParams,
@@ -58,7 +84,13 @@ export class Retrieval extends APIResource {
   /**
    * Read the parsed text content of a specific file.
    *
-   * @deprecated Moved out of beta. Use the top-level retrieval resource instead
+   * @example
+   * ```ts
+   * const response = await client.retrieval.read({
+   *   file_id: 'file_id',
+   *   index_id: 'idx-abc123',
+   * });
+   * ```
    */
   read(params: RetrievalReadParams, options?: RequestOptions): APIPromise<RetrievalReadResponse> {
     const { organization_id, project_id, ...body } = params;
@@ -286,7 +318,8 @@ export interface RetrievalRetrieveParams {
   static_filters?: RetrievalRetrieveParams.StaticFilters | null;
 
   /**
-   * Body param: Maximum number of results to return.
+   * Body param: Maximum number of results to return. Values above 500 are capped
+   * at 500.
    */
   top_k?: number | null;
 

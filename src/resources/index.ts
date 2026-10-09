@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export * from './shared';
+export { Alpha } from './alpha/alpha';
 export {
   Batches,
   type BatchCreateResponse,
@@ -14,6 +15,21 @@ export {
   type BatchListResponsesPaginatedCursor,
 } from './batches';
 export { Beta } from './beta/beta';
+export {
+  Chat,
+  type ChatCreateResponse,
+  type ChatRetrieveResponse,
+  type ChatListResponse,
+  type ChatGetSummaryResponse,
+  type ChatStreamResponse,
+  type ChatListParams,
+  type ChatCreateParams,
+  type ChatRetrieveParams,
+  type ChatDeleteParams,
+  type ChatGetSummaryParams,
+  type ChatStreamParams,
+  type ChatListResponsesPaginatedCursor,
+} from './chat';
 export { Classifier } from './classifier/classifier';
 export {
   Classify,
@@ -104,6 +120,21 @@ export {
   type FileListResponsesPaginatedCursor,
 } from './files';
 export {
+  Indexes,
+  type IndexCreateResponse,
+  type IndexListResponse,
+  type IndexCancelSyncResponse,
+  type IndexGetResponse,
+  type IndexSyncResponse,
+  type IndexGetParams,
+  type IndexDeleteParams,
+  type IndexCreateParams,
+  type IndexSyncParams,
+  type IndexCancelSyncParams,
+  type IndexListParams,
+  type IndexListResponsesPaginatedCursor,
+} from './indexes';
+export {
   Parsing,
   type BBox,
   type CodeItem,
@@ -188,6 +219,19 @@ export {
   type ProjectListParams,
   type ProjectGetParams,
 } from './projects';
+export {
+  Retrieval,
+  type RetrievalRetrieveResponse,
+  type RetrievalFindResponse,
+  type RetrievalGrepResponse,
+  type RetrievalReadResponse,
+  type RetrievalRetrieveParams,
+  type RetrievalFindParams,
+  type RetrievalGrepParams,
+  type RetrievalReadParams,
+  type RetrievalFindResponsesPaginatedCursorPost,
+  type RetrievalGrepResponsesPaginatedCursorPost,
+} from './retrieval';
 export {
   Retrievers,
   type CompositeRetrievalMode,
