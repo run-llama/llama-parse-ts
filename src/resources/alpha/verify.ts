@@ -1730,7 +1730,7 @@ export namespace VerifyGetDetailsResponse {
     /**
      * Raw values from the tool behind this finding; the shape varies by tool
      */
-    metadata_tool?: { [key: string]: unknown };
+    metadata?: { [key: string]: unknown };
   }
 
   /**
