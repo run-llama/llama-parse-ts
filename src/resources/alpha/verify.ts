@@ -1723,14 +1723,14 @@ export namespace VerifyGetDetailsResponse {
     tool: string;
 
     /**
-     * Tool-specific structured payload
-     */
-    data?: { [key: string]: unknown };
-
-    /**
      * Whether this is hard (conclusive) evidence
      */
     hard?: boolean;
+
+    /**
+     * Raw values from the tool behind this finding; the shape varies by tool
+     */
+    metadata_tool?: { [key: string]: unknown };
   }
 
   /**
