@@ -437,7 +437,7 @@ export interface FooterItem {
  */
 export interface Form {
   /**
-   * Structured representation: an ordered tree of sections, fields, and tables
+   * Structured representation: an ordered tree of sections, fields, tables, and text
    */
   json: Array<FormField | FormSection | FormTable | FormText>;
 
@@ -2118,7 +2118,8 @@ export interface ParsingGetResponse {
   job: ParsingGetResponse.Job;
 
   /**
-   * Per-page form analysis results (one entry per page).
+   * Beta: per-page form analysis results; node types the calling SDK predates are
+   * left out.
    */
   forms?: ParsingGetResponse.Forms | null;
 
@@ -2239,7 +2240,8 @@ export namespace ParsingGetResponse {
   }
 
   /**
-   * Per-page form analysis results (one entry per page).
+   * Beta: per-page form analysis results; node types the calling SDK predates are
+   * left out.
    */
   export interface Forms {
     /**
