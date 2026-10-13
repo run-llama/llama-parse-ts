@@ -364,6 +364,12 @@ export interface ExtractV2Parameters {
   product_type: 'extract_v2';
 
   /**
+   * More precise citation bounding boxes. Set to false for faster extraction with
+   * less precise boxes.
+   */
+  advanced_citations?: boolean;
+
+  /**
    * Include citations in results. Returned under `extract_metadata` (auto-included
    * when set). Text-level on `turbo` (no bounding boxes).
    */
