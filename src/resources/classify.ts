@@ -64,7 +64,8 @@ export class Classify extends APIResource {
    * Get a classify job by ID.
    *
    * Returns the job status, configuration, and classify result when complete. The
-   * result includes the matched document type, confidence score, and reasoning.
+   * result includes the matched document type, confidence score, and reasoning. Use
+   * `expand=usage` for credits billed against the job.
    *
    * @example
    * ```ts
@@ -513,6 +514,36 @@ export interface ClassifyCreateResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Usage recorded against a classify job.
+   *
+   * Classify bills through the parse job it runs on a file input, so that parse
+   * job's credits are the whole total. A job run on a parse job you created bills
+   * nothing of its own: `parse_credits` is null and `credits` is 0.
+   */
+  usage?: ClassifyCreateResponse.Usage | null;
+}
+
+export namespace ClassifyCreateResponse {
+  /**
+   * Usage recorded against a classify job.
+   *
+   * Classify bills through the parse job it runs on a file input, so that parse
+   * job's credits are the whole total. A job run on a parse job you created bills
+   * nothing of its own: `parse_credits` is null and `credits` is 0.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+
+    /**
+     * Credits billed against the parse job Classify ran on the input file
+     */
+    parse_credits?: number | null;
+  }
 }
 
 /**
@@ -588,6 +619,36 @@ export interface ClassifyListResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Usage recorded against a classify job.
+   *
+   * Classify bills through the parse job it runs on a file input, so that parse
+   * job's credits are the whole total. A job run on a parse job you created bills
+   * nothing of its own: `parse_credits` is null and `credits` is 0.
+   */
+  usage?: ClassifyListResponse.Usage | null;
+}
+
+export namespace ClassifyListResponse {
+  /**
+   * Usage recorded against a classify job.
+   *
+   * Classify bills through the parse job it runs on a file input, so that parse
+   * job's credits are the whole total. A job run on a parse job you created bills
+   * nothing of its own: `parse_credits` is null and `credits` is 0.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+
+    /**
+     * Credits billed against the parse job Classify ran on the input file
+     */
+    parse_credits?: number | null;
+  }
 }
 
 /**
@@ -678,6 +739,36 @@ export interface ClassifyCancelResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Usage recorded against a classify job.
+   *
+   * Classify bills through the parse job it runs on a file input, so that parse
+   * job's credits are the whole total. A job run on a parse job you created bills
+   * nothing of its own: `parse_credits` is null and `credits` is 0.
+   */
+  usage?: ClassifyCancelResponse.Usage | null;
+}
+
+export namespace ClassifyCancelResponse {
+  /**
+   * Usage recorded against a classify job.
+   *
+   * Classify bills through the parse job it runs on a file input, so that parse
+   * job's credits are the whole total. A job run on a parse job you created bills
+   * nothing of its own: `parse_credits` is null and `credits` is 0.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+
+    /**
+     * Credits billed against the parse job Classify ran on the input file
+     */
+    parse_credits?: number | null;
+  }
 }
 
 /**
@@ -753,6 +844,36 @@ export interface ClassifyGetResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Usage recorded against a classify job.
+   *
+   * Classify bills through the parse job it runs on a file input, so that parse
+   * job's credits are the whole total. A job run on a parse job you created bills
+   * nothing of its own: `parse_credits` is null and `credits` is 0.
+   */
+  usage?: ClassifyGetResponse.Usage | null;
+}
+
+export namespace ClassifyGetResponse {
+  /**
+   * Usage recorded against a classify job.
+   *
+   * Classify bills through the parse job it runs on a file input, so that parse
+   * job's credits are the whole total. A job run on a parse job you created bills
+   * nothing of its own: `parse_credits` is null and `credits` is 0.
+   */
+  export interface Usage {
+    /**
+     * Total credits billed against this job. Null until billing has recorded it.
+     */
+    credits?: number | null;
+
+    /**
+     * Credits billed against the parse job Classify ran on the input file
+     */
+    parse_credits?: number | null;
+  }
 }
 
 export interface ClassifyCreateParams {
@@ -915,6 +1036,11 @@ export interface ClassifyListParams extends PaginatedCursorParams {
 }
 
 export interface ClassifyGetParams {
+  /**
+   * Additional fields to include: usage
+   */
+  expand?: Array<string>;
+
   organization_id?: string | null;
 
   project_id?: string | null;
