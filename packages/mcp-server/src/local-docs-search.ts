@@ -547,13 +547,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/v1/split/jobs/{split_job_id}',
     httpMethod: 'delete',
     summary: 'Delete Split Job',
-    description: 'Delete a split job and its results.',
+    description:
+      'Delete a split job and its results. A job that is not in a terminal state is refused with 409; cancel it first.',
     stainlessPath: '(resource) split > (method) delete',
     qualified: 'client.split.delete',
     params: ['split_job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
     response: 'object',
     markdown:
-      "## delete\n\n`client.split.delete(split_job_id: string, organization_id?: string, project_id?: string): object`\n\n**delete** `/api/v1/split/jobs/{split_job_id}`\n\nDelete a split job and its results.\n\n### Parameters\n\n- `split_job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst split = await client.split.delete('split_job_id');\n\nconsole.log(split);\n```",
+      "## delete\n\n`client.split.delete(split_job_id: string, organization_id?: string, project_id?: string): object`\n\n**delete** `/api/v1/split/jobs/{split_job_id}`\n\nDelete a split job and its results. A job that is not in a terminal state is refused with 409; cancel it first.\n\n### Parameters\n\n- `split_job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst split = await client.split.delete('split_job_id');\n\nconsole.log(split);\n```",
     perLanguage: {
       python: {
         method: 'split.delete',
