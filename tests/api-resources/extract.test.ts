@@ -32,6 +32,7 @@ describe('resource extract', () => {
           required: ['total_amount', 'vendor_name'],
           type: 'object',
         },
+        advanced_citations: false,
         cite_sources: true,
         confidence_scores: true,
         disable_cache: true,

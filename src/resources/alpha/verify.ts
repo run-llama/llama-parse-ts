@@ -42,7 +42,9 @@ export class Verify extends APIResource {
    *
    * @example
    * ```ts
-   * const verify = await client.alpha.verify.create();
+   * const verify = await client.alpha.verify.create({
+   *   file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+   * });
    * ```
    */
   create(params: VerifyCreateParams, options?: RequestOptions): APIPromise<VerifyCreateResponse> {
@@ -1723,14 +1725,14 @@ export namespace VerifyGetDetailsResponse {
     tool: string;
 
     /**
-     * Tool-specific structured payload
-     */
-    data?: { [key: string]: unknown };
-
-    /**
      * Whether this is hard (conclusive) evidence
      */
     hard?: boolean;
+
+    /**
+     * Raw values from the tool behind this finding; the shape varies by tool
+     */
+    metadata?: { [key: string]: unknown };
   }
 
   /**
@@ -1869,6 +1871,11 @@ export interface VerifyListParams extends PaginatedCursorParams {
 
 export interface VerifyCreateParams {
   /**
+   * Body param: File ID of the document to analyze
+   */
+  file_input: string;
+
+  /**
    * Query param
    */
   organization_id?: string | null;
@@ -1882,16 +1889,6 @@ export interface VerifyCreateParams {
    * Body param: Configuration for a Verify job.
    */
   configuration?: VerifyCreateParams.Configuration | null;
-
-  /**
-   * @deprecated Body param: Deprecated: use file_input instead
-   */
-  file_id?: string | null;
-
-  /**
-   * Body param: File ID of the document to analyze
-   */
-  file_input?: string | null;
 
   /**
    * Body param: Idempotency key scoped to the project. Reusing a key returns the

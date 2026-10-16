@@ -42,8 +42,10 @@ describe('resource verify', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create', async () => {
-    const responsePromise = client.alpha.verify.create({});
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.alpha.verify.create({
+      file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -51,6 +53,27 @@ describe('resource verify', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.alpha.verify.create({
+      file_input: 'dfl-aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
+      organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      configuration: { target_pages: '1,3,5-7', tier: 'agentic' },
+      transaction_id: 'tx-unique-idempotency-key',
+      webhook_configuration_ids: ['whc-...', 'whc-...'],
+      webhook_configurations: [
+        {
+          webhook_events: ['parse.success', 'parse.error'],
+          webhook_headers: { Authorization: 'Bearer sk-...' },
+          webhook_output_format: 'json',
+          webhook_signing_secret: 'whsec_...',
+          webhook_url: 'https://example.com/webhooks/llamacloud',
+        },
+      ],
+    });
   });
 
   // Mock server tests are disabled
