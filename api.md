@@ -90,6 +90,7 @@ Types:
 - <code><a href="./src/resources/parsing.ts">FormSection</a></code>
 - <code><a href="./src/resources/parsing.ts">FormTable</a></code>
 - <code><a href="./src/resources/parsing.ts">FormTableCellItems</a></code>
+- <code><a href="./src/resources/parsing.ts">FormText</a></code>
 - <code><a href="./src/resources/parsing.ts">HeaderItem</a></code>
 - <code><a href="./src/resources/parsing.ts">HeadingItem</a></code>
 - <code><a href="./src/resources/parsing.ts">ImageItem</a></code>

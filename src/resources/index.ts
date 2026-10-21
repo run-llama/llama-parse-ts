@@ -147,6 +147,7 @@ export {
   type FormSection,
   type FormTable,
   type FormTableCellItems,
+  type FormText,
   type HeaderItem,
   type HeadingItem,
   type ImageItem,

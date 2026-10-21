@@ -35,7 +35,7 @@ export const listIndexes = tool({
     const client = getClient();
     const projectId = getProjectId();
     const all: Array<{ name: string; exportConfigId: string }> = [];
-    for await (const item of client.beta.indexes.list({
+    for await (const item of client.indexes.list({
       project_id: projectId ?? null,
     })) {
       all.push({ name: item.name, exportConfigId: item.export_config_id });
@@ -61,7 +61,7 @@ export const retrieve = tool({
   }),
   execute: async ({ index_id, query, top_k, score_threshold, rerank_top_n }) => {
     const client = getClient();
-    const response = await client.beta.retrieval.retrieve({
+    const response = await client.retrieval.retrieve({
       index_id,
       query,
       top_k: top_k ?? undefined,
@@ -98,7 +98,7 @@ export const findFiles = tool({
   execute: async ({ index_id, file_name, file_name_contains }) => {
     const client = getClient();
     const files: Array<{ fileName: string; fileId: string }> = [];
-    for await (const item of client.beta.retrieval.find({
+    for await (const item of client.retrieval.find({
       index_id,
       file_name: file_name ?? undefined,
       file_name_contains: file_name_contains ?? undefined,
@@ -120,7 +120,7 @@ export const readFile = tool({
   }),
   execute: async ({ index_id, file_id, offset, max_length }) => {
     const client = getClient();
-    const response = await client.beta.retrieval.read({
+    const response = await client.retrieval.read({
       index_id,
       file_id,
       offset: offset ?? 0,
@@ -152,7 +152,7 @@ export const grepFile = tool({
       startChar: number;
       endChar: number;
     }> = [];
-    for await (const item of client.beta.retrieval.grep({
+    for await (const item of client.retrieval.grep({
       index_id,
       file_id,
       pattern,
