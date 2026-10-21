@@ -1,5 +1,24 @@
 # Changelog
 
+## [2.19.0](https://github.com/run-llama/llama-parse-ts/compare/v2.18.0...v2.19.0) (2026-10-21)
+
+
+### Features
+
+* **classify:** add expand=usage to GET /api/v2/classify/{job_id} ([#29577](https://github.com/run-llama/llama-parse-ts/issues/29577)) ([da4ee5a](https://github.com/run-llama/llama-parse-ts/commit/da4ee5a18573ee9217e08e83dc465d5f35403d0c))
+
+
+### Bug Fixes
+
+* **parse:** apply watermark and wrapped-word rules to Lite fallbacks ([#30128](https://github.com/run-llama/llama-parse-ts/issues/30128)) ([f22e307](https://github.com/run-llama/llama-parse-ts/commit/f22e307793548a146e727fef00a94a52e39ef74b))
+* **sdk:** one FormText model for the forms text node (PROD-10339) ([a870c5a](https://github.com/run-llama/llama-parse-ts/commit/a870c5a835f196f0cafab36d79b200ef930fcd6d))
+* **split:** refuse to delete a non-terminal job ([#29785](https://github.com/run-llama/llama-parse-ts/issues/29785)) ([0617c6f](https://github.com/run-llama/llama-parse-ts/commit/0617c6fb20c1f2cee25fd4d56d5382441e009be9))
+
+
+### Chores
+
+* **examples:** use the top-level Index v2 resources ([7f25ab0](https://github.com/run-llama/llama-parse-ts/commit/7f25ab0d7962601bda5adc78a00faf8bf4f00c48))
+
 ## [2.18.0](https://github.com/run-llama/llama-parse-ts/compare/v2.17.0...v2.18.0) (2026-10-09)
 
 
