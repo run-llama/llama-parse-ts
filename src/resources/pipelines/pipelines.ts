@@ -1467,12 +1467,12 @@ export namespace Pipeline {
    */
   export interface ConfigHash {
     /**
-     * Hash of the embedding config.
+     * @deprecated Hash of the embedding config. Null in API responses.
      */
     embedding_config_hash?: string | null;
 
     /**
-     * Hash of the llama parse parameters.
+     * @deprecated Hash of the llama parse parameters. Null in API responses.
      */
     parsing_config_hash?: string | null;
 

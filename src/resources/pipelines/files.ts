@@ -112,7 +112,8 @@ export interface PipelineFile {
   pipeline_id: string;
 
   /**
-   * Hashes for the configuration of the pipeline.
+   * Hashes for the configuration of the pipeline. Every hash but
+   * `transform_config_hash` is null.
    */
   config_hash?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
