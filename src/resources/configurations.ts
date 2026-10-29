@@ -558,8 +558,8 @@ export interface ParseV2Parameters {
   webhook_configuration_ids?: Array<string> | null;
 
   /**
-   * Webhook endpoints for job status notifications. Multiple webhooks can be
-   * configured for different events or services
+   * Webhook endpoints for job notifications. Maximum 10 total, including
+   * webhook_configuration_ids.
    */
   webhook_configurations?: Array<ParseV2Parameters.WebhookConfiguration>;
 }
