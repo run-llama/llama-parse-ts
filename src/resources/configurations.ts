@@ -411,7 +411,7 @@ export interface ExtractV2Parameters {
    * specified. Turbo extract does not support parse configuration or produce a parse
    * output; use another tier if your workflow requires parsed text.
    */
-  parse_tier?: string | null;
+  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
 
   /**
    * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
@@ -442,10 +442,10 @@ export interface ExtractV2Parameters {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
-   * agentic_plus (50 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
+   * agentic_plus (50 credits/page), or turbo (35 credits/page)
    */
-  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
 
   /**
    * Extract version name, such as '2.5'. Use 'latest' for the newest compatible
@@ -811,6 +811,11 @@ export namespace ParseV2Parameters {
      * Markdown formatting options including table styles and link annotations
      */
     export interface Markdown {
+      /**
+       * Detect printed gutter line numbers and return their Markdown offsets
+       */
+      annotate_line_numbers?: boolean | null;
+
       /**
        * Add link annotations to markdown output in the format [text](url). When false,
        * only the link text is included
@@ -1571,6 +1576,17 @@ export namespace SplitV1Parameters {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
+     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+     * 1 disables merging.
+     */
+    min_pages_per_split?: number;
   }
 }
 
