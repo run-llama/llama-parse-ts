@@ -553,8 +553,9 @@ export interface FileListParams extends PaginatedCursorParams {
   file_name?: string | null;
 
   /**
-   * A comma-separated list of fields to order by, sorted in ascending order. Use
-   * 'field_name desc' to specify descending order.
+   * Order the results. One of 'name' (ascending), 'id' (ascending) or 'created_at'
+   * (descending). An explicit asc/desc modifier and multi-field ordering are not
+   * supported; anything else is rejected.
    */
   order_by?: string | null;
 

@@ -34,8 +34,12 @@ export class DataSources extends APIResource {
   /**
    * Get a data source by ID.
    */
-  get(dataSourceID: string, options?: RequestOptions): APIPromise<DataSource> {
-    return this._client.get(path`/api/v1/data-sources/${dataSourceID}`, options);
+  get(
+    dataSourceID: string,
+    query: DataSourceGetParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<DataSource> {
+    return this._client.get(path`/api/v1/data-sources/${dataSourceID}`, { query, ...options });
   }
 
   /**
@@ -43,17 +47,28 @@ export class DataSources extends APIResource {
    */
   update(
     dataSourceID: string,
-    body: DataSourceUpdateParams,
+    params: DataSourceUpdateParams,
     options?: RequestOptions,
   ): APIPromise<DataSource> {
-    return this._client.put(path`/api/v1/data-sources/${dataSourceID}`, { body, ...options });
+    const { project_id, ...body } = params;
+    return this._client.put(path`/api/v1/data-sources/${dataSourceID}`, {
+      query: { project_id },
+      body,
+      ...options,
+    });
   }
 
   /**
    * Delete a data source by ID.
    */
-  delete(dataSourceID: string, options?: RequestOptions): APIPromise<void> {
+  delete(
+    dataSourceID: string,
+    params: DataSourceDeleteParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { project_id } = params ?? {};
     return this._client.delete(path`/api/v1/data-sources/${dataSourceID}`, {
+      query: { project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -202,7 +217,14 @@ export interface DataSourceCreateParams {
   } | null;
 }
 
+export interface DataSourceGetParams {
+  project_id?: string | null;
+}
+
 export interface DataSourceUpdateParams {
+  /**
+   * Body param
+   */
   source_type:
     | 'AZURE_STORAGE_BLOB'
     | 'BOX'
@@ -217,7 +239,12 @@ export interface DataSourceUpdateParams {
     | 'SLACK';
 
   /**
-   * Component that implements the data source
+   * Query param
+   */
+  project_id?: string | null;
+
+  /**
+   * Body param: Component that implements the data source
    */
   component?:
     | { [key: string]: unknown }
@@ -235,16 +262,21 @@ export interface DataSourceUpdateParams {
     | null;
 
   /**
-   * Custom metadata that will be present on all data loaded from the data source
+   * Body param: Custom metadata that will be present on all data loaded from the
+   * data source
    */
   custom_metadata?: {
     [key: string]: { [key: string]: unknown } | Array<unknown> | string | number | boolean | null;
   } | null;
 
   /**
-   * The name of the data source.
+   * Body param: The name of the data source.
    */
   name?: string | null;
+}
+
+export interface DataSourceDeleteParams {
+  project_id?: string | null;
 }
 
 export declare namespace DataSources {
@@ -254,6 +286,8 @@ export declare namespace DataSources {
     type DataSourceListResponse as DataSourceListResponse,
     type DataSourceListParams as DataSourceListParams,
     type DataSourceCreateParams as DataSourceCreateParams,
+    type DataSourceGetParams as DataSourceGetParams,
     type DataSourceUpdateParams as DataSourceUpdateParams,
+    type DataSourceDeleteParams as DataSourceDeleteParams,
   };
 }
