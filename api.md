@@ -309,6 +309,7 @@ Types:
 - <code><a href="./src/resources/pipelines/pipelines.ts">PageScreenshotNodeWithScore</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">Pipeline</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineCreate</a></code>
+- <code><a href="./src/resources/pipelines/pipelines.ts">PipelineListItem</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineMetadataConfig</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PipelineType</a></code>
 - <code><a href="./src/resources/pipelines/pipelines.ts">PresetRetrievalParams</a></code>

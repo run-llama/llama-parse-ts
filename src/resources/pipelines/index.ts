@@ -88,6 +88,7 @@ export {
   type PageScreenshotNodeWithScore,
   type Pipeline,
   type PipelineCreate,
+  type PipelineListItem,
   type PipelineMetadataConfig,
   type PipelineType,
   type PresetRetrievalParams,

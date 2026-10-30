@@ -1643,6 +1643,205 @@ export interface PipelineCreate {
   transform_config?: AutoTransformConfig | AdvancedModeTransformConfig | null;
 }
 
+/**
+ * A pipeline returned by the legacy list endpoint.
+ */
+export interface PipelineListItem {
+  /**
+   * Unique identifier
+   */
+  id: string;
+
+  /**
+   * Embedding configuration, or null when unavailable for a legacy pipeline.
+   */
+  embedding_config:
+    | AzureOpenAIEmbeddingConfig
+    | BedrockEmbeddingConfig
+    | CohereEmbeddingConfig
+    | GeminiEmbeddingConfig
+    | HuggingFaceInferenceAPIEmbeddingConfig
+    | PipelineListItem.ManagedOpenAIEmbeddingConfig
+    | OpenAIEmbeddingConfig
+    | VertexAIEmbeddingConfig
+    | null;
+
+  name: string;
+
+  project_id: string;
+
+  /**
+   * Hashes for the configuration of a pipeline.
+   */
+  config_hash?: PipelineListItem.ConfigHash | null;
+
+  /**
+   * Creation datetime
+   */
+  created_at?: string | null;
+
+  /**
+   * Schema for a data sink.
+   */
+  data_sink?: DataSinksAPI.DataSink | null;
+
+  /**
+   * Schema for an embedding model config.
+   */
+  embedding_model_config?: PipelineListItem.EmbeddingModelConfig | null;
+
+  /**
+   * The ID of the EmbeddingModelConfig this pipeline is using.
+   */
+  embedding_model_config_id?: string | null;
+
+  /**
+   * Settings that can be configured for how to use LlamaParse to parse files within
+   * a LlamaCloud pipeline.
+   */
+  llama_parse_parameters?: LlamaParseParameters | null;
+
+  /**
+   * The ID of the ManagedPipeline this playground pipeline is linked to.
+   */
+  managed_pipeline_id?: string | null;
+
+  /**
+   * Metadata configuration for the pipeline.
+   */
+  metadata_config?: PipelineMetadataConfig | null;
+
+  /**
+   * Type of pipeline. Either PLAYGROUND or MANAGED.
+   */
+  pipeline_type?: PipelineType;
+
+  /**
+   * Preset retrieval parameters for the pipeline.
+   */
+  preset_retrieval_parameters?: PresetRetrievalParams;
+
+  /**
+   * Configuration for sparse embedding models used in hybrid search.
+   *
+   * This allows users to choose between Splade and BM25 models for sparse retrieval
+   * in managed data sinks.
+   */
+  sparse_model_config?: SparseModelConfig | null;
+
+  /**
+   * Status of the pipeline.
+   */
+  status?: 'CREATED' | 'DELETING' | null;
+
+  /**
+   * Configuration for the transformation.
+   */
+  transform_config?: AutoTransformConfig | AdvancedModeTransformConfig;
+
+  /**
+   * Update datetime
+   */
+  updated_at?: string | null;
+}
+
+export namespace PipelineListItem {
+  export interface ManagedOpenAIEmbeddingConfig {
+    /**
+     * Configuration for the Managed OpenAI embedding model.
+     */
+    component?: ManagedOpenAIEmbeddingConfig.Component;
+
+    /**
+     * Type of the embedding model.
+     */
+    type?: 'MANAGED_OPENAI_EMBEDDING';
+  }
+
+  export namespace ManagedOpenAIEmbeddingConfig {
+    /**
+     * Configuration for the Managed OpenAI embedding model.
+     */
+    export interface Component {
+      class_name?: string;
+
+      /**
+       * The batch size for embedding calls.
+       */
+      embed_batch_size?: number;
+
+      /**
+       * The name of the OpenAI embedding model.
+       */
+      model_name?: 'openai-text-embedding-3-small';
+
+      /**
+       * The number of workers to use for async embedding calls.
+       */
+      num_workers?: number | null;
+    }
+  }
+
+  /**
+   * Hashes for the configuration of a pipeline.
+   */
+  export interface ConfigHash {
+    /**
+     * @deprecated Hash of the embedding config. Null in API responses.
+     */
+    embedding_config_hash?: string | null;
+
+    /**
+     * @deprecated Hash of the llama parse parameters. Null in API responses.
+     */
+    parsing_config_hash?: string | null;
+
+    /**
+     * Hash of the transform config.
+     */
+    transform_config_hash?: string | null;
+  }
+
+  /**
+   * Schema for an embedding model config.
+   */
+  export interface EmbeddingModelConfig {
+    /**
+     * Unique identifier
+     */
+    id: string;
+
+    /**
+     * The embedding configuration for the embedding model config.
+     */
+    embedding_config:
+      | PipelinesAPI.AzureOpenAIEmbeddingConfig
+      | PipelinesAPI.BedrockEmbeddingConfig
+      | PipelinesAPI.CohereEmbeddingConfig
+      | PipelinesAPI.GeminiEmbeddingConfig
+      | PipelinesAPI.HuggingFaceInferenceAPIEmbeddingConfig
+      | PipelinesAPI.OpenAIEmbeddingConfig
+      | PipelinesAPI.VertexAIEmbeddingConfig;
+
+    /**
+     * The name of the embedding model config.
+     */
+    name: string;
+
+    project_id: string;
+
+    /**
+     * Creation datetime
+     */
+    created_at?: string | null;
+
+    /**
+     * Update datetime
+     */
+    updated_at?: string | null;
+  }
+}
+
 export interface PipelineMetadataConfig {
   /**
    * List of metadata keys to exclude from embeddings
@@ -1888,208 +2087,7 @@ export namespace PipelineRetrieveResponse {
   }
 }
 
-export type PipelineListResponse = Array<PipelineListResponse.PipelineListResponseItem>;
-
-export namespace PipelineListResponse {
-  /**
-   * A pipeline returned by the legacy list endpoint.
-   */
-  export interface PipelineListResponseItem {
-    /**
-     * Unique identifier
-     */
-    id: string;
-
-    /**
-     * Embedding configuration, or null when unavailable for a legacy pipeline.
-     */
-    embedding_config:
-      | PipelinesAPI.AzureOpenAIEmbeddingConfig
-      | PipelinesAPI.BedrockEmbeddingConfig
-      | PipelinesAPI.CohereEmbeddingConfig
-      | PipelinesAPI.GeminiEmbeddingConfig
-      | PipelinesAPI.HuggingFaceInferenceAPIEmbeddingConfig
-      | PipelineListResponseItem.ManagedOpenAIEmbeddingConfig
-      | PipelinesAPI.OpenAIEmbeddingConfig
-      | PipelinesAPI.VertexAIEmbeddingConfig
-      | null;
-
-    name: string;
-
-    project_id: string;
-
-    /**
-     * Hashes for the configuration of a pipeline.
-     */
-    config_hash?: PipelineListResponseItem.ConfigHash | null;
-
-    /**
-     * Creation datetime
-     */
-    created_at?: string | null;
-
-    /**
-     * Schema for a data sink.
-     */
-    data_sink?: DataSinksAPI.DataSink | null;
-
-    /**
-     * Schema for an embedding model config.
-     */
-    embedding_model_config?: PipelineListResponseItem.EmbeddingModelConfig | null;
-
-    /**
-     * The ID of the EmbeddingModelConfig this pipeline is using.
-     */
-    embedding_model_config_id?: string | null;
-
-    /**
-     * Settings that can be configured for how to use LlamaParse to parse files within
-     * a LlamaCloud pipeline.
-     */
-    llama_parse_parameters?: PipelinesAPI.LlamaParseParameters | null;
-
-    /**
-     * The ID of the ManagedPipeline this playground pipeline is linked to.
-     */
-    managed_pipeline_id?: string | null;
-
-    /**
-     * Metadata configuration for the pipeline.
-     */
-    metadata_config?: PipelinesAPI.PipelineMetadataConfig | null;
-
-    /**
-     * Type of pipeline. Either PLAYGROUND or MANAGED.
-     */
-    pipeline_type?: PipelinesAPI.PipelineType;
-
-    /**
-     * Preset retrieval parameters for the pipeline.
-     */
-    preset_retrieval_parameters?: PipelinesAPI.PresetRetrievalParams;
-
-    /**
-     * Configuration for sparse embedding models used in hybrid search.
-     *
-     * This allows users to choose between Splade and BM25 models for sparse retrieval
-     * in managed data sinks.
-     */
-    sparse_model_config?: PipelinesAPI.SparseModelConfig | null;
-
-    /**
-     * Status of the pipeline.
-     */
-    status?: 'CREATED' | 'DELETING' | null;
-
-    /**
-     * Configuration for the transformation.
-     */
-    transform_config?: PipelinesAPI.AutoTransformConfig | PipelinesAPI.AdvancedModeTransformConfig;
-
-    /**
-     * Update datetime
-     */
-    updated_at?: string | null;
-  }
-
-  export namespace PipelineListResponseItem {
-    export interface ManagedOpenAIEmbeddingConfig {
-      /**
-       * Configuration for the Managed OpenAI embedding model.
-       */
-      component?: ManagedOpenAIEmbeddingConfig.Component;
-
-      /**
-       * Type of the embedding model.
-       */
-      type?: 'MANAGED_OPENAI_EMBEDDING';
-    }
-
-    export namespace ManagedOpenAIEmbeddingConfig {
-      /**
-       * Configuration for the Managed OpenAI embedding model.
-       */
-      export interface Component {
-        class_name?: string;
-
-        /**
-         * The batch size for embedding calls.
-         */
-        embed_batch_size?: number;
-
-        /**
-         * The name of the OpenAI embedding model.
-         */
-        model_name?: 'openai-text-embedding-3-small';
-
-        /**
-         * The number of workers to use for async embedding calls.
-         */
-        num_workers?: number | null;
-      }
-    }
-
-    /**
-     * Hashes for the configuration of a pipeline.
-     */
-    export interface ConfigHash {
-      /**
-       * @deprecated Hash of the embedding config. Null in API responses.
-       */
-      embedding_config_hash?: string | null;
-
-      /**
-       * @deprecated Hash of the llama parse parameters. Null in API responses.
-       */
-      parsing_config_hash?: string | null;
-
-      /**
-       * Hash of the transform config.
-       */
-      transform_config_hash?: string | null;
-    }
-
-    /**
-     * Schema for an embedding model config.
-     */
-    export interface EmbeddingModelConfig {
-      /**
-       * Unique identifier
-       */
-      id: string;
-
-      /**
-       * The embedding configuration for the embedding model config.
-       */
-      embedding_config:
-        | PipelinesAPI.AzureOpenAIEmbeddingConfig
-        | PipelinesAPI.BedrockEmbeddingConfig
-        | PipelinesAPI.CohereEmbeddingConfig
-        | PipelinesAPI.GeminiEmbeddingConfig
-        | PipelinesAPI.HuggingFaceInferenceAPIEmbeddingConfig
-        | PipelinesAPI.OpenAIEmbeddingConfig
-        | PipelinesAPI.VertexAIEmbeddingConfig;
-
-      /**
-       * The name of the embedding model config.
-       */
-      name: string;
-
-      project_id: string;
-
-      /**
-       * Creation datetime
-       */
-      created_at?: string | null;
-
-      /**
-       * Update datetime
-       */
-      updated_at?: string | null;
-    }
-  }
-}
+export type PipelineListResponse = Array<PipelineListItem>;
 
 /**
  * A pipeline in a project.
@@ -2559,6 +2557,7 @@ export declare namespace Pipelines {
     type PageScreenshotNodeWithScore as PageScreenshotNodeWithScore,
     type Pipeline as Pipeline,
     type PipelineCreate as PipelineCreate,
+    type PipelineListItem as PipelineListItem,
     type PipelineMetadataConfig as PipelineMetadataConfig,
     type PipelineType as PipelineType,
     type PresetRetrievalParams as PresetRetrievalParams,
