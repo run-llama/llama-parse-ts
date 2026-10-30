@@ -36,6 +36,7 @@ describe('resource extract', () => {
         cite_sources: true,
         confidence_scores: true,
         disable_cache: true,
+        effort: 'max',
         extraction_target: 'per_doc',
         max_pages: 10,
         parse_config_id: 'cfg-11111111-2222-3333-4444-555555555555',

@@ -327,6 +327,13 @@ export interface ExtractConfiguration {
   disable_cache?: boolean;
 
   /**
+   * Use 'max' for additional processing effort on agentic_plus. Bills by model usage
+   * with the page charge as a minimum. Omit or set to null for the tier's default
+   * behavior.
+   */
+  effort?: 'max' | null;
+
+  /**
    * Deprecated. Applies only to Agentic and Cost Effective versions 2.0 or earlier.
    * Granularity of extraction: per_doc returns one object per document, per_page
    * returns one object per page, per_table_row returns one object per table row.
