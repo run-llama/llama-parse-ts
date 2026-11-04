@@ -46,9 +46,12 @@ export class Extract extends APIResource {
   /**
    * List extraction jobs with optional filtering and pagination.
    *
-   * Filter by `configuration_id`, `status`, `file_input`, or creation date range.
-   * Results are returned newest-first. Use `expand=configuration` to include the
-   * full configuration used, and `expand=extract_metadata` for per-field metadata.
+   * Filter by `configuration_id`, `status`, `file_input`, `review_status`, or
+   * creation date range. Results are returned newest-first. `review_status=pending`
+   * lists completed jobs waiting for review, unless `status` names another. A review
+   * stays pending when its job fails or is cancelled, so pass that `status` to list
+   * those. Use `expand=configuration` to include the full configuration used, and
+   * `expand=extract_metadata` for per-field metadata.
    *
    * @example
    * ```ts
@@ -922,6 +925,11 @@ export interface ExtractListParams extends PaginatedCursorParams {
   organization_id?: string | null;
 
   project_id?: string | null;
+
+  /**
+   * Filter by review status; none is a job without a review
+   */
+  review_status?: 'approved' | 'none' | 'pending' | 'rejected' | null;
 
   /**
    * Filter by status
