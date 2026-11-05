@@ -973,9 +973,15 @@ export interface LlamaParseParameters {
 
 export namespace LlamaParseParameters {
   /**
-   * Configuration for a single outbound webhook endpoint.
+   * A webhook endpoint kept in a saved configuration or pipeline.
    */
   export interface WebhookConfiguration {
+    /**
+     * Webhook ID, set by the server. Send it back unchanged so a masked credential
+     * keeps this webhook's saved value.
+     */
+    id?: string | null;
+
     /**
      * Events to subscribe to (e.g. 'parse.success', 'extract.error'). If null, all
      * events are delivered.

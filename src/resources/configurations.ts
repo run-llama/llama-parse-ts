@@ -1480,12 +1480,15 @@ export namespace ParseV2Parameters {
   }
 
   /**
-   * Webhook configuration for receiving parsing job notifications.
-   *
-   * Webhooks are called when specified events occur during job processing. Configure
-   * multiple webhook configurations to send to different endpoints.
+   * A webhook endpoint kept in a saved Parse configuration.
    */
   export interface WebhookConfiguration {
+    /**
+     * Webhook ID, set by the server. Send it back unchanged so a masked credential
+     * keeps this webhook's saved value.
+     */
+    id?: string | null;
+
     /**
      * Events that trigger this webhook. Options: 'parse.success' (job completed),
      * 'parse.error' (job failed), 'parse.partial_success' (some pages failed),
