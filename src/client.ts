@@ -117,28 +117,6 @@ import {
   DataSources,
 } from './resources/data-sources';
 import {
-  Extract,
-  ExtractCancelParams,
-  ExtractConfiguration,
-  ExtractCreateParams,
-  ExtractDeleteParams,
-  ExtractDeleteResponse,
-  ExtractGenerateSchemaParams,
-  ExtractGetParams,
-  ExtractJobMetadata,
-  ExtractJobUsage,
-  ExtractListParams,
-  ExtractV2Job,
-  ExtractV2JobCreate,
-  ExtractV2JobQueryResponse,
-  ExtractV2JobsPaginatedCursor,
-  ExtractV2SchemaGenerateRequest,
-  ExtractV2SchemaValidateRequest,
-  ExtractV2SchemaValidateResponse,
-  ExtractValidateSchemaParams,
-  ExtractedFieldMetadata,
-} from './resources/extract';
-import {
   ExtractAgent,
   ExtractAgentsPaginatedCursor,
   ExtractionAgentListParams,
@@ -272,6 +250,28 @@ import {
 import { Alpha } from './resources/alpha/alpha';
 import { Beta } from './resources/beta/beta';
 import { Classifier } from './resources/classifier/classifier';
+import {
+  Extract,
+  ExtractCancelParams,
+  ExtractConfiguration,
+  ExtractCreateParams,
+  ExtractDeleteParams,
+  ExtractDeleteResponse,
+  ExtractGenerateSchemaParams,
+  ExtractGetParams,
+  ExtractJobMetadata,
+  ExtractJobUsage,
+  ExtractListParams,
+  ExtractV2Job,
+  ExtractV2JobCreate,
+  ExtractV2JobQueryResponse,
+  ExtractV2JobsPaginatedCursor,
+  ExtractV2SchemaGenerateRequest,
+  ExtractV2SchemaValidateRequest,
+  ExtractV2SchemaValidateResponse,
+  ExtractValidateSchemaParams,
+  ExtractedFieldMetadata,
+} from './resources/extract/extract';
 import {
   AdvancedModeTransformConfig,
   AutoTransformConfig,

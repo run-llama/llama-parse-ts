@@ -155,6 +155,48 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/extract/schema/generate',
   },
   {
+    clientCallName: 'client.extract.review.create',
+    fullyQualifiedName: 'extract.review.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/{job_id}/review',
+  },
+  {
+    clientCallName: 'client.extract.review.get',
+    fullyQualifiedName: 'extract.review.get',
+    httpMethod: 'get',
+    httpPath: '/api/v2/extract/{job_id}/review',
+  },
+  {
+    clientCallName: 'client.extract.review.changeFields',
+    fullyQualifiedName: 'extract.review.changeFields',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/{job_id}/review/fields',
+  },
+  {
+    clientCallName: 'client.extract.review.approve',
+    fullyQualifiedName: 'extract.review.approve',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/{job_id}/review/approve',
+  },
+  {
+    clientCallName: 'client.extract.review.reject',
+    fullyQualifiedName: 'extract.review.reject',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/{job_id}/review/reject',
+  },
+  {
+    clientCallName: 'client.extract.review.reopen',
+    fullyQualifiedName: 'extract.review.reopen',
+    httpMethod: 'post',
+    httpPath: '/api/v2/extract/{job_id}/review/reopen',
+  },
+  {
+    clientCallName: 'client.extract.review.listEvents',
+    fullyQualifiedName: 'extract.review.listEvents',
+    httpMethod: 'get',
+    httpPath: '/api/v2/extract/{job_id}/review/events',
+  },
+  {
     clientCallName: 'client.batches.create',
     fullyQualifiedName: 'batches.create',
     httpMethod: 'post',

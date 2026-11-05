@@ -108,7 +108,7 @@ export {
   type ExtractValidateSchemaParams,
   type ExtractGenerateSchemaParams,
   type ExtractV2JobsPaginatedCursor,
-} from './extract';
+} from './extract/extract';
 export {
   ExtractionAgents,
   type ExtractAgent,

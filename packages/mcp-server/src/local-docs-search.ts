@@ -1355,6 +1355,391 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'create',
+    endpoint: '/api/v2/extract/{job_id}/review',
+    httpMethod: 'post',
+    summary: 'Create Extract Review',
+    description:
+      "Beta: answers 403 until extract review is enabled for the caller and their organization.\n\nTurn review on for an extract job.\n\nFields read below `confidence_threshold`, and required fields left empty, are\nflagged for a person to check. Every setting has a default, so the body can be\nleft out. A job still running can be named: it waits for review once it\ncompletes. A job that failed or was cancelled without a review, or that cannot\nbe reviewed, answers 409 with `code: job_not_reviewable`; a field in\n`fields_in_scope` the job's schema does not have answers 400.\n\nAnswers 201 with the new review, or 200 with the job's existing review, whose\nsettings stay as they are.",
+    stainlessPath: '(resource) extract.review > (method) create',
+    qualified: 'client.extract.review.create',
+    params: [
+      'job_id: string;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'confidence_threshold?: number;',
+      'fields_in_scope?: string[];',
+      'required_fields?: string[];',
+    ],
+    response:
+      "{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }",
+    markdown:
+      "## create\n\n`client.extract.review.create(job_id: string, organization_id?: string, project_id?: string, confidence_threshold?: number, fields_in_scope?: string[], required_fields?: string[]): { id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: object[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n\n**post** `/api/v2/extract/{job_id}/review`\n\nBeta: answers 403 until extract review is enabled for the caller and their organization.\n\nTurn review on for an extract job.\n\nFields read below `confidence_threshold`, and required fields left empty, are\nflagged for a person to check. Every setting has a default, so the body can be\nleft out. A job still running can be named: it waits for review once it\ncompletes. A job that failed or was cancelled without a review, or that cannot\nbe reviewed, answers 409 with `code: job_not_reviewable`; a field in\n`fields_in_scope` the job's schema does not have answers 400.\n\nAnswers 201 with the new review, or 200 with the job's existing review, whose\nsettings stay as they are.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `confidence_threshold?: number`\n  Fields read below this confidence are flagged.\n\n- `fields_in_scope?: string[]`\n  JSON Pointers of the fields the threshold applies to; empty means all.\n\n- `required_fields?: string[]`\n  JSON Pointers of fields flagged when empty; defaults to the schema's required.\n\n### Returns\n\n- `{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n  An extract job's review: its settings, flags, field actions and decision,\nwith the result as read and as reviewed.\n\n  - `id: string`\n  - `confidence_threshold: number`\n  - `created_at: string`\n  - `decided_at: string`\n  - `decided_by: string`\n  - `decided_reason: string`\n  - `field_actions: object`\n  - `fields_in_scope: string[]`\n  - `flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]`\n  - `job_id: string`\n  - `open_flags: string[]`\n  - `original_result: object`\n  - `required_fields: string[]`\n  - `retain_until: string`\n  - `reviewed_result: object`\n  - `revision: number`\n  - `source_file_id: string`\n  - `status: 'approved' | 'pending' | 'rejected'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractReview = await client.extract.review.create('job_id');\n\nconsole.log(extractReview);\n```",
+    perLanguage: {
+      python: {
+        method: 'extract.review.create',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_review = client.extract.review.create(\n    job_id="job_id",\n)\nprint(extract_review.id)',
+      },
+      go: {
+        method: 'client.Extract.Review.New',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractReview, err := client.Extract.Review.New(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ExtractReviewNewParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractReview.ID)\n}\n',
+      },
+      java: {
+        method: 'extract().review().create',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.review.ExtractReview;\nimport ai.llamaindex.llamacloud.models.extract.review.ReviewCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractReview extractReview = client.extract().review().create("job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Review.Create',
+        example:
+          'ReviewCreateParams parameters = new() { JobID = "job_id" };\n\nvar extractReview = await client.Extract.Review.Create(parameters);\n\nConsole.WriteLine(extractReview);',
+      },
+      typescript: {
+        method: 'client.extract.review.create',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractReview = await client.extract.review.create('job_id');\n\nconsole.log(extractReview.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID/review \\\n    -X POST \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'review create',
+        example: "llp extract:review create \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
+    },
+  },
+  {
+    name: 'get',
+    endpoint: '/api/v2/extract/{job_id}/review',
+    httpMethod: 'get',
+    summary: 'Get Extract Review',
+    description:
+      "Beta: answers 403 until extract review is enabled for the caller and their organization.\n\nGet an extract job's review: its flags, field actions and decision, with the\nresult as the model read it and as reviewed. A job without a review answers 404.",
+    stainlessPath: '(resource) extract.review > (method) get',
+    qualified: 'client.extract.review.get',
+    params: ['job_id: string;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }",
+    markdown:
+      "## get\n\n`client.extract.review.get(job_id: string, organization_id?: string, project_id?: string): { id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: object[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n\n**get** `/api/v2/extract/{job_id}/review`\n\nBeta: answers 403 until extract review is enabled for the caller and their organization.\n\nGet an extract job's review: its flags, field actions and decision, with the\nresult as the model read it and as reviewed. A job without a review answers 404.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n  An extract job's review: its settings, flags, field actions and decision,\nwith the result as read and as reviewed.\n\n  - `id: string`\n  - `confidence_threshold: number`\n  - `created_at: string`\n  - `decided_at: string`\n  - `decided_by: string`\n  - `decided_reason: string`\n  - `field_actions: object`\n  - `fields_in_scope: string[]`\n  - `flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]`\n  - `job_id: string`\n  - `open_flags: string[]`\n  - `original_result: object`\n  - `required_fields: string[]`\n  - `retain_until: string`\n  - `reviewed_result: object`\n  - `revision: number`\n  - `source_file_id: string`\n  - `status: 'approved' | 'pending' | 'rejected'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractReview = await client.extract.review.get('job_id');\n\nconsole.log(extractReview);\n```",
+    perLanguage: {
+      python: {
+        method: 'extract.review.get',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_review = client.extract.review.get(\n    job_id="job_id",\n)\nprint(extract_review.id)',
+      },
+      go: {
+        method: 'client.Extract.Review.Get',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractReview, err := client.Extract.Review.Get(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ExtractReviewGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractReview.ID)\n}\n',
+      },
+      java: {
+        method: 'extract().review().get',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.review.ExtractReview;\nimport ai.llamaindex.llamacloud.models.extract.review.ReviewGetParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ExtractReview extractReview = client.extract().review().get("job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Review.Get',
+        example:
+          'ReviewGetParams parameters = new() { JobID = "job_id" };\n\nvar extractReview = await client.Extract.Review.Get(parameters);\n\nConsole.WriteLine(extractReview);',
+      },
+      typescript: {
+        method: 'client.extract.review.get',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractReview = await client.extract.review.get('job_id');\n\nconsole.log(extractReview.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID/review \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'review get',
+        example: "llp extract:review get \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
+    },
+  },
+  {
+    name: 'change_fields',
+    endpoint: '/api/v2/extract/{job_id}/review/fields',
+    httpMethod: 'post',
+    summary: 'Change Extract Review Fields',
+    description:
+      "Beta: answers 403 until extract review is enabled for the caller and their organization.\n\nConfirm, correct, clear, restore or undo fields of a completed job.\n\nThe changes apply in order, in one write. A job without a review gets one with\nthe default settings, at revision 0. A path that is not a field of the job, or a\nvalue the field's schema refuses, answers 400 and changes nothing.\nA job that has not completed answers 409 with `code: job_not_reviewable`. A `revision` other than the review's latest answers 409 with `code: stale_revision` and the latest `revision`.",
+    stainlessPath: '(resource) extract.review > (method) change_fields',
+    qualified: 'client.extract.review.changeFields',
+    params: [
+      'job_id: string;',
+      "changes: { change: 'clear' | 'confirm' | 'correct' | 'restore' | 'undo'; path: string; value?: object; }[];",
+      'revision: number;',
+      'organization_id?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      "{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }",
+    markdown:
+      "## change_fields\n\n`client.extract.review.changeFields(job_id: string, changes: { change: 'clear' | 'confirm' | 'correct' | 'restore' | 'undo'; path: string; value?: object; }[], revision: number, organization_id?: string, project_id?: string): { id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: object[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n\n**post** `/api/v2/extract/{job_id}/review/fields`\n\nBeta: answers 403 until extract review is enabled for the caller and their organization.\n\nConfirm, correct, clear, restore or undo fields of a completed job.\n\nThe changes apply in order, in one write. A job without a review gets one with\nthe default settings, at revision 0. A path that is not a field of the job, or a\nvalue the field's schema refuses, answers 400 and changes nothing.\nA job that has not completed answers 409 with `code: job_not_reviewable`. A `revision` other than the review's latest answers 409 with `code: stale_revision` and the latest `revision`.\n\n### Parameters\n\n- `job_id: string`\n\n- `changes: { change: 'clear' | 'confirm' | 'correct' | 'restore' | 'undo'; path: string; value?: object; }[]`\n  Changes to apply, in order.\n\n- `revision: number`\n  The review's revision as the caller last read it.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n  An extract job's review: its settings, flags, field actions and decision,\nwith the result as read and as reviewed.\n\n  - `id: string`\n  - `confidence_threshold: number`\n  - `created_at: string`\n  - `decided_at: string`\n  - `decided_by: string`\n  - `decided_reason: string`\n  - `field_actions: object`\n  - `fields_in_scope: string[]`\n  - `flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]`\n  - `job_id: string`\n  - `open_flags: string[]`\n  - `original_result: object`\n  - `required_fields: string[]`\n  - `retain_until: string`\n  - `reviewed_result: object`\n  - `revision: number`\n  - `source_file_id: string`\n  - `status: 'approved' | 'pending' | 'rejected'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractReview = await client.extract.review.changeFields('job_id', { changes: [{ change: 'correct', path: '/total' }], revision: 0 });\n\nconsole.log(extractReview);\n```",
+    perLanguage: {
+      python: {
+        method: 'extract.review.change_fields',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_review = client.extract.review.change_fields(\n    job_id="job_id",\n    changes=[{\n        "change": "correct",\n        "path": "/total",\n    }],\n    revision=0,\n)\nprint(extract_review.id)',
+      },
+      go: {
+        method: 'client.Extract.Review.ChangeFields',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractReview, err := client.Extract.Review.ChangeFields(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ExtractReviewChangeFieldsParams{\n\t\t\tChanges: []llamacloud.ExtractReviewChangeFieldsParamsChange{{\n\t\t\t\tChange: "correct",\n\t\t\t\tPath:   "/total",\n\t\t\t}},\n\t\t\tRevision: 0,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractReview.ID)\n}\n',
+      },
+      java: {
+        method: 'extract().review().changeFields',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.review.ExtractReview;\nimport ai.llamaindex.llamacloud.models.extract.review.ReviewChangeFieldsParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ReviewChangeFieldsParams params = ReviewChangeFieldsParams.builder()\n            .jobId("job_id")\n            .addChange(ReviewChangeFieldsParams.Change.builder()\n                .change(ReviewChangeFieldsParams.Change.InnerChange.CORRECT)\n                .path("/total")\n                .build())\n            .revision(0L)\n            .build();\n        ExtractReview extractReview = client.extract().review().changeFields(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Review.ChangeFields',
+        example:
+          'ReviewChangeFieldsParams parameters = new()\n{\n    JobID = "job_id",\n    Changes =\n    [\n        new()\n        {\n            Change = Change.Correct,\n            Path = "/total",\n            Value = JsonSerializer.SerializeToElement(1250.5),\n        },\n    ],\n    Revision = 0,\n};\n\nvar extractReview = await client.Extract.Review.ChangeFields(parameters);\n\nConsole.WriteLine(extractReview);',
+      },
+      typescript: {
+        method: 'client.extract.review.changeFields',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractReview = await client.extract.review.changeFields('job_id', {\n  changes: [{ change: 'correct', path: '/total' }],\n  revision: 0,\n});\n\nconsole.log(extractReview.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID/review/fields \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "changes": [\n            {\n              "change": "correct",\n              "path": "/total"\n            }\n          ],\n          "revision": 0\n        }\'',
+      },
+      cli: {
+        method: 'review change_fields',
+        example:
+          "llp extract:review change-fields \\\n  --api-key 'My API Key' \\\n  --job-id job_id \\\n  --change '{change: correct, path: /total}' \\\n  --revision 0",
+      },
+    },
+  },
+  {
+    name: 'approve',
+    endpoint: '/api/v2/extract/{job_id}/review/approve',
+    httpMethod: 'post',
+    summary: 'Approve Extract Review',
+    description:
+      "Beta: answers 403 until extract review is enabled for the caller and their organization.\n\nApprove the reviewed result.\n\nWhile flagged fields nobody checked remain, answers 409 with `code: open_flags`\nand their `paths`, unless `sign_off` confirms them as part of approving.\nA job that has not completed answers 409 with `code: job_not_reviewable`. A `revision` other than the review's latest answers 409 with `code: stale_revision` and the latest `revision`.",
+    stainlessPath: '(resource) extract.review > (method) approve',
+    qualified: 'client.extract.review.approve',
+    params: [
+      'job_id: string;',
+      'revision: number;',
+      'organization_id?: string;',
+      'project_id?: string;',
+      'sign_off?: boolean;',
+    ],
+    response:
+      "{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }",
+    markdown:
+      "## approve\n\n`client.extract.review.approve(job_id: string, revision: number, organization_id?: string, project_id?: string, sign_off?: boolean): { id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: object[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n\n**post** `/api/v2/extract/{job_id}/review/approve`\n\nBeta: answers 403 until extract review is enabled for the caller and their organization.\n\nApprove the reviewed result.\n\nWhile flagged fields nobody checked remain, answers 409 with `code: open_flags`\nand their `paths`, unless `sign_off` confirms them as part of approving.\nA job that has not completed answers 409 with `code: job_not_reviewable`. A `revision` other than the review's latest answers 409 with `code: stale_revision` and the latest `revision`.\n\n### Parameters\n\n- `job_id: string`\n\n- `revision: number`\n  The review's revision as the caller last read it.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n- `sign_off?: boolean`\n  Confirm the flagged fields nobody checked as part of approving.\n\n### Returns\n\n- `{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n  An extract job's review: its settings, flags, field actions and decision,\nwith the result as read and as reviewed.\n\n  - `id: string`\n  - `confidence_threshold: number`\n  - `created_at: string`\n  - `decided_at: string`\n  - `decided_by: string`\n  - `decided_reason: string`\n  - `field_actions: object`\n  - `fields_in_scope: string[]`\n  - `flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]`\n  - `job_id: string`\n  - `open_flags: string[]`\n  - `original_result: object`\n  - `required_fields: string[]`\n  - `retain_until: string`\n  - `reviewed_result: object`\n  - `revision: number`\n  - `source_file_id: string`\n  - `status: 'approved' | 'pending' | 'rejected'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractReview = await client.extract.review.approve('job_id', { revision: 0 });\n\nconsole.log(extractReview);\n```",
+    perLanguage: {
+      python: {
+        method: 'extract.review.approve',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_review = client.extract.review.approve(\n    job_id="job_id",\n    revision=0,\n)\nprint(extract_review.id)',
+      },
+      go: {
+        method: 'client.Extract.Review.Approve',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractReview, err := client.Extract.Review.Approve(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ExtractReviewApproveParams{\n\t\t\tRevision: 0,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractReview.ID)\n}\n',
+      },
+      java: {
+        method: 'extract().review().approve',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.review.ExtractReview;\nimport ai.llamaindex.llamacloud.models.extract.review.ReviewApproveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ReviewApproveParams params = ReviewApproveParams.builder()\n            .jobId("job_id")\n            .revision(0L)\n            .build();\n        ExtractReview extractReview = client.extract().review().approve(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Review.Approve',
+        example:
+          'ReviewApproveParams parameters = new()\n{\n    JobID = "job_id",\n    Revision = 0,\n};\n\nvar extractReview = await client.Extract.Review.Approve(parameters);\n\nConsole.WriteLine(extractReview);',
+      },
+      typescript: {
+        method: 'client.extract.review.approve',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractReview = await client.extract.review.approve('job_id', { revision: 0 });\n\nconsole.log(extractReview.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID/review/approve \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "revision": 0\n        }\'',
+      },
+      cli: {
+        method: 'review approve',
+        example:
+          "llp extract:review approve \\\n  --api-key 'My API Key' \\\n  --job-id job_id \\\n  --revision 0",
+      },
+    },
+  },
+  {
+    name: 'reject',
+    endpoint: '/api/v2/extract/{job_id}/review/reject',
+    httpMethod: 'post',
+    summary: 'Reject Extract Review',
+    description:
+      "Beta: answers 403 until extract review is enabled for the caller and their organization.\n\nReject the result, with a reason. A job that failed or was cancelled can be rejected,\nwhich closes a review turned on while it ran. A job still queued or running answers\n409 with `code: job_not_reviewable`. A `revision` other than the review's latest answers 409 with `code: stale_revision` and the latest `revision`.",
+    stainlessPath: '(resource) extract.review > (method) reject',
+    qualified: 'client.extract.review.reject',
+    params: [
+      'job_id: string;',
+      'reason: string;',
+      'revision: number;',
+      'organization_id?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      "{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }",
+    markdown:
+      "## reject\n\n`client.extract.review.reject(job_id: string, reason: string, revision: number, organization_id?: string, project_id?: string): { id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: object[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n\n**post** `/api/v2/extract/{job_id}/review/reject`\n\nBeta: answers 403 until extract review is enabled for the caller and their organization.\n\nReject the result, with a reason. A job that failed or was cancelled can be rejected,\nwhich closes a review turned on while it ran. A job still queued or running answers\n409 with `code: job_not_reviewable`. A `revision` other than the review's latest answers 409 with `code: stale_revision` and the latest `revision`.\n\n### Parameters\n\n- `job_id: string`\n\n- `reason: string`\n  Why the result was rejected.\n\n- `revision: number`\n  The review's revision as the caller last read it.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n  An extract job's review: its settings, flags, field actions and decision,\nwith the result as read and as reviewed.\n\n  - `id: string`\n  - `confidence_threshold: number`\n  - `created_at: string`\n  - `decided_at: string`\n  - `decided_by: string`\n  - `decided_reason: string`\n  - `field_actions: object`\n  - `fields_in_scope: string[]`\n  - `flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]`\n  - `job_id: string`\n  - `open_flags: string[]`\n  - `original_result: object`\n  - `required_fields: string[]`\n  - `retain_until: string`\n  - `reviewed_result: object`\n  - `revision: number`\n  - `source_file_id: string`\n  - `status: 'approved' | 'pending' | 'rejected'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractReview = await client.extract.review.reject('job_id', { reason: 'The invoice total does not match the line items.', revision: 0 });\n\nconsole.log(extractReview);\n```",
+    perLanguage: {
+      python: {
+        method: 'extract.review.reject',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_review = client.extract.review.reject(\n    job_id="job_id",\n    reason="The invoice total does not match the line items.",\n    revision=0,\n)\nprint(extract_review.id)',
+      },
+      go: {
+        method: 'client.Extract.Review.Reject',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractReview, err := client.Extract.Review.Reject(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ExtractReviewRejectParams{\n\t\t\tReason:   "The invoice total does not match the line items.",\n\t\t\tRevision: 0,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractReview.ID)\n}\n',
+      },
+      java: {
+        method: 'extract().review().reject',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.review.ExtractReview;\nimport ai.llamaindex.llamacloud.models.extract.review.ReviewRejectParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ReviewRejectParams params = ReviewRejectParams.builder()\n            .jobId("job_id")\n            .reason("The invoice total does not match the line items.")\n            .revision(0L)\n            .build();\n        ExtractReview extractReview = client.extract().review().reject(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Review.Reject',
+        example:
+          'ReviewRejectParams parameters = new()\n{\n    JobID = "job_id",\n    Reason = "The invoice total does not match the line items.",\n    Revision = 0,\n};\n\nvar extractReview = await client.Extract.Review.Reject(parameters);\n\nConsole.WriteLine(extractReview);',
+      },
+      typescript: {
+        method: 'client.extract.review.reject',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractReview = await client.extract.review.reject('job_id', {\n  reason: 'The invoice total does not match the line items.',\n  revision: 0,\n});\n\nconsole.log(extractReview.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID/review/reject \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "reason": "The invoice total does not match the line items.",\n          "revision": 0\n        }\'',
+      },
+      cli: {
+        method: 'review reject',
+        example:
+          "llp extract:review reject \\\n  --api-key 'My API Key' \\\n  --job-id job_id \\\n  --reason 'The invoice total does not match the line items.' \\\n  --revision 0",
+      },
+    },
+  },
+  {
+    name: 'reopen',
+    endpoint: '/api/v2/extract/{job_id}/review/reopen',
+    httpMethod: 'post',
+    summary: 'Reopen Extract Review',
+    description:
+      "Beta: answers 403 until extract review is enabled for the caller and their organization.\n\nPut an approved or rejected review back to pending. Its field actions stay.\n\nA `revision` other than the review's latest answers 409 with `code: stale_revision` and the latest `revision`.",
+    stainlessPath: '(resource) extract.review > (method) reopen',
+    qualified: 'client.extract.review.reopen',
+    params: ['job_id: string;', 'revision: number;', 'organization_id?: string;', 'project_id?: string;'],
+    response:
+      "{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }",
+    markdown:
+      "## reopen\n\n`client.extract.review.reopen(job_id: string, revision: number, organization_id?: string, project_id?: string): { id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: object[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n\n**post** `/api/v2/extract/{job_id}/review/reopen`\n\nBeta: answers 403 until extract review is enabled for the caller and their organization.\n\nPut an approved or rejected review back to pending. Its field actions stay.\n\nA `revision` other than the review's latest answers 409 with `code: stale_revision` and the latest `revision`.\n\n### Parameters\n\n- `job_id: string`\n\n- `revision: number`\n  The review's revision as the caller last read it.\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; confidence_threshold: number; created_at: string; decided_at: string; decided_by: string; decided_reason: string; field_actions: object; fields_in_scope: string[]; flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]; job_id: string; open_flags: string[]; original_result: object; required_fields: string[]; retain_until: string; reviewed_result: object; revision: number; source_file_id: string; status: 'approved' | 'pending' | 'rejected'; updated_at: string; }`\n  An extract job's review: its settings, flags, field actions and decision,\nwith the result as read and as reviewed.\n\n  - `id: string`\n  - `confidence_threshold: number`\n  - `created_at: string`\n  - `decided_at: string`\n  - `decided_by: string`\n  - `decided_reason: string`\n  - `field_actions: object`\n  - `fields_in_scope: string[]`\n  - `flags: { handled: boolean; path: string; reason: 'below_threshold' | 'required_empty'; cell?: { row: number; column?: string; }; confidence?: number; }[]`\n  - `job_id: string`\n  - `open_flags: string[]`\n  - `original_result: object`\n  - `required_fields: string[]`\n  - `retain_until: string`\n  - `reviewed_result: object`\n  - `revision: number`\n  - `source_file_id: string`\n  - `status: 'approved' | 'pending' | 'rejected'`\n  - `updated_at: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nconst extractReview = await client.extract.review.reopen('job_id', { revision: 0 });\n\nconsole.log(extractReview);\n```",
+    perLanguage: {
+      python: {
+        method: 'extract.review.reopen',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\nextract_review = client.extract.review.reopen(\n    job_id="job_id",\n    revision=0,\n)\nprint(extract_review.id)',
+      },
+      go: {
+        method: 'client.Extract.Review.Reopen',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\textractReview, err := client.Extract.Review.Reopen(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ExtractReviewReopenParams{\n\t\t\tRevision: 0,\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", extractReview.ID)\n}\n',
+      },
+      java: {
+        method: 'extract().review().reopen',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.review.ExtractReview;\nimport ai.llamaindex.llamacloud.models.extract.review.ReviewReopenParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ReviewReopenParams params = ReviewReopenParams.builder()\n            .jobId("job_id")\n            .revision(0L)\n            .build();\n        ExtractReview extractReview = client.extract().review().reopen(params);\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Review.Reopen',
+        example:
+          'ReviewReopenParams parameters = new()\n{\n    JobID = "job_id",\n    Revision = 0,\n};\n\nvar extractReview = await client.Extract.Review.Reopen(parameters);\n\nConsole.WriteLine(extractReview);',
+      },
+      typescript: {
+        method: 'client.extract.review.reopen',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\nconst extractReview = await client.extract.review.reopen('job_id', { revision: 0 });\n\nconsole.log(extractReview.id);",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID/review/reopen \\\n    -H \'Content-Type: application/json\' \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY" \\\n    -d \'{\n          "revision": 0\n        }\'',
+      },
+      cli: {
+        method: 'review reopen',
+        example:
+          "llp extract:review reopen \\\n  --api-key 'My API Key' \\\n  --job-id job_id \\\n  --revision 0",
+      },
+    },
+  },
+  {
+    name: 'list_events',
+    endpoint: '/api/v2/extract/{job_id}/review/events',
+    httpMethod: 'get',
+    summary: 'List Extract Review Events',
+    description:
+      "Beta: answers 403 until extract review is enabled for the caller and their organization.\n\nList a review's history, newest first.",
+    stainlessPath: '(resource) extract.review > (method) list_events',
+    qualified: 'client.extract.review.listEvents',
+    params: [
+      'job_id: string;',
+      'organization_id?: string;',
+      'page_size?: number;',
+      'page_token?: string;',
+      'project_id?: string;',
+    ],
+    response:
+      "{ id: string; actor_id: string; created_at: string; kind: string; detail?: { confidence_threshold: number; fields_in_scope: string[]; origin: 'api' | 'edit' | 'history' | 'run'; required_fields: string[]; } | { reason: string; } | { paths: string[]; }; path?: string; value_after?: object; value_before?: object; }",
+    markdown:
+      "## list_events\n\n`client.extract.review.listEvents(job_id: string, organization_id?: string, page_size?: number, page_token?: string, project_id?: string): { id: string; actor_id: string; created_at: string; kind: string; detail?: object | object | object; path?: string; value_after?: object; value_before?: object; }`\n\n**get** `/api/v2/extract/{job_id}/review/events`\n\nBeta: answers 403 until extract review is enabled for the caller and their organization.\n\nList a review's history, newest first.\n\n### Parameters\n\n- `job_id: string`\n\n- `organization_id?: string`\n\n- `page_size?: number`\n  Events per page.\n\n- `page_token?: string`\n  Token from the previous page.\n\n- `project_id?: string`\n\n### Returns\n\n- `{ id: string; actor_id: string; created_at: string; kind: string; detail?: { confidence_threshold: number; fields_in_scope: string[]; origin: 'api' | 'edit' | 'history' | 'run'; required_fields: string[]; } | { reason: string; } | { paths: string[]; }; path?: string; value_after?: object; value_before?: object; }`\n  One entry in a review's history.\n\n  - `id: string`\n  - `actor_id: string`\n  - `created_at: string`\n  - `kind: string`\n  - `detail?: { confidence_threshold: number; fields_in_scope: string[]; origin: 'api' | 'edit' | 'history' | 'run'; required_fields: string[]; } | { reason: string; } | { paths: string[]; }`\n  - `path?: string`\n  - `value_after?: object`\n  - `value_before?: object`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\n// Automatically fetches more pages as needed.\nfor await (const extractReviewEvent of client.extract.review.listEvents('job_id')) {\n  console.log(extractReviewEvent);\n}\n```",
+    perLanguage: {
+      python: {
+        method: 'extract.review.list_events',
+        example:
+          'import os\nfrom llama_cloud import LlamaCloud\n\nclient = LlamaCloud(\n    api_key=os.environ.get("LLAMA_CLOUD_API_KEY"),  # This is the default and can be omitted\n)\npage = client.extract.review.list_events(\n    job_id="job_id",\n)\npage = page.items[0]\nprint(page.id)',
+      },
+      go: {
+        method: 'client.Extract.Review.ListEvents',
+        example:
+          'package main\n\nimport (\n\t"context"\n\t"fmt"\n\n\t"github.com/run-llama/llama-parse-go"\n\t"github.com/run-llama/llama-parse-go/option"\n)\n\nfunc main() {\n\tclient := llamacloud.NewClient(\n\t\toption.WithAPIKey("My API Key"),\n\t)\n\tpage, err := client.Extract.Review.ListEvents(\n\t\tcontext.TODO(),\n\t\t"job_id",\n\t\tllamacloud.ExtractReviewListEventsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf("%+v\\n", page)\n}\n',
+      },
+      java: {
+        method: 'extract().review().listEvents',
+        example:
+          'package ai.llamaindex.llamacloud.example;\n\nimport ai.llamaindex.llamacloud.client.LlamaCloudClient;\nimport ai.llamaindex.llamacloud.client.okhttp.LlamaCloudOkHttpClient;\nimport ai.llamaindex.llamacloud.models.extract.review.ReviewListEventsPage;\nimport ai.llamaindex.llamacloud.models.extract.review.ReviewListEventsParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        LlamaCloudClient client = LlamaCloudOkHttpClient.fromEnv();\n\n        ReviewListEventsPage page = client.extract().review().listEvents("job_id");\n    }\n}',
+      },
+      csharp: {
+        method: 'Extract.Review.ListEvents',
+        example:
+          'ReviewListEventsParams parameters = new() { JobID = "job_id" };\n\nvar page = await client.Extract.Review.ListEvents(parameters);\nawait foreach (var item in page.Paginate())\n{\n    Console.WriteLine(item);\n}',
+      },
+      typescript: {
+        method: 'client.extract.review.listEvents',
+        example:
+          "import LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud({\n  apiKey: process.env['LLAMA_CLOUD_API_KEY'], // This is the default and can be omitted\n});\n\n// Automatically fetches more pages as needed.\nfor await (const extractReviewEvent of client.extract.review.listEvents('job_id')) {\n  console.log(extractReviewEvent.id);\n}",
+      },
+      http: {
+        example:
+          'curl https://api.cloud.llamaindex.ai/api/v2/extract/$JOB_ID/review/events \\\n    -H "Authorization: Bearer $LLAMA_CLOUD_API_KEY"',
+      },
+      cli: {
+        method: 'review list_events',
+        example: "llp extract:review list-events \\\n  --api-key 'My API Key' \\\n  --job-id job_id",
+      },
+    },
+  },
+  {
+    name: 'create',
     endpoint: '/api/v2/batches',
     httpMethod: 'post',
     summary: 'Create Batch',

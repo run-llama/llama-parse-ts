@@ -109,27 +109,44 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/extract.ts">ExtractConfiguration</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractJobMetadata</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractJobUsage</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractV2Job</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractV2JobCreate</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractV2JobQueryResponse</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractV2SchemaGenerateRequest</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractV2SchemaValidateRequest</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractV2SchemaValidateResponse</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractedFieldMetadata</a></code>
-- <code><a href="./src/resources/extract.ts">ExtractDeleteResponse</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractConfiguration</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractJobMetadata</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractJobUsage</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractV2Job</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractV2JobCreate</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractV2JobQueryResponse</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractV2SchemaGenerateRequest</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractV2SchemaValidateRequest</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractV2SchemaValidateResponse</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractedFieldMetadata</a></code>
+- <code><a href="./src/resources/extract/extract.ts">ExtractDeleteResponse</a></code>
 
 Methods:
 
-- <code title="post /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">create</a>({ ...params }) -> ExtractV2Job</code>
-- <code title="get /api/v2/extract">client.extract.<a href="./src/resources/extract.ts">list</a>({ ...params }) -> ExtractV2JobsPaginatedCursor</code>
-- <code title="get /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">get</a>(jobID, { ...params }) -> ExtractV2Job</code>
-- <code title="delete /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract.ts">delete</a>(jobID, { ...params }) -> unknown</code>
-- <code title="post /api/v2/extract/{job_id}/cancel">client.extract.<a href="./src/resources/extract.ts">cancel</a>(jobID, { ...params }) -> ExtractV2Job</code>
-- <code title="post /api/v2/extract/schema/validation">client.extract.<a href="./src/resources/extract.ts">validateSchema</a>({ ...params }) -> ExtractV2SchemaValidateResponse</code>
-- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/resources/extract.ts">generateSchema</a>({ ...params }) -> ConfigurationCreate</code>
+- <code title="post /api/v2/extract">client.extract.<a href="./src/resources/extract/extract.ts">create</a>({ ...params }) -> ExtractV2Job</code>
+- <code title="get /api/v2/extract">client.extract.<a href="./src/resources/extract/extract.ts">list</a>({ ...params }) -> ExtractV2JobsPaginatedCursor</code>
+- <code title="get /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract/extract.ts">get</a>(jobID, { ...params }) -> ExtractV2Job</code>
+- <code title="delete /api/v2/extract/{job_id}">client.extract.<a href="./src/resources/extract/extract.ts">delete</a>(jobID, { ...params }) -> unknown</code>
+- <code title="post /api/v2/extract/{job_id}/cancel">client.extract.<a href="./src/resources/extract/extract.ts">cancel</a>(jobID, { ...params }) -> ExtractV2Job</code>
+- <code title="post /api/v2/extract/schema/validation">client.extract.<a href="./src/resources/extract/extract.ts">validateSchema</a>({ ...params }) -> ExtractV2SchemaValidateResponse</code>
+- <code title="post /api/v2/extract/schema/generate">client.extract.<a href="./src/resources/extract/extract.ts">generateSchema</a>({ ...params }) -> ConfigurationCreate</code>
+
+## Review
+
+Types:
+
+- <code><a href="./src/resources/extract/review.ts">ExtractReview</a></code>
+- <code><a href="./src/resources/extract/review.ts">ExtractReviewEvent</a></code>
+
+Methods:
+
+- <code title="post /api/v2/extract/{job_id}/review">client.extract.review.<a href="./src/resources/extract/review.ts">create</a>(jobID, { ...params }) -> ExtractReview</code>
+- <code title="get /api/v2/extract/{job_id}/review">client.extract.review.<a href="./src/resources/extract/review.ts">get</a>(jobID, { ...params }) -> ExtractReview</code>
+- <code title="post /api/v2/extract/{job_id}/review/fields">client.extract.review.<a href="./src/resources/extract/review.ts">changeFields</a>(jobID, { ...params }) -> ExtractReview</code>
+- <code title="post /api/v2/extract/{job_id}/review/approve">client.extract.review.<a href="./src/resources/extract/review.ts">approve</a>(jobID, { ...params }) -> ExtractReview</code>
+- <code title="post /api/v2/extract/{job_id}/review/reject">client.extract.review.<a href="./src/resources/extract/review.ts">reject</a>(jobID, { ...params }) -> ExtractReview</code>
+- <code title="post /api/v2/extract/{job_id}/review/reopen">client.extract.review.<a href="./src/resources/extract/review.ts">reopen</a>(jobID, { ...params }) -> ExtractReview</code>
+- <code title="get /api/v2/extract/{job_id}/review/events">client.extract.review.<a href="./src/resources/extract/review.ts">listEvents</a>(jobID, { ...params }) -> ExtractReviewEventsPaginatedCursor</code>
 
 # Classifier
 
