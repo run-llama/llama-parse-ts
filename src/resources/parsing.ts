@@ -574,6 +574,30 @@ export namespace FormField {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -625,6 +649,30 @@ export namespace FormField {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -676,6 +724,30 @@ export namespace FormField {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -823,6 +895,30 @@ export namespace FormSection {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -874,6 +970,30 @@ export namespace FormSection {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -1004,6 +1124,30 @@ export namespace FormTable {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -1055,6 +1199,30 @@ export namespace FormTable {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -1106,6 +1274,30 @@ export namespace FormTable {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -1157,6 +1349,30 @@ export namespace FormTable {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -1274,6 +1490,30 @@ export namespace FormText {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -1325,6 +1565,30 @@ export namespace FormText {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -1376,6 +1640,30 @@ export namespace FormText {
            * `[start, end)` UTF-8 byte span in the complete source property string
            */
           span: Array<unknown>;
+
+          /**
+           * Per-character grounding within the word, present when `granular_bboxes` includes
+           * 'char' (Agentic Plus only). Each box is an even split of the word box across the
+           * word's characters.
+           */
+          chars?: Array<Word.Char> | null;
+        }
+
+        export namespace Word {
+          /**
+           * One grounded character: a `[start, end)` span in the source text and its bbox.
+           */
+          export interface Char {
+            /**
+             * Character bounding box
+             */
+            bbox: ParsingAPI.BBox;
+
+            /**
+             * `[start, end)` UTF-8 byte span in the complete source property string
+             */
+            span: Array<unknown>;
+          }
         }
       }
     }
@@ -2866,6 +3154,8 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic tier
    */
   agentic: Array<
+    | '2026-11-05'
+    | '2026-10-30'
     | '2026-10-16'
     | '2026-10-15'
     | '2026-09-29'
@@ -2923,6 +3213,10 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic_plus tier
    */
   agentic_plus: Array<
+    | '2026-11-02'
+    | '2026-10-28'
+    | '2026-10-26'
+    | '2026-10-20'
     | '2026-09-28'
     | '2026-09-24'
     | '2026-09-11'
@@ -2972,6 +3266,8 @@ export interface ParsingListVersionsResponse {
    * Versions for the cost_effective tier
    */
   cost_effective: Array<
+    | '2026-11-05'
+    | '2026-10-30'
     | '2026-09-28'
     | '2026-08-19'
     | '2026-08-11'
@@ -3043,13 +3339,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2026-06-15`
-   * - `cost_effective`: `2026-09-28`
-   * - `agentic`: `2026-10-16`
-   * - `agentic_plus`: `2026-09-28`
+   * - `cost_effective`: `2026-11-05`
+   * - `agentic`: `2026-11-05`
+   * - `agentic_plus`: `2026-11-02`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-10-16' | '2026-09-28' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-11-05' | '2026-11-02' | '2026-06-15' | (string & {});
 
   /**
    * Query param
@@ -3160,8 +3456,8 @@ export interface ParsingCreateParams {
   webhook_configuration_ids?: Array<string> | null;
 
   /**
-   * Body param: Webhook endpoints for job status notifications. Multiple webhooks
-   * can be configured for different events or services
+   * Body param: Webhook endpoints for job notifications. Maximum 10 total, including
+   * webhook_configuration_ids.
    */
   webhook_configurations?: Array<ParsingCreateParams.WebhookConfiguration>;
 }
@@ -3357,15 +3653,16 @@ export namespace ParsingCreateParams {
     /**
      * Bounding-box granularity levels to compute for the parse. 'word' computes one
      * bounding box per detected word; 'line' computes one per text line; 'cell'
-     * computes one per table cell. Multiple levels can be requested. Empty list
-     * (default) disables granular bboxes — only item-level layout boxes are returned
-     * on the result. When set, the computed boxes are not inlined on the result items;
-     * they are written to a separate `grounded_items` sidecar (JSONL, one row per
-     * page) and exposed as `result_content_metadata.grounded_items` (a presigned
-     * download URL) on the parse result. Each row matches the `GroundedJsonItem`
-     * shape.
+     * computes one per table cell; 'char' adds one box per character inside each
+     * grounded word (`chars` on each word), available on the `agentic_plus` tier only.
+     * Multiple levels can be requested. Empty list (default) disables granular bboxes
+     * — only item-level layout boxes are returned on the result. When set, the
+     * computed boxes are not inlined on the result items; they are written to a
+     * separate `grounded_items` sidecar (JSONL, one row per page) and exposed as
+     * `result_content_metadata.grounded_items` (a presigned download URL) on the parse
+     * result. Each row matches the `GroundedJsonItem` shape.
      */
-    granular_bboxes?: Array<'cell' | 'line' | 'word'>;
+    granular_bboxes?: Array<'cell' | 'char' | 'line' | 'word'>;
 
     /**
      * Image categories to save: 'screenshot' (full page renders), 'embedded' (images
@@ -3937,13 +4234,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2026-06-15`
-         * - `cost_effective`: `2026-09-28`
-         * - `agentic`: `2026-10-16`
-         * - `agentic_plus`: `2026-09-28`
+         * - `cost_effective`: `2026-11-05`
+         * - `agentic`: `2026-11-05`
+         * - `agentic_plus`: `2026-11-02`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-10-16' | '2026-09-28' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-11-05' | '2026-11-02' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {

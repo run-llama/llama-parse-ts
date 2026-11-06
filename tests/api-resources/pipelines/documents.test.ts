@@ -40,6 +40,7 @@ describe('resource documents', () => {
           page_positions: [0],
         },
       ],
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -66,6 +67,7 @@ describe('resource documents', () => {
           limit: 0,
           only_api_data_source_documents: true,
           only_direct_upload: true,
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           skip: 0,
           status_refresh_policy: 'cached',
         },
@@ -98,6 +100,7 @@ describe('resource documents', () => {
           data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           file_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           only_direct_upload: true,
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         },
         { path: '/_stainless_unknown_path' },
       ),
@@ -122,6 +125,7 @@ describe('resource documents', () => {
   test.skip('get: required and optional params', async () => {
     const response = await client.pipelines.documents.get('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -143,6 +147,7 @@ describe('resource documents', () => {
   test.skip('delete: required and optional params', async () => {
     const response = await client.pipelines.documents.delete('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -164,6 +169,7 @@ describe('resource documents', () => {
   test.skip('getStatus: required and optional params', async () => {
     const response = await client.pipelines.documents.getStatus('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -185,6 +191,7 @@ describe('resource documents', () => {
   test.skip('sync: required and optional params', async () => {
     const response = await client.pipelines.documents.sync('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -206,6 +213,7 @@ describe('resource documents', () => {
   test.skip('getChunks: required and optional params', async () => {
     const response = await client.pipelines.documents.getChunks('document_id', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -241,6 +249,7 @@ describe('resource documents', () => {
           page_positions: [0],
         },
       ],
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 });

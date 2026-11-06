@@ -178,6 +178,11 @@ export interface SplitCreateResponse {
   user_id: string;
 
   /**
+   * Split version used for this job.
+   */
+  version: string;
+
+  /**
    * Split configuration ID used for this job.
    */
   configuration_id?: string | null;
@@ -293,6 +298,11 @@ export interface SplitListResponse {
    * User who created this job.
    */
   user_id: string;
+
+  /**
+   * Split version used for this job.
+   */
+  version: string;
 
   /**
    * Split configuration ID used for this job.
@@ -414,6 +424,11 @@ export interface SplitCancelResponse {
   user_id: string;
 
   /**
+   * Split version used for this job.
+   */
+  version: string;
+
+  /**
    * Split configuration ID used for this job.
    */
   configuration_id?: string | null;
@@ -529,6 +544,11 @@ export interface SplitGetResponse {
    * User who created this job.
    */
   user_id: string;
+
+  /**
+   * Split version used for this job.
+   */
+  version: string;
 
   /**
    * Split configuration ID used for this job.

@@ -387,6 +387,13 @@ export interface ExtractV2Parameters {
   disable_cache?: boolean;
 
   /**
+   * Use 'max' for additional processing effort on agentic_plus. Bills by model usage
+   * with the page charge as a minimum. Omit or set to null for the tier's default
+   * behavior.
+   */
+  effort?: 'max' | null;
+
+  /**
    * Deprecated. Applies only to Agentic and Cost Effective versions 2.0 or earlier.
    * Granularity of extraction: per_doc returns one object per document, per_page
    * returns one object per page, per_table_row returns one object per table row.
@@ -411,7 +418,7 @@ export interface ExtractV2Parameters {
    * specified. Turbo extract does not support parse configuration or produce a parse
    * output; use another tier if your workflow requires parsed text.
    */
-  parse_tier?: string | null;
+  parse_tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'fast' | null;
 
   /**
    * Optional worksheet names to extract when spreadsheet_mode is on. Overrides
@@ -421,12 +428,9 @@ export interface ExtractV2Parameters {
   sheet_names?: Array<string> | null;
 
   /**
-   * Beta. When true, extract structured data directly from a spreadsheet workbook
-   * (.xlsx/.xls/.csv) — the agent reads cells straight from the workbook instead of
-   * the standard document path. Off by default (spreadsheets keep the standard
-   * path). Requires the agentic_plus tier. Billed on the standard per-page extract
-   * rate, against a page count derived from workbook size. Citations and confidence
-   * scores are not available in this mode.
+   * Extract structured data directly from spreadsheet cells (.xlsx/.xls/.csv).
+   * Billed at the standard per-page Extract rate, with page count derived from
+   * workbook size.
    */
   spreadsheet_mode?: boolean;
 
@@ -442,10 +446,10 @@ export interface ExtractV2Parameters {
   target_pages?: string | null;
 
   /**
-   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page), or
-   * agentic_plus (50 credits/page)
+   * Extract tier: cost_effective (5 credits/page), agentic (15 credits/page),
+   * agentic_plus (50 credits/page), or turbo (35 credits/page)
    */
-  tier?: 'agentic' | 'agentic_plus' | 'cost_effective';
+  tier?: 'agentic' | 'agentic_plus' | 'cost_effective' | 'turbo';
 
   /**
    * Extract version name, such as '2.5'. Use 'latest' for the newest compatible
@@ -482,13 +486,13 @@ export interface ParseV2Parameters {
    * Current `latest` by tier:
    *
    * - `fast`: `2026-06-15`
-   * - `cost_effective`: `2026-09-28`
-   * - `agentic`: `2026-10-16`
-   * - `agentic_plus`: `2026-09-28`
+   * - `cost_effective`: `2026-11-05`
+   * - `agentic`: `2026-11-05`
+   * - `agentic_plus`: `2026-11-02`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-10-16' | '2026-09-28' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-11-05' | '2026-11-02' | '2026-06-15' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -558,8 +562,8 @@ export interface ParseV2Parameters {
   webhook_configuration_ids?: Array<string> | null;
 
   /**
-   * Webhook endpoints for job status notifications. Multiple webhooks can be
-   * configured for different events or services
+   * Webhook endpoints for job notifications. Maximum 10 total, including
+   * webhook_configuration_ids.
    */
   webhook_configurations?: Array<ParseV2Parameters.WebhookConfiguration>;
 }
@@ -755,15 +759,16 @@ export namespace ParseV2Parameters {
     /**
      * Bounding-box granularity levels to compute for the parse. 'word' computes one
      * bounding box per detected word; 'line' computes one per text line; 'cell'
-     * computes one per table cell. Multiple levels can be requested. Empty list
-     * (default) disables granular bboxes — only item-level layout boxes are returned
-     * on the result. When set, the computed boxes are not inlined on the result items;
-     * they are written to a separate `grounded_items` sidecar (JSONL, one row per
-     * page) and exposed as `result_content_metadata.grounded_items` (a presigned
-     * download URL) on the parse result. Each row matches the `GroundedJsonItem`
-     * shape.
+     * computes one per table cell; 'char' adds one box per character inside each
+     * grounded word (`chars` on each word), available on the `agentic_plus` tier only.
+     * Multiple levels can be requested. Empty list (default) disables granular bboxes
+     * — only item-level layout boxes are returned on the result. When set, the
+     * computed boxes are not inlined on the result items; they are written to a
+     * separate `grounded_items` sidecar (JSONL, one row per page) and exposed as
+     * `result_content_metadata.grounded_items` (a presigned download URL) on the parse
+     * result. Each row matches the `GroundedJsonItem` shape.
      */
-    granular_bboxes?: Array<'cell' | 'line' | 'word'>;
+    granular_bboxes?: Array<'cell' | 'char' | 'line' | 'word'>;
 
     /**
      * Image categories to save: 'screenshot' (full page renders), 'embedded' (images
@@ -811,6 +816,11 @@ export namespace ParseV2Parameters {
      * Markdown formatting options including table styles and link annotations
      */
     export interface Markdown {
+      /**
+       * Detect printed gutter line numbers and return their Markdown offsets
+       */
+      annotate_line_numbers?: boolean | null;
+
       /**
        * Add link annotations to markdown output in the format [text](url). When false,
        * only the link text is included
@@ -1330,13 +1340,13 @@ export namespace ParseV2Parameters {
          * Current `latest` by tier:
          *
          * - `fast`: `2026-06-15`
-         * - `cost_effective`: `2026-09-28`
-         * - `agentic`: `2026-10-16`
-         * - `agentic_plus`: `2026-09-28`
+         * - `cost_effective`: `2026-11-05`
+         * - `agentic`: `2026-11-05`
+         * - `agentic_plus`: `2026-11-02`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-10-16' | '2026-09-28' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-11-05' | '2026-11-02' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
@@ -1470,12 +1480,15 @@ export namespace ParseV2Parameters {
   }
 
   /**
-   * Webhook configuration for receiving parsing job notifications.
-   *
-   * Webhooks are called when specified events occur during job processing. Configure
-   * multiple webhook configurations to send to different endpoints.
+   * A webhook endpoint kept in a saved Parse configuration.
    */
   export interface WebhookConfiguration {
+    /**
+     * Webhook ID, set by the server. Send it back unchanged so a masked credential
+     * keeps this webhook's saved value.
+     */
+    id?: string | null;
+
     /**
      * Events that trigger this webhook. Options: 'parse.success' (job completed),
      * 'parse.error' (job failed), 'parse.partial_success' (some pages failed),
@@ -1571,6 +1584,17 @@ export namespace SplitV1Parameters {
      * 'uncategorized' but are excluded from results.
      */
     allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+    /**
+     * Free-form guidance for where segment boundaries are placed.
+     */
+    custom_instructions?: string | null;
+
+    /**
+     * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+     * 1 disables merging.
+     */
+    min_pages_per_split?: number;
   }
 }
 

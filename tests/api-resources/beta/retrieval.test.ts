@@ -32,7 +32,7 @@ describe('resource retrieval', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       custom_filters: { foo: { operator: 'eq', value: 'string' } },
       full_text_pipeline_weight: 0,
-      num_candidates: 0,
+      num_candidates: 1,
       rerank: { enabled: true, top_n: 5 },
       score_threshold: 0,
       static_filters: { parsed_directory_file_id: { operator: 'eq', value: 'string' } },
