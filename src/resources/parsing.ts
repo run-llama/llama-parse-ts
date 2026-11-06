@@ -3154,6 +3154,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic tier
    */
   agentic: Array<
+    | '2026-11-05'
     | '2026-10-30'
     | '2026-10-16'
     | '2026-10-15'
@@ -3265,6 +3266,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the cost_effective tier
    */
   cost_effective: Array<
+    | '2026-11-05'
     | '2026-10-30'
     | '2026-09-28'
     | '2026-08-19'
@@ -3337,13 +3339,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2026-06-15`
-   * - `cost_effective`: `2026-10-30`
-   * - `agentic`: `2026-10-30`
+   * - `cost_effective`: `2026-11-05`
+   * - `agentic`: `2026-11-05`
    * - `agentic_plus`: `2026-11-02`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-11-02' | '2026-10-30' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-11-05' | '2026-11-02' | '2026-06-15' | (string & {});
 
   /**
    * Query param
@@ -4232,13 +4234,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2026-06-15`
-         * - `cost_effective`: `2026-10-30`
-         * - `agentic`: `2026-10-30`
+         * - `cost_effective`: `2026-11-05`
+         * - `agentic`: `2026-11-05`
          * - `agentic_plus`: `2026-11-02`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-11-02' | '2026-10-30' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-11-05' | '2026-11-02' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
