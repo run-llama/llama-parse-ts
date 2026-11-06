@@ -8459,12 +8459,12 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/v1/beta/directories/{directory_id}',
     httpMethod: 'delete',
     summary: 'Delete Directory',
-    description: 'Permanently delete a directory.',
+    description: 'Permanently delete a directory, and the files in it that no other directory or index uses.',
     stainlessPath: '(resource) beta.directories > (method) delete',
     qualified: 'client.beta.directories.delete',
     params: ['directory_id: string;', 'organization_id?: string;', 'project_id?: string;'],
     markdown:
-      "## delete\n\n`client.beta.directories.delete(directory_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/beta/directories/{directory_id}`\n\nPermanently delete a directory.\n\n### Parameters\n\n- `directory_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.beta.directories.delete('directory_id')\n```",
+      "## delete\n\n`client.beta.directories.delete(directory_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/beta/directories/{directory_id}`\n\nPermanently delete a directory, and the files in it that no other directory or index uses.\n\n### Parameters\n\n- `directory_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.beta.directories.delete('directory_id')\n```",
     perLanguage: {
       python: {
         method: 'beta.directories.delete',
@@ -8747,7 +8747,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'delete',
     summary: 'Delete Directory File',
     description:
-      'Delete a directory file by `directory_file_id`; to resolve from `unique_id`, list with a filter first.',
+      'Delete a directory file by `directory_file_id`; to resolve from `unique_id`, list with a filter first.\n\nThe uploaded file is deleted with it unless another directory or index still uses it.',
     stainlessPath: '(resource) beta.directories.files > (method) delete',
     qualified: 'client.beta.directories.files.delete',
     params: [
@@ -8757,7 +8757,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'project_id?: string;',
     ],
     markdown:
-      "## delete\n\n`client.beta.directories.files.delete(directory_id: string, directory_file_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/beta/directories/{directory_id}/files/{directory_file_id}`\n\nDelete a directory file by `directory_file_id`; to resolve from `unique_id`, list with a filter first.\n\n### Parameters\n\n- `directory_id: string`\n\n- `directory_file_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.beta.directories.files.delete('directory_file_id', { directory_id: 'directory_id' })\n```",
+      "## delete\n\n`client.beta.directories.files.delete(directory_id: string, directory_file_id: string, organization_id?: string, project_id?: string): void`\n\n**delete** `/api/v1/beta/directories/{directory_id}/files/{directory_file_id}`\n\nDelete a directory file by `directory_file_id`; to resolve from `unique_id`, list with a filter first.\n\nThe uploaded file is deleted with it unless another directory or index still uses it.\n\n### Parameters\n\n- `directory_id: string`\n\n- `directory_file_id: string`\n\n- `organization_id?: string`\n\n- `project_id?: string`\n\n### Example\n\n```typescript\nimport LlamaCloud from '@llamaindex/llama-cloud';\n\nconst client = new LlamaCloud();\n\nawait client.beta.directories.files.delete('directory_file_id', { directory_id: 'directory_id' })\n```",
     perLanguage: {
       python: {
         method: 'beta.directories.files.delete',
