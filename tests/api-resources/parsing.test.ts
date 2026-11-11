@@ -134,6 +134,7 @@ describe('resource parsing', () => {
             image_in_page: true,
             layout_element_in_page: 'layout_element_in_page',
             layout_element_in_page_confidence_threshold: 0,
+            min_complexity: 'high',
             page_contains_at_least_n_charts: 0,
             page_contains_at_least_n_images: 0,
             page_contains_at_least_n_layout_elements: 0,
