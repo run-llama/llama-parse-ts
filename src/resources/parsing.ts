@@ -144,6 +144,10 @@ export class Parsing extends APIResource {
    * The job must be in a terminal state (COMPLETED, FAILED, CANCELLED). Cancel a job
    * that is still running before deleting it.
    *
+   * A job that a document in Evaluate reads its ground truth from can't be deleted.
+   * It is kept until the document is removed from Evaluate or the project is
+   * deleted.
+   *
    * Returns the identifiers of the deleted job.
    *
    * @example
@@ -3214,6 +3218,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic_plus tier
    */
   agentic_plus: Array<
+    | '2026-11-11'
     | '2026-11-10'
     | '2026-11-07'
     | '2026-11-02'
@@ -3345,11 +3350,11 @@ export interface ParsingCreateParams {
    * - `fast`: `2026-06-15`
    * - `cost_effective`: `2026-11-09`
    * - `agentic`: `2026-11-09`
-   * - `agentic_plus`: `2026-11-10`
+   * - `agentic_plus`: `2026-11-11`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-11-10' | '2026-11-09' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-11-11' | '2026-11-09' | '2026-06-15' | (string & {});
 
   /**
    * Query param
@@ -4246,11 +4251,11 @@ export namespace ParsingCreateParams {
          * - `fast`: `2026-06-15`
          * - `cost_effective`: `2026-11-09`
          * - `agentic`: `2026-11-09`
-         * - `agentic_plus`: `2026-11-10`
+         * - `agentic_plus`: `2026-11-11`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-11-10' | '2026-11-09' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-11-11' | '2026-11-09' | '2026-06-15' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
