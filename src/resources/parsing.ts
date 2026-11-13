@@ -3990,6 +3990,16 @@ export namespace ParsingCreateParams {
       parsing_conf: AutoModeConfiguration.ParsingConf;
 
       /**
+       * Match every page when the document has more than N pages
+       */
+      document_longer_than_n_pages?: number | null;
+
+      /**
+       * Match every page when the document has fewer than N pages
+       */
+      document_shorter_than_n_pages?: number | null;
+
+      /**
        * Single glob pattern to match against filename
        */
       filename_match_glob?: string | null;

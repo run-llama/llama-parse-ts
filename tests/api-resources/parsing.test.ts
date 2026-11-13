@@ -125,6 +125,8 @@ describe('resource parsing', () => {
               tier: 'agentic',
               version: 'latest',
             },
+            document_longer_than_n_pages: 5,
+            document_shorter_than_n_pages: 5,
             filename_match_glob: '*.txt',
             filename_match_glob_list: ['string'],
             filename_regexp: 'filename_regexp',
