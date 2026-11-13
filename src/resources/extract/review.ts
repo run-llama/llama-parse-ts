@@ -402,9 +402,9 @@ export interface ExtractReviewEvent {
   id: string;
 
   /**
-   * ID of the user who acted.
+   * ID of the user who acted; null when a review policy turned review on.
    */
-  actor_id: string;
+  actor_id: string | null;
 
   /**
    * When it happened.
@@ -468,9 +468,10 @@ export namespace ExtractReviewEvent {
     fields_in_scope: Array<string>;
 
     /**
-     * Turned on as the job ran, from History, by a first edit, or by the API.
+     * Turned on as the job ran, from History, by a first edit, by the API, or by the
+     * configuration's review policy as the job completed.
      */
-    origin: 'api' | 'edit' | 'history' | 'run';
+    origin: 'api' | 'edit' | 'history' | 'policy' | 'run';
 
     /**
      * JSON Pointers of fields flagged when empty.
