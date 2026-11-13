@@ -1,5 +1,20 @@
 const fs = require('fs');
-const problems = Object.values(JSON.parse(fs.readFileSync('.attw.json', 'utf-8')).problems)
+
+// Delete the report even when it can't be parsed: a crashed attw leaves an empty
+// .attw.json, and a leftover file blocks the next checkout of the SDK repo.
+function readReport() {
+  try {
+    return JSON.parse(fs.readFileSync('.attw.json', 'utf-8'));
+  } catch (error) {
+    throw new Error(`attw did not write a JSON report, so it probably crashed: ${error.message}`, {
+      cause: error,
+    });
+  } finally {
+    fs.rmSync('.attw.json', { force: true });
+  }
+}
+
+const problems = Object.values(readReport().problems)
   .flat()
   .filter(
     (problem) =>
@@ -15,7 +30,6 @@ const problems = Object.values(JSON.parse(fs.readFileSync('.attw.json', 'utf-8')
         )
       ),
   );
-fs.unlinkSync('.attw.json');
 if (problems.length) {
   process.stdout.write('The types are wrong!\n' + JSON.stringify(problems, null, 2) + '\n');
   process.exitCode = 1;

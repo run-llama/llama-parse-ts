@@ -485,14 +485,14 @@ export interface ParseV2Parameters {
    *
    * Current `latest` by tier:
    *
-   * - `fast`: `2026-06-15`
+   * - `fast`: `2026-11-12`
    * - `cost_effective`: `2026-11-09`
    * - `agentic`: `2026-11-09`
    * - `agentic_plus`: `2026-11-11`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-11-11' | '2026-11-09' | '2026-06-15' | (string & {});
+  version: 'latest' | '2026-11-12' | '2026-11-11' | '2026-11-09' | (string & {});
 
   /**
    * Options for AI-powered parsing tiers (cost_effective, agentic, agentic_plus).
@@ -1132,10 +1132,11 @@ export namespace ParseV2Parameters {
       layout_element_in_page_confidence_threshold?: number | string | null;
 
       /**
-       * Trigger on pages at least this complex. high: pages whose tables look wrong.
-       * medium: also pages that are mostly scanned text.
+       * Trigger on pages with at least 100 source words. low: table warnings or at least
+       * 50% OCR words. medium: at least 3 table concerns or missed tables. high: medium
+       * plus at least 2 detected tables.
        */
-      min_complexity?: 'high' | 'medium' | null;
+      min_complexity?: 'high' | 'low' | 'medium' | null;
 
       /**
        * Trigger if page has more than N charts
@@ -1345,14 +1346,14 @@ export namespace ParseV2Parameters {
          *
          * Current `latest` by tier:
          *
-         * - `fast`: `2026-06-15`
+         * - `fast`: `2026-11-12`
          * - `cost_effective`: `2026-11-09`
          * - `agentic`: `2026-11-09`
          * - `agentic_plus`: `2026-11-11`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-11-11' | '2026-11-09' | '2026-06-15' | (string & {}) | null;
+        version?: 'latest' | '2026-11-12' | '2026-11-11' | '2026-11-09' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
