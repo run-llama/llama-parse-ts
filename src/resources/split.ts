@@ -231,6 +231,11 @@ export interface SplitCreateResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Advisory findings about the categories this job uses; empty when none.
+   */
+  warnings?: Array<SplitCreateResponse.Warning>;
 }
 
 export namespace SplitCreateResponse {
@@ -256,6 +261,26 @@ export namespace SplitCreateResponse {
      * 1 disables merging.
      */
     min_pages_per_split?: number;
+  }
+
+  /**
+   * Advisory finding about split categories; the job still runs.
+   */
+  export interface Warning {
+    /**
+     * Names of the categories the warning concerns.
+     */
+    category_names: Array<string>;
+
+    /**
+     * Rule that produced the warning.
+     */
+    code: 'catch_all_category' | 'missing_description' | 'near_duplicate_description' | 'near_duplicate_name';
+
+    /**
+     * What is ambiguous and how to fix it.
+     */
+    message: string;
   }
 }
 
@@ -353,6 +378,11 @@ export interface SplitListResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Advisory findings about the categories this job uses; empty when none.
+   */
+  warnings?: Array<SplitListResponse.Warning>;
 }
 
 export namespace SplitListResponse {
@@ -378,6 +408,26 @@ export namespace SplitListResponse {
      * 1 disables merging.
      */
     min_pages_per_split?: number;
+  }
+
+  /**
+   * Advisory finding about split categories; the job still runs.
+   */
+  export interface Warning {
+    /**
+     * Names of the categories the warning concerns.
+     */
+    category_names: Array<string>;
+
+    /**
+     * Rule that produced the warning.
+     */
+    code: 'catch_all_category' | 'missing_description' | 'near_duplicate_description' | 'near_duplicate_name';
+
+    /**
+     * What is ambiguous and how to fix it.
+     */
+    message: string;
   }
 }
 
@@ -477,6 +527,11 @@ export interface SplitCancelResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Advisory findings about the categories this job uses; empty when none.
+   */
+  warnings?: Array<SplitCancelResponse.Warning>;
 }
 
 export namespace SplitCancelResponse {
@@ -502,6 +557,26 @@ export namespace SplitCancelResponse {
      * 1 disables merging.
      */
     min_pages_per_split?: number;
+  }
+
+  /**
+   * Advisory finding about split categories; the job still runs.
+   */
+  export interface Warning {
+    /**
+     * Names of the categories the warning concerns.
+     */
+    category_names: Array<string>;
+
+    /**
+     * Rule that produced the warning.
+     */
+    code: 'catch_all_category' | 'missing_description' | 'near_duplicate_description' | 'near_duplicate_name';
+
+    /**
+     * What is ambiguous and how to fix it.
+     */
+    message: string;
   }
 }
 
@@ -599,6 +674,11 @@ export interface SplitGetResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Advisory findings about the categories this job uses; empty when none.
+   */
+  warnings?: Array<SplitGetResponse.Warning>;
 }
 
 export namespace SplitGetResponse {
@@ -624,6 +704,26 @@ export namespace SplitGetResponse {
      * 1 disables merging.
      */
     min_pages_per_split?: number;
+  }
+
+  /**
+   * Advisory finding about split categories; the job still runs.
+   */
+  export interface Warning {
+    /**
+     * Names of the categories the warning concerns.
+     */
+    category_names: Array<string>;
+
+    /**
+     * Rule that produced the warning.
+     */
+    code: 'catch_all_category' | 'missing_description' | 'near_duplicate_description' | 'near_duplicate_name';
+
+    /**
+     * What is ambiguous and how to fix it.
+     */
+    message: string;
   }
 }
 
