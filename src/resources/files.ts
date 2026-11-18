@@ -232,6 +232,11 @@ export interface FileCreateResponse {
   external_file_id?: string | null;
 
   /**
+   * Recorded file size in bytes. Null means no size was recorded.
+   */
+  file_size?: number | null;
+
+  /**
    * File extension (pdf, docx, png, etc.)
    */
   file_type?: string | null;
@@ -284,6 +289,11 @@ export interface FileRetrieveResponse {
   external_file_id?: string | null;
 
   /**
+   * Recorded file size in bytes. Null means no size was recorded.
+   */
+  file_size?: number | null;
+
+  /**
    * File extension (pdf, docx, png, etc.)
    */
   file_type?: string | null;
@@ -334,6 +344,11 @@ export interface FileListResponse {
    * Optional ID for correlating with an external system
    */
   external_file_id?: string | null;
+
+  /**
+   * Recorded file size in bytes. Null means no size was recorded.
+   */
+  file_size?: number | null;
 
   /**
    * File extension (pdf, docx, png, etc.)
@@ -410,6 +425,11 @@ export namespace FileQueryResponse {
      * Optional ID for correlating with an external system
      */
     external_file_id?: string | null;
+
+    /**
+     * Recorded file size in bytes. Null means no size was recorded.
+     */
+    file_size?: number | null;
 
     /**
      * File extension (pdf, docx, png, etc.)
