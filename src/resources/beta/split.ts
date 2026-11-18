@@ -266,7 +266,9 @@ export interface SplitSegmentResponse {
   confidence_category: string;
 
   /**
-   * Page numbers in this segment, as numbered by the input document.
+   * Page numbers in this segment, as numbered by the input document. For PPTX,
+   * hidden slides are skipped unless the parse config or parse job sets
+   * `input_options.presentation.include_hidden_slides`.
    */
   pages: Array<number>;
 }
