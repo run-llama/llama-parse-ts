@@ -487,7 +487,8 @@ export namespace SplitCreateParams {
    */
   export interface Configuration {
     /**
-     * Categories to split documents into.
+     * Categories to split documents into. Names must be unique; 'uncategorized' is
+     * reserved unless allow_uncategorized is 'forbid'.
      */
     categories: Array<SplitAPI.SplitCategory>;
 

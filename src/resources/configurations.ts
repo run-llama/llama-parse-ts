@@ -1547,7 +1547,8 @@ export namespace ParseV2Parameters {
  */
 export interface SplitV1Parameters {
   /**
-   * Categories to split documents into.
+   * Categories to split documents into. Names must be unique; 'uncategorized' is
+   * reserved unless allow_uncategorized is 'forbid'.
    */
   categories: Array<SplitAPI.SplitCategory>;
 
