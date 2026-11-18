@@ -144,10 +144,6 @@ export class Parsing extends APIResource {
    * The job must be in a terminal state (COMPLETED, FAILED, CANCELLED). Cancel a job
    * that is still running before deleting it.
    *
-   * A job that a document in Evaluate reads its ground truth from can't be deleted.
-   * It is kept until the document is removed from Evaluate or the project is
-   * deleted.
-   *
    * Returns the identifiers of the deleted job.
    *
    * @example
