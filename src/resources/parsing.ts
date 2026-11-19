@@ -553,6 +553,11 @@ export namespace FormField {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<ID.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace ID {
@@ -628,6 +633,11 @@ export namespace FormField {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<Label.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace Label {
@@ -703,6 +713,11 @@ export namespace FormField {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<Value.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace Value {
@@ -881,6 +896,11 @@ export namespace FormSection {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<ID.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace ID {
@@ -956,6 +976,11 @@ export namespace FormSection {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<Label.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace Label {
@@ -1117,6 +1142,11 @@ export namespace FormTable {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<ID.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace ID {
@@ -1192,6 +1222,11 @@ export namespace FormTable {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<Column.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace Column {
@@ -1267,6 +1302,11 @@ export namespace FormTable {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<Label.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace Label {
@@ -1342,6 +1382,11 @@ export namespace FormTable {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<Row.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace Row {
@@ -1483,6 +1528,11 @@ export namespace FormText {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<ID.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace ID {
@@ -1558,6 +1608,11 @@ export namespace FormText {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<Label.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace Label {
@@ -1633,6 +1688,11 @@ export namespace FormText {
        * use final page coordinates and optional local rotation r.
        */
       lines: Array<Value.Line>;
+
+      /**
+       * Bounding box with coordinates and optional metadata.
+       */
+      bbox?: ParsingAPI.BBox | null;
     }
 
     export namespace Value {
