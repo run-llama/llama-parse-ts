@@ -484,6 +484,21 @@ export interface FormField {
   label?: string | null;
 
   /**
+   * `[start, end)` UTF-8 byte offsets of the field's printed caption (a table cell's
+   * column header) in its page's `markdown` string (forms=enrich_pro only). Absent
+   * when it has no place in the markdown
+   */
+  label_markdown_span?: Array<unknown> | null;
+
+  /**
+   * `[start, end)` UTF-8 byte offsets of the field's value in its page's `markdown`
+   * string (forms=enrich_pro only). A checkbox covers its `[x]` or `[ ]`, and a
+   * blank table cell covers the whole cell. Absent when the value has no place in
+   * the markdown
+   */
+  markdown_span?: Array<unknown> | null;
+
+  /**
    * Form field node
    */
   type?: 'field';
@@ -824,6 +839,13 @@ export interface FormSection {
   label?: string | null;
 
   /**
+   * `[start, end)` UTF-8 byte offsets of the section heading in its page's
+   * `markdown` string (forms=enrich_pro only). Absent when it has no place in the
+   * markdown
+   */
+  markdown_span?: Array<unknown> | null;
+
+  /**
    * Form section node
    */
   type?: 'section';
@@ -1040,6 +1062,12 @@ export interface FormTable {
    * Printed table caption, if any
    */
   label?: string | null;
+
+  /**
+   * `[start, end)` UTF-8 byte offsets of the table caption in its page's `markdown`
+   * string (forms=enrich_pro only). Absent when it has no place in the markdown
+   */
+  markdown_span?: Array<unknown> | null;
 
   /**
    * Form table node
@@ -3214,6 +3242,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic_plus tier
    */
   agentic_plus: Array<
+    | '2026-11-19'
     | '2026-11-18'
     | '2026-11-17'
     | '2026-11-16'
@@ -3349,11 +3378,11 @@ export interface ParsingCreateParams {
    * - `fast`: `2026-11-12`
    * - `cost_effective`: `2026-11-09`
    * - `agentic`: `2026-11-09`
-   * - `agentic_plus`: `2026-11-18`
+   * - `agentic_plus`: `2026-11-19`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-11-18' | '2026-11-12' | '2026-11-09' | (string & {});
+  version: 'latest' | '2026-11-19' | '2026-11-12' | '2026-11-09' | (string & {});
 
   /**
    * Query param
@@ -4262,11 +4291,11 @@ export namespace ParsingCreateParams {
          * - `fast`: `2026-11-12`
          * - `cost_effective`: `2026-11-09`
          * - `agentic`: `2026-11-09`
-         * - `agentic_plus`: `2026-11-18`
+         * - `agentic_plus`: `2026-11-19`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-11-18' | '2026-11-12' | '2026-11-09' | (string & {}) | null;
+        version?: 'latest' | '2026-11-19' | '2026-11-12' | '2026-11-09' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
