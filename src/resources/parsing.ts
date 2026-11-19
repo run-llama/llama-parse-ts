@@ -485,16 +485,17 @@ export interface FormField {
 
   /**
    * `[start, end)` UTF-8 byte offsets of the field's printed caption (a table cell's
-   * column header) in its page's `markdown` string (forms=enrich_pro only). Absent
-   * when it has no place in the markdown
+   * column header) in its page's `markdown` string, on some Agentic Plus jobs from
+   * version 2026-11-19. Absent on other jobs and when it has no place in the
+   * markdown
    */
   label_markdown_span?: Array<unknown> | null;
 
   /**
    * `[start, end)` UTF-8 byte offsets of the field's value in its page's `markdown`
-   * string (forms=enrich_pro only). A checkbox covers its `[x]` or `[ ]`, and a
-   * blank table cell covers the whole cell. Absent when the value has no place in
-   * the markdown
+   * string, on some Agentic Plus jobs from version 2026-11-19. A checkbox covers its
+   * `[x]` or `[ ]`, and a blank table cell covers the whole cell. Absent on other
+   * jobs and when the value has no place in the markdown
    */
   markdown_span?: Array<unknown> | null;
 
@@ -840,8 +841,8 @@ export interface FormSection {
 
   /**
    * `[start, end)` UTF-8 byte offsets of the section heading in its page's
-   * `markdown` string (forms=enrich_pro only). Absent when it has no place in the
-   * markdown
+   * `markdown` string, on some Agentic Plus jobs from version 2026-11-19. Absent on
+   * other jobs and when it has no place in the markdown
    */
   markdown_span?: Array<unknown> | null;
 
@@ -1065,7 +1066,8 @@ export interface FormTable {
 
   /**
    * `[start, end)` UTF-8 byte offsets of the table caption in its page's `markdown`
-   * string (forms=enrich_pro only). Absent when it has no place in the markdown
+   * string, on some Agentic Plus jobs from version 2026-11-19. Absent on other jobs
+   * and when it has no place in the markdown
    */
   markdown_span?: Array<unknown> | null;
 
@@ -3981,11 +3983,9 @@ export namespace ParsingCreateParams {
      * detected as forms, producing a structured tree of the form's sections, fields,
      * and fillable grids. Retrieve the result with expand=forms. 'default' (the
      * default) applies standard parsing with no extra pass. Not available on the fast
-     * tier. 'enrich_pro' reads forms with higher accuracy than 'enrich' and returns
-     * the same expand=forms tree; it is available on tier='agentic_plus' with version
-     * 'latest' or 2026-11-17 or later
+     * tier
      */
-    forms?: 'default' | 'enrich' | 'enrich_pro' | null;
+    forms?: 'default' | 'enrich' | null;
 
     /**
      * Options for ignoring specific text types (diagonal, hidden, text in images)

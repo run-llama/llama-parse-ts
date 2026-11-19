@@ -1050,11 +1050,9 @@ export namespace ParseV2Parameters {
      * detected as forms, producing a structured tree of the form's sections, fields,
      * and fillable grids. Retrieve the result with expand=forms. 'default' (the
      * default) applies standard parsing with no extra pass. Not available on the fast
-     * tier. 'enrich_pro' reads forms with higher accuracy than 'enrich' and returns
-     * the same expand=forms tree; it is available on tier='agentic_plus' with version
-     * 'latest' or 2026-11-17 or later
+     * tier
      */
-    forms?: 'default' | 'enrich' | 'enrich_pro' | null;
+    forms?: 'default' | 'enrich' | null;
 
     /**
      * Options for ignoring specific text types (diagonal, hidden, text in images)
