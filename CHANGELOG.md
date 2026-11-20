@@ -1,5 +1,40 @@
 # Changelog
 
+## [2.20.0](https://github.com/run-llama/llama-parse-ts/compare/v2.19.0...v2.20.0) (2026-11-20)
+
+
+### Features
+
+* **extract:** expose Max effort in the public API ([#30756](https://github.com/run-llama/llama-parse-ts/issues/30756)) ([7e435f2](https://github.com/run-llama/llama-parse-ts/commit/7e435f26ac28147dab88110bb1c1e5521ff818f1))
+* **extract:** send a saved configuration's completed jobs to review by policy ([#34124](https://github.com/run-llama/llama-parse-ts/issues/34124)) ([cd710fc](https://github.com/run-llama/llama-parse-ts/commit/cd710fc67d1bc92c6c01664cf766919ccd8a3d88))
+* **parse-eval:** let Parse delete ground-truth jobs like any other job ([#35004](https://github.com/run-llama/llama-parse-ts/issues/35004)) ([bcd4cda](https://github.com/run-llama/llama-parse-ts/commit/bcd4cda4d489c46786fe904af14dce2e9c28b9e6))
+* **parse:** add document page count bounds ([#34227](https://github.com/run-llama/llama-parse-ts/issues/34227)) ([d321bb3](https://github.com/run-llama/llama-parse-ts/commit/d321bb336e8719221c02623911b7999275809437))
+* **parse:** Agentic and Cost Effective 2026-11-09 lead with OCRIA 1.5 ([#33718](https://github.com/run-llama/llama-parse-ts/issues/33718)) ([e751240](https://github.com/run-llama/llama-parse-ts/commit/e751240d273b065a3e16bd439f1a8cfd8efc783f))
+* **parse:** optional `bbox` on form text grounding in the public API schema ([#35073](https://github.com/run-llama/llama-parse-ts/issues/35073)) ([52298ba](https://github.com/run-llama/llama-parse-ts/commit/52298ba5486eff969cd2996b7d0b189680c1f671))
+* **split:** advisory warnings for ambiguous category configs ([#34714](https://github.com/run-llama/llama-parse-ts/issues/34714)) ([0b2bbcf](https://github.com/run-llama/llama-parse-ts/commit/0b2bbcfc8956bab901390ed59a9de1fe44ed1b1f))
+* **split:** category segment boundary in 1.3.0 ([#35081](https://github.com/run-llama/llama-parse-ts/issues/35081)) ([6f28a44](https://github.com/run-llama/llama-parse-ts/commit/6f28a442caa417997cb9b59810b4e823b65297d1))
+* **split:** report the job's Split version on v1 SplitJobResponse ([#30318](https://github.com/run-llama/llama-parse-ts/issues/30318)) ([92634ef](https://github.com/run-llama/llama-parse-ts/commit/92634efbde89073b9a436c1356c0138f278b235f))
+* **webhooks:** keep a saved webhook's masked credentials by its id ([#32736](https://github.com/run-llama/llama-parse-ts/issues/32736)) ([ac86d38](https://github.com/run-llama/llama-parse-ts/commit/ac86d38ff0d6d809ac0d3a4323cdd6e1cb620640))
+
+
+### Bug Fixes
+
+* **api:** reject a page_size below 1 on every list route's pagination query (PROD-10603) ([#30406](https://github.com/run-llama/llama-parse-ts/issues/30406)) ([a1f8c11](https://github.com/run-llama/llama-parse-ts/commit/a1f8c11f0792c21f9cae8920e07027af1f345cfe))
+* keep legacy pipelines with empty embedding configs listable ([#31282](https://github.com/run-llama/llama-parse-ts/issues/31282)) ([571aa69](https://github.com/run-llama/llama-parse-ts/commit/571aa6989121c0ea0a3f93048bbbdfbfad279938))
+* restore generated code the custom-code patch had been deleting ([#27](https://github.com/run-llama/llama-parse-ts/issues/27)) ([b8e63fb](https://github.com/run-llama/llama-parse-ts/commit/b8e63fb2f4c4a4f8121aff89ce8718e9596670c0))
+* **split:** reject category names that make segment labels ambiguous (PROD-10501) ([#29963](https://github.com/run-llama/llama-parse-ts/issues/29963)) ([dd51eac](https://github.com/run-llama/llama-parse-ts/commit/dd51eaceb0afdd4319cbe14eb461f4894c92043f))
+
+
+### Chores
+
+* delete the empty .attw.json a crashed lint run committed ([#29](https://github.com/run-llama/llama-parse-ts/issues/29)) ([b59945b](https://github.com/run-llama/llama-parse-ts/commit/b59945b01e61fab15969bca8980341f7ffbc9a87))
+
+
+### Documentation
+
+* **extract:** describe Max effort pricing by the processing each document needs ([#33403](https://github.com/run-llama/llama-parse-ts/issues/33403)) ([3c73bbf](https://github.com/run-llama/llama-parse-ts/commit/3c73bbf5ae72f33f5f64190bd02bfdfb7e320343))
+* **split:** PPTX segment pages count visible slides only (PROD-10504) ([#29972](https://github.com/run-llama/llama-parse-ts/issues/29972)) ([ce29899](https://github.com/run-llama/llama-parse-ts/commit/ce298991bb722b900476206b19f526ef63a15681))
+
 ## [2.19.0](https://github.com/run-llama/llama-parse-ts/compare/v2.18.0...v2.19.0) (2026-10-21)
 
 
