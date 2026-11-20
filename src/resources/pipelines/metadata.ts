@@ -16,12 +16,13 @@ export class Metadata extends APIResource {
    */
   create(
     pipelineID: string,
-    body: MetadataCreateParams,
+    params: MetadataCreateParams,
     options?: RequestOptions,
   ): APIPromise<MetadataCreateResponse> {
+    const { project_id, ...body } = params;
     return this._client.put(
       path`/api/v1/pipelines/${pipelineID}/metadata`,
-      multipartFormRequestOptions({ body, ...options }, this._client),
+      multipartFormRequestOptions({ query: { project_id }, body, ...options }, this._client),
     );
   }
 
@@ -30,8 +31,14 @@ export class Metadata extends APIResource {
    *
    * @deprecated
    */
-  deleteAll(pipelineID: string, options?: RequestOptions): APIPromise<void> {
+  deleteAll(
+    pipelineID: string,
+    params: MetadataDeleteAllParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<void> {
+    const { project_id } = params ?? {};
     return this._client.delete(path`/api/v1/pipelines/${pipelineID}/metadata`, {
+      query: { project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -41,12 +48,25 @@ export class Metadata extends APIResource {
 export type MetadataCreateResponse = { [key: string]: string };
 
 export interface MetadataCreateParams {
+  /**
+   * Body param
+   */
   upload_file: Uploadable;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
+}
+
+export interface MetadataDeleteAllParams {
+  project_id?: string | null;
 }
 
 export declare namespace Metadata {
   export {
     type MetadataCreateResponse as MetadataCreateResponse,
     type MetadataCreateParams as MetadataCreateParams,
+    type MetadataDeleteAllParams as MetadataDeleteAllParams,
   };
 }

@@ -266,7 +266,9 @@ export interface SplitSegmentResponse {
   confidence_category: string;
 
   /**
-   * Page numbers in this segment, as numbered by the input document.
+   * Page numbers in this segment, as numbered by the input document. For PPTX,
+   * hidden slides are skipped unless the parse config or parse job sets
+   * `input_options.presentation.include_hidden_slides`.
    */
   pages: Array<number>;
 }
@@ -305,6 +307,11 @@ export interface SplitCreateResponse {
    * User ID who created this job.
    */
   user_id: string;
+
+  /**
+   * Split version used for this job.
+   */
+  version: string;
 
   /**
    * Split configuration ID used for this job.
@@ -368,6 +375,11 @@ export interface SplitListResponse {
   user_id: string;
 
   /**
+   * Split version used for this job.
+   */
+  version: string;
+
+  /**
    * Split configuration ID used for this job.
    */
   configuration_id?: string | null;
@@ -429,6 +441,11 @@ export interface SplitGetResponse {
   user_id: string;
 
   /**
+   * Split version used for this job.
+   */
+  version: string;
+
+  /**
    * Split configuration ID used for this job.
    */
   configuration_id?: string | null;
@@ -487,7 +504,8 @@ export namespace SplitCreateParams {
    */
   export interface Configuration {
     /**
-     * Categories to split documents into.
+     * Categories to split documents into. Names must be unique; 'uncategorized' is
+     * reserved unless allow_uncategorized is 'forbid'.
      */
     categories: Array<SplitAPI.SplitCategory>;
 
@@ -515,6 +533,24 @@ export namespace SplitCreateParams {
        * 'uncategorized' but are excluded from results.
        */
       allow_uncategorized?: 'forbid' | 'include' | 'omit';
+
+      /**
+       * Free-form guidance for where segment boundaries are placed.
+       */
+      custom_instructions?: string | null;
+
+      /**
+       * Minimum pages per segment. Shorter segments are merged into an adjacent segment;
+       * 1 disables merging.
+       */
+      min_pages_per_split?: number;
+
+      /**
+       * Where a new segment starts: document at each new document, category wherever the
+       * category changes. Unset means document. category requires version 1.3.0 or
+       * later.
+       */
+      segment_boundary?: 'category' | 'document' | null;
     }
   }
 }

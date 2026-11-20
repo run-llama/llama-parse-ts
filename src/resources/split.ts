@@ -178,6 +178,11 @@ export interface SplitCreateResponse {
   user_id: string;
 
   /**
+   * Split version used for this job.
+   */
+  version: string;
+
+  /**
    * Split configuration ID used for this job.
    */
   configuration_id?: string | null;
@@ -226,6 +231,11 @@ export interface SplitCreateResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Advisory findings about the categories this job uses; empty when none.
+   */
+  warnings?: Array<SplitCreateResponse.Warning>;
 }
 
 export namespace SplitCreateResponse {
@@ -251,6 +261,33 @@ export namespace SplitCreateResponse {
      * 1 disables merging.
      */
     min_pages_per_split?: number;
+
+    /**
+     * Where a new segment starts: document at each new document, category wherever the
+     * category changes. Unset means document. category requires version 1.3.0 or
+     * later.
+     */
+    segment_boundary?: 'category' | 'document' | null;
+  }
+
+  /**
+   * Advisory finding about split categories; the job still runs.
+   */
+  export interface Warning {
+    /**
+     * Names of the categories the warning concerns.
+     */
+    category_names: Array<string>;
+
+    /**
+     * Rule that produced the warning.
+     */
+    code: 'catch_all_category' | 'missing_description' | 'near_duplicate_description' | 'near_duplicate_name';
+
+    /**
+     * What is ambiguous and how to fix it.
+     */
+    message: string;
   }
 }
 
@@ -293,6 +330,11 @@ export interface SplitListResponse {
    * User who created this job.
    */
   user_id: string;
+
+  /**
+   * Split version used for this job.
+   */
+  version: string;
 
   /**
    * Split configuration ID used for this job.
@@ -343,6 +385,11 @@ export interface SplitListResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Advisory findings about the categories this job uses; empty when none.
+   */
+  warnings?: Array<SplitListResponse.Warning>;
 }
 
 export namespace SplitListResponse {
@@ -368,6 +415,33 @@ export namespace SplitListResponse {
      * 1 disables merging.
      */
     min_pages_per_split?: number;
+
+    /**
+     * Where a new segment starts: document at each new document, category wherever the
+     * category changes. Unset means document. category requires version 1.3.0 or
+     * later.
+     */
+    segment_boundary?: 'category' | 'document' | null;
+  }
+
+  /**
+   * Advisory finding about split categories; the job still runs.
+   */
+  export interface Warning {
+    /**
+     * Names of the categories the warning concerns.
+     */
+    category_names: Array<string>;
+
+    /**
+     * Rule that produced the warning.
+     */
+    code: 'catch_all_category' | 'missing_description' | 'near_duplicate_description' | 'near_duplicate_name';
+
+    /**
+     * What is ambiguous and how to fix it.
+     */
+    message: string;
   }
 }
 
@@ -412,6 +486,11 @@ export interface SplitCancelResponse {
    * User who created this job.
    */
   user_id: string;
+
+  /**
+   * Split version used for this job.
+   */
+  version: string;
 
   /**
    * Split configuration ID used for this job.
@@ -462,6 +541,11 @@ export interface SplitCancelResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Advisory findings about the categories this job uses; empty when none.
+   */
+  warnings?: Array<SplitCancelResponse.Warning>;
 }
 
 export namespace SplitCancelResponse {
@@ -487,6 +571,33 @@ export namespace SplitCancelResponse {
      * 1 disables merging.
      */
     min_pages_per_split?: number;
+
+    /**
+     * Where a new segment starts: document at each new document, category wherever the
+     * category changes. Unset means document. category requires version 1.3.0 or
+     * later.
+     */
+    segment_boundary?: 'category' | 'document' | null;
+  }
+
+  /**
+   * Advisory finding about split categories; the job still runs.
+   */
+  export interface Warning {
+    /**
+     * Names of the categories the warning concerns.
+     */
+    category_names: Array<string>;
+
+    /**
+     * Rule that produced the warning.
+     */
+    code: 'catch_all_category' | 'missing_description' | 'near_duplicate_description' | 'near_duplicate_name';
+
+    /**
+     * What is ambiguous and how to fix it.
+     */
+    message: string;
   }
 }
 
@@ -529,6 +640,11 @@ export interface SplitGetResponse {
    * User who created this job.
    */
   user_id: string;
+
+  /**
+   * Split version used for this job.
+   */
+  version: string;
 
   /**
    * Split configuration ID used for this job.
@@ -579,6 +695,11 @@ export interface SplitGetResponse {
    * Update datetime
    */
   updated_at?: string | null;
+
+  /**
+   * Advisory findings about the categories this job uses; empty when none.
+   */
+  warnings?: Array<SplitGetResponse.Warning>;
 }
 
 export namespace SplitGetResponse {
@@ -604,6 +725,33 @@ export namespace SplitGetResponse {
      * 1 disables merging.
      */
     min_pages_per_split?: number;
+
+    /**
+     * Where a new segment starts: document at each new document, category wherever the
+     * category changes. Unset means document. category requires version 1.3.0 or
+     * later.
+     */
+    segment_boundary?: 'category' | 'document' | null;
+  }
+
+  /**
+   * Advisory finding about split categories; the job still runs.
+   */
+  export interface Warning {
+    /**
+     * Names of the categories the warning concerns.
+     */
+    category_names: Array<string>;
+
+    /**
+     * Rule that produced the warning.
+     */
+    code: 'catch_all_category' | 'missing_description' | 'near_duplicate_description' | 'near_duplicate_name';
+
+    /**
+     * What is ambiguous and how to fix it.
+     */
+    message: string;
   }
 }
 
@@ -656,7 +804,8 @@ export namespace SplitCreateParams {
    */
   export interface Configuration {
     /**
-     * Categories to split documents into.
+     * Categories to split documents into. Names must be unique; 'uncategorized' is
+     * reserved unless allow_uncategorized is 'forbid'.
      */
     categories: Array<BetaSplitAPI.SplitCategory>;
 
@@ -717,6 +866,13 @@ export namespace SplitCreateParams {
        * 1 disables merging.
        */
       min_pages_per_split?: number;
+
+      /**
+       * Where a new segment starts: document at each new document, category wherever the
+       * category changes. Unset means document. category requires version 1.3.0 or
+       * later.
+       */
+      segment_boundary?: 'category' | 'document' | null;
     }
   }
 
@@ -744,6 +900,7 @@ export namespace SplitCreateParams {
       | 'extract.error'
       | 'extract.partial_success'
       | 'extract.pending'
+      | 'extract.running'
       | 'extract.success'
       | 'parse.cancelled'
       | 'parse.error'

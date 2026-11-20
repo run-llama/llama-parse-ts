@@ -112,7 +112,8 @@ export class Directories extends APIResource {
   }
 
   /**
-   * Permanently delete a directory.
+   * Permanently delete a directory, and the files in it that no other directory or
+   * index uses.
    *
    * @example
    * ```ts

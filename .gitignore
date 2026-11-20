@@ -9,6 +9,7 @@ dist-deno
 /*.tgz
 .idea/
 .eslintcache
+.attw.json
 dist-bundle
 *.mcpb
 oidc

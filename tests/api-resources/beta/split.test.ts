@@ -28,7 +28,12 @@ describe('resource split', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       configuration: {
         categories: [{ name: 'x', description: 'x' }],
-        splitting_strategy: { allow_uncategorized: 'forbid' },
+        splitting_strategy: {
+          allow_uncategorized: 'forbid',
+          custom_instructions: 'Start a new segment at every signature page.',
+          min_pages_per_split: 1,
+          segment_boundary: 'category',
+        },
         version: 'latest',
       },
       configuration_id: 'configuration_id',
@@ -57,7 +62,7 @@ describe('resource split', () => {
           created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           job_ids: ['string', 'string'],
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          page_size: 0,
+          page_size: 1,
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           status: 'cancelled',

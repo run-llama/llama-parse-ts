@@ -57,7 +57,7 @@ describe('resource files', () => {
           file_id: 'file_id',
           include_deleted: true,
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          page_size: 0,
+          page_size: 1,
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           unique_id: 'unique_id',

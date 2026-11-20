@@ -23,6 +23,18 @@ describe('resource dataSources', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('getDataSources: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.pipelines.dataSources.getDataSources(
+        '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(LlamaCloud.NotFoundError);
+  });
+
+  // Mock server tests are disabled
   test.skip('updateDataSources: only required params', async () => {
     const responsePromise = client.pipelines.dataSources.updateDataSources(
       '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -41,7 +53,10 @@ describe('resource dataSources', () => {
   test.skip('updateDataSources: required and optional params', async () => {
     const response = await client.pipelines.dataSources.updateDataSources(
       '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      { body: [{ data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', sync_interval: 0 }] },
+      {
+        body: [{ data_source_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', sync_interval: 0 }],
+        project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      },
     );
   });
 
@@ -63,6 +78,7 @@ describe('resource dataSources', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.pipelines.dataSources.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       sync_interval: 0,
     });
   });
@@ -85,6 +101,7 @@ describe('resource dataSources', () => {
   test.skip('getStatus: required and optional params', async () => {
     const response = await client.pipelines.dataSources.getStatus('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
   });
 
@@ -106,6 +123,7 @@ describe('resource dataSources', () => {
   test.skip('sync: required and optional params', async () => {
     const response = await client.pipelines.dataSources.sync('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       pipeline_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       pipeline_file_ids: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
     });
   });

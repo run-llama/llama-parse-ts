@@ -64,7 +64,7 @@ describe('resource batches', () => {
           created_at_on_or_after: '2019-12-27T18:11:19.117Z',
           created_at_on_or_before: '2019-12-27T18:11:19.117Z',
           organization_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-          page_size: 0,
+          page_size: 1,
           page_token: 'page_token',
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           source_directory_id: 'source_directory_id',

@@ -137,7 +137,8 @@ export interface WebhookConfigCreate {
   webhook_url: string;
 
   /**
-   * Events to subscribe to. If null, all events are delivered.
+   * Events to subscribe to. If null, all events are delivered. An empty list
+   * subscribes to nothing and is rejected.
    */
   webhook_events?: Array<
     | 'batch.cancelled'
@@ -155,6 +156,7 @@ export interface WebhookConfigCreate {
     | 'extract.error'
     | 'extract.partial_success'
     | 'extract.pending'
+    | 'extract.running'
     | 'extract.success'
     | 'parse.cancelled'
     | 'parse.error'
@@ -255,6 +257,7 @@ export interface WebhookConfigResponse {
     | 'extract.error'
     | 'extract.partial_success'
     | 'extract.pending'
+    | 'extract.running'
     | 'extract.success'
     | 'parse.cancelled'
     | 'parse.error'
@@ -310,7 +313,8 @@ export interface WebhookConfigCreateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Events to subscribe to. If null, all events are delivered.
+   * Body param: Events to subscribe to. If null, all events are delivered. An empty
+   * list subscribes to nothing and is rejected.
    */
   webhook_events?: Array<
     | 'batch.cancelled'
@@ -328,6 +332,7 @@ export interface WebhookConfigCreateParams {
     | 'extract.error'
     | 'extract.partial_success'
     | 'extract.pending'
+    | 'extract.running'
     | 'extract.success'
     | 'parse.cancelled'
     | 'parse.error'
@@ -406,7 +411,8 @@ export interface WebhookConfigUpdateParams {
   project_id?: string | null;
 
   /**
-   * Body param: Updated event subscriptions.
+   * Body param: Updated event subscriptions. Omit to leave unchanged; [] is
+   * rejected.
    */
   webhook_events?: Array<
     | 'batch.cancelled'
@@ -424,6 +430,7 @@ export interface WebhookConfigUpdateParams {
     | 'extract.error'
     | 'extract.partial_success'
     | 'extract.pending'
+    | 'extract.running'
     | 'extract.success'
     | 'parse.cancelled'
     | 'parse.error'

@@ -23,8 +23,12 @@ export class Documents extends APIResource {
     params: DocumentCreateParams,
     options?: RequestOptions,
   ): APIPromise<DocumentCreateResponse> {
-    const { body } = params;
-    return this._client.post(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
+    const { body, project_id } = params;
+    return this._client.post(path`/api/v1/pipelines/${pipelineID}/documents`, {
+      query: { project_id },
+      body: body,
+      ...options,
+    });
   }
 
   /**
@@ -72,8 +76,11 @@ export class Documents extends APIResource {
    * @deprecated
    */
   get(documentID: string, params: DocumentGetParams, options?: RequestOptions): APIPromise<CloudDocument> {
-    const { pipeline_id } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, options);
+    const { pipeline_id, ...query } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -83,8 +90,9 @@ export class Documents extends APIResource {
    * @deprecated
    */
   delete(documentID: string, params: DocumentDeleteParams, options?: RequestOptions): APIPromise<void> {
-    const { pipeline_id } = params;
+    const { pipeline_id, project_id } = params;
     return this._client.delete(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}`, {
+      query: { project_id },
       ...options,
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
@@ -100,8 +108,11 @@ export class Documents extends APIResource {
     params: DocumentGetStatusParams,
     options?: RequestOptions,
   ): APIPromise<PipelinesAPI.ManagedIngestionStatusResponse> {
-    const { pipeline_id } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/status`, options);
+    const { pipeline_id, ...query } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/status`, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -110,8 +121,11 @@ export class Documents extends APIResource {
    * @deprecated
    */
   sync(documentID: string, params: DocumentSyncParams, options?: RequestOptions): APIPromise<unknown> {
-    const { pipeline_id } = params;
-    return this._client.post(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/sync`, options);
+    const { pipeline_id, project_id } = params;
+    return this._client.post(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/sync`, {
+      query: { project_id },
+      ...options,
+    });
   }
 
   /**
@@ -124,8 +138,11 @@ export class Documents extends APIResource {
     params: DocumentGetChunksParams,
     options?: RequestOptions,
   ): APIPromise<DocumentGetChunksResponse> {
-    const { pipeline_id } = params;
-    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/chunks`, options);
+    const { pipeline_id, ...query } = params;
+    return this._client.get(path`/api/v1/pipelines/${pipeline_id}/documents/${documentID}/chunks`, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -138,8 +155,12 @@ export class Documents extends APIResource {
     params: DocumentUpsertParams,
     options?: RequestOptions,
   ): APIPromise<DocumentUpsertResponse> {
-    const { body } = params;
-    return this._client.put(path`/api/v1/pipelines/${pipelineID}/documents`, { body: body, ...options });
+    const { body, project_id } = params;
+    return this._client.put(path`/api/v1/pipelines/${pipelineID}/documents`, {
+      query: { project_id },
+      body: body,
+      ...options,
+    });
   }
 }
 
@@ -332,7 +353,15 @@ export type DocumentSyncResponse = unknown;
 export type DocumentUpsertResponse = Array<CloudDocument>;
 
 export interface DocumentCreateParams {
+  /**
+   * Body param
+   */
   body: Array<CloudDocumentCreate>;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export interface DocumentListParams extends PaginatedCloudDocumentsParams {
@@ -341,6 +370,8 @@ export interface DocumentListParams extends PaginatedCloudDocumentsParams {
   only_api_data_source_documents?: boolean | null;
 
   only_direct_upload?: boolean | null;
+
+  project_id?: string | null;
 
   status_refresh_policy?: 'cached' | 'ttl';
 }
@@ -351,30 +382,80 @@ export interface DocumentGetStatusCountsParams {
   file_id?: string | null;
 
   only_direct_upload?: boolean;
+
+  project_id?: string | null;
 }
 
 export interface DocumentGetParams {
+  /**
+   * Path param
+   */
   pipeline_id: string;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export interface DocumentDeleteParams {
+  /**
+   * Path param
+   */
   pipeline_id: string;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export interface DocumentGetStatusParams {
+  /**
+   * Path param
+   */
   pipeline_id: string;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export interface DocumentSyncParams {
+  /**
+   * Path param
+   */
   pipeline_id: string;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export interface DocumentGetChunksParams {
+  /**
+   * Path param
+   */
   pipeline_id: string;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export interface DocumentUpsertParams {
+  /**
+   * Body param
+   */
   body: Array<CloudDocumentCreate>;
+
+  /**
+   * Query param
+   */
+  project_id?: string | null;
 }
 
 export declare namespace Documents {

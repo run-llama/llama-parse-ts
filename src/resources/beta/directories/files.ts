@@ -108,6 +108,9 @@ export class Files extends APIResource {
    * Delete a directory file by `directory_file_id`; to resolve from `unique_id`,
    * list with a filter first.
    *
+   * The uploaded file is deleted with it unless another directory or index still
+   * uses it.
+   *
    * @example
    * ```ts
    * await client.beta.directories.files.delete(
