@@ -544,6 +544,13 @@ export namespace SplitCreateParams {
        * 1 disables merging.
        */
       min_pages_per_split?: number;
+
+      /**
+       * Where a new segment starts: document at each new document, category wherever the
+       * category changes. Unset means document. category requires version 1.3.0 or
+       * later.
+       */
+      segment_boundary?: 'category' | 'document' | null;
     }
   }
 }

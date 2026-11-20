@@ -34,6 +34,7 @@ describe('resource split', () => {
           allow_uncategorized: 'forbid',
           custom_instructions: 'Start a new segment at every signature page.',
           min_pages_per_split: 1,
+          segment_boundary: 'category',
         },
         target_pages: '1,3,5-7',
         version: 'latest',
