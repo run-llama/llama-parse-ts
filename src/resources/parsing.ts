@@ -363,6 +363,12 @@ export interface BBox {
   end_index?: number | null;
 
   /**
+   * Filename of the saved layout image cut from this region; equals `filename` of an
+   * `images_content_metadata` entry.
+   */
+  image_filename?: string | null;
+
+  /**
    * Label for the bounding box
    */
   label?: string | null;
@@ -2732,6 +2738,12 @@ export namespace ParsingGetResponse {
       content_type?: string | null;
 
       /**
+       * Layout class of the region a layout image was cut from: 'chart', 'table',
+       * 'image' or 'seal'. Null for other images.
+       */
+      label?: string | null;
+
+      /**
        * Presigned URL to download the image
        */
       presigned_url?: string | null;
@@ -2741,6 +2753,13 @@ export namespace ParsingGetResponse {
        * release.
        */
       size_bytes?: number | null;
+
+      /**
+       * Figure classes of the region a layout image was cut from, e.g. ['line_chart'] or
+       * ['logo']; empty when the region has no figure classification. Null for other
+       * images.
+       */
+      sublabels?: Array<string> | null;
     }
 
     export namespace Image {
