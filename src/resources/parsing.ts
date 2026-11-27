@@ -363,6 +363,12 @@ export interface BBox {
   end_index?: number | null;
 
   /**
+   * Filename of the saved layout image cut from this region; equals `filename` of an
+   * `images_content_metadata` entry.
+   */
+  image_filename?: string | null;
+
+  /**
    * Label for the bounding box
    */
   label?: string | null;
@@ -2732,6 +2738,12 @@ export namespace ParsingGetResponse {
       content_type?: string | null;
 
       /**
+       * Layout class of the region a layout image was cut from: 'chart', 'table',
+       * 'image' or 'seal'. Null for other images.
+       */
+      label?: string | null;
+
+      /**
        * Presigned URL to download the image
        */
       presigned_url?: string | null;
@@ -2741,6 +2753,13 @@ export namespace ParsingGetResponse {
        * release.
        */
       size_bytes?: number | null;
+
+      /**
+       * Figure classes of the region a layout image was cut from, e.g. ['line_chart'] or
+       * ['logo']; empty when the region has no figure classification. Null for other
+       * images.
+       */
+      sublabels?: Array<string> | null;
     }
 
     export namespace Image {
@@ -3244,6 +3263,7 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic tier
    */
   agentic: Array<
+    | '2026-11-22'
     | '2026-11-09'
     | '2026-11-05'
     | '2026-10-30'
@@ -3304,6 +3324,8 @@ export interface ParsingListVersionsResponse {
    * Versions for the agentic_plus tier
    */
   agentic_plus: Array<
+    | '2026-11-27'
+    | '2026-11-26'
     | '2026-11-19'
     | '2026-11-18'
     | '2026-11-17'
@@ -3364,6 +3386,8 @@ export interface ParsingListVersionsResponse {
    * Versions for the cost_effective tier
    */
   cost_effective: Array<
+    | '2026-11-24'
+    | '2026-11-22'
     | '2026-11-09'
     | '2026-11-05'
     | '2026-10-30'
@@ -3438,13 +3462,13 @@ export interface ParsingCreateParams {
    * Current `latest` by tier:
    *
    * - `fast`: `2026-11-12`
-   * - `cost_effective`: `2026-11-09`
-   * - `agentic`: `2026-11-09`
-   * - `agentic_plus`: `2026-11-19`
+   * - `cost_effective`: `2026-11-24`
+   * - `agentic`: `2026-11-22`
+   * - `agentic_plus`: `2026-11-27`
    *
    * Full list: `GET /api/v2/parse/versions`.
    */
-  version: 'latest' | '2026-11-19' | '2026-11-12' | '2026-11-09' | (string & {});
+  version: 'latest' | '2026-11-27' | '2026-11-24' | '2026-11-22' | '2026-11-12' | (string & {});
 
   /**
    * Query param
@@ -4349,13 +4373,13 @@ export namespace ParsingCreateParams {
          * Current `latest` by tier:
          *
          * - `fast`: `2026-11-12`
-         * - `cost_effective`: `2026-11-09`
-         * - `agentic`: `2026-11-09`
-         * - `agentic_plus`: `2026-11-19`
+         * - `cost_effective`: `2026-11-24`
+         * - `agentic`: `2026-11-22`
+         * - `agentic_plus`: `2026-11-27`
          *
          * Full list: `GET /api/v2/parse/versions`.
          */
-        version?: 'latest' | '2026-11-19' | '2026-11-12' | '2026-11-09' | (string & {}) | null;
+        version?: 'latest' | '2026-11-27' | '2026-11-24' | '2026-11-22' | '2026-11-12' | (string & {}) | null;
       }
 
       export namespace ParsingConf {
